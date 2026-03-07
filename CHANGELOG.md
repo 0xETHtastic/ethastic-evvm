@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- **Gas Optimization**: 
+  - Refactored input handling modifiers across all services to use `calldata` instead of `memory` for external function parameters, reducing gas costs for transactions that involve large data inputs by avoiding unnecessary copying of data into memory.
+  - Updated algorithms accross services whose use `for` loops to use `unchecked` blocks where safe to do so, eliminating redundant overflow checks and further reducing gas costs in scenarios with multiple iterations.
+- **Core.sol**: Refactored `breakerSetupNameServiceAddress` variable from `bytes1` to `bool` for better gas efficiency.
+
+
 ## [3.0.3] - 2026-03-05
 
 ### Changed

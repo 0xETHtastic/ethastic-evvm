@@ -94,7 +94,7 @@ contract Core is Storage {
 
         stakerList[_stakingContractAddress] = FLAG_IS_STAKER;
 
-        breakerSetupNameServiceAddress = FLAG_IS_STAKER;
+        breakerSetupNameServiceAddress = true;
     }
 
     /**
@@ -107,8 +107,7 @@ contract Core is Storage {
         address _nameServiceAddress,
         address _treasuryAddress
     ) external {
-        if (breakerSetupNameServiceAddress == 0x00)
-            revert Error.BreakerExploded();
+        if (!breakerSetupNameServiceAddress) revert Error.BreakerExploded();
 
         if (_nameServiceAddress == address(0) || _treasuryAddress == address(0))
             revert Error.AddressCantBeZero();
@@ -230,14 +229,14 @@ contract Core is Storage {
     function pay(
         address from,
         address to_address,
-        string memory to_identity,
+        string calldata to_identity,
         address token,
         uint256 amount,
         uint256 priorityFee,
         address senderExecutor,
         uint256 nonce,
         bool isAsyncExec,
-        bytes memory signature
+        bytes calldata signature
     ) external {
         if (
             SignatureRecover.recoverSigner(
@@ -264,8 +263,7 @@ contract Core is Storage {
 
         if (isAsyncExec) {
             bytes1 statusNonce = asyncNonceStatus(from, nonce);
-            if (asyncNonceStatus(from, nonce) == 0x01)
-                revert Error.AsyncNonceAlreadyUsed();
+            if (statusNonce == 0x01) revert Error.AsyncNonceAlreadyUsed();
 
             if (
                 statusNonce == 0x02 &&
@@ -308,7 +306,7 @@ contract Core is Storage {
      * @return results Success status for each payment in the batch.
      */
     function batchPay(
-        Structs.BatchData[] memory batchData
+        Structs.BatchData[] calldata batchData
     ) external returns (uint256 successfulTransactions, bool[] memory results) {
         bool isSenderStaker = isAddressStaker(msg.sender);
         address to_aux;
@@ -435,14 +433,14 @@ contract Core is Storage {
      */
     function dispersePay(
         address from,
-        Structs.DispersePayMetadata[] memory toData,
+        Structs.DispersePayMetadata[] calldata toData,
         address token,
         uint256 amount,
         uint256 priorityFee,
         address senderExecutor,
         uint256 nonce,
         bool isAsyncExec,
-        bytes memory signature
+        bytes calldata signature
     ) external {
         if (
             SignatureRecover.recoverSigner(
@@ -498,7 +496,7 @@ contract Core is Storage {
         uint256 acomulatedAmount = 0;
         balances[from][token] -= (amount + (isSenderStaker ? priorityFee : 0));
         address to_aux;
-        for (uint256 i = 0; i < toData.length; i++) {
+        for (uint256 i = 0; i < toData.length; ) {
             acomulatedAmount += toData[i].amount;
 
             if (!AdvancedStrings.equal(toData[i].to_identity, "")) {
@@ -516,6 +514,10 @@ contract Core is Storage {
             }
 
             balances[to_aux][token] += toData[i].amount;
+
+            unchecked {
+                i++;
+            }
         }
 
         if (acomulatedAmount != amount) revert Error.InvalidAmount();
@@ -557,7 +559,7 @@ contract Core is Storage {
      * @param amount Total amount to distribute.
      */
     function disperseCaPay(
-        Structs.DisperseCaPayMetadata[] memory toData,
+        Structs.DisperseCaPayMetadata[] calldata toData,
         address token,
         uint256 amount
     ) external {
@@ -573,9 +575,13 @@ contract Core is Storage {
 
         balances[from][token] -= amount;
 
-        for (uint256 i = 0; i < toData.length; i++) {
+        for (uint256 i = 0; i < toData.length; ) {
             acomulatedAmount += toData[i].amount;
             balances[toData[i].toAddress][token] += toData[i].amount;
+
+            unchecked {
+                i++;
+            }
         }
 
         if (acomulatedAmount != amount) revert Error.InvalidAmount();
@@ -601,7 +607,7 @@ contract Core is Storage {
         address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
-        bytes memory signature
+        bytes calldata signature
     ) external {
         address servicePointer = msg.sender;
 
@@ -1211,11 +1217,12 @@ contract Core is Storage {
         view
         returns (ProposalStructs.UintTypeProposal memory)
     {
-        return ProposalStructs.UintTypeProposal({
-            current: evvmMetadata.reward,
-            proposal: proposalChangeReward,
-            timeToAccept: timeToAcceptChangeReward
-        });
+        return
+            ProposalStructs.UintTypeProposal({
+                current: evvmMetadata.reward,
+                proposal: proposalChangeReward,
+                timeToAccept: timeToAcceptChangeReward
+            });
     }
 
     /**

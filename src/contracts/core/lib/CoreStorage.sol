@@ -139,7 +139,7 @@ abstract contract CoreStorage {
     /**
      * @notice Internal guard to ensure system contracts are initialized only once.
      */
-    bytes1 breakerSetupNameServiceAddress;
+    bool breakerSetupNameServiceAddress;
 
     //░▒▓█ Staker Registry █████████████████████████████████████████████████████████████▓▒░
 

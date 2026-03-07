@@ -220,7 +220,7 @@ contract TreasuryExternalChainStation is
     /// @param hostChainStationAddressString String representation for Axelar protocol
     function _setHostChainAddress(
         address hostChainStationAddress,
-        string memory hostChainStationAddressString
+        string calldata hostChainStationAddressString
     ) external onlyAdmin {
         if (fuseSetHostChainAddress != 0x01) revert();
 
@@ -484,7 +484,7 @@ contract TreasuryExternalChainStation is
         uint256 priorityFee,
         uint256 amount,
         uint256 nonce,
-        bytes memory signature
+        bytes calldata signature
     ) external onlyFisherExecutor {
         if (asyncNonce[from][nonce]) revert CoreError.AsyncNonceAlreadyUsed();
 
@@ -567,7 +567,7 @@ contract TreasuryExternalChainStation is
         uint256 priorityFee,
         uint256 amount,
         uint256 nonce,
-        bytes memory signature
+        bytes calldata signature
     ) external onlyFisherExecutor {
         if (asyncNonce[from][nonce]) revert CoreError.AsyncNonceAlreadyUsed();
 
@@ -665,7 +665,7 @@ contract TreasuryExternalChainStation is
         uint256 priorityFee,
         uint256 amount,
         uint256 nonce,
-        bytes memory signature
+        bytes calldata signature
     ) external payable onlyFisherExecutor {
         if (asyncNonce[from][nonce]) revert CoreError.AsyncNonceAlreadyUsed();
 
@@ -1089,7 +1089,7 @@ contract TreasuryExternalChainStation is
     /// @param hostChainStationAddressString String representation for Axelar protocol
     function proposeHostChainAddress(
         address hostChainStationAddress,
-        string memory hostChainStationAddressString
+        string calldata hostChainStationAddressString
     ) external onlyAdmin {
         if (fuseSetHostChainAddress == 0x01) revert();
 
@@ -1209,7 +1209,7 @@ contract TreasuryExternalChainStation is
     /// @notice Decodes cross-chain payload and executes the token transfer
     /// @dev Handles both ETH (address(0)) and ERC20 token transfers to recipients
     /// @param payload Encoded transfer data containing token, recipient, and amount
-    function decodeAndGive(bytes memory payload) internal {
+    function decodeAndGive(bytes calldata payload) internal {
         (address token, address toAddress, uint256 amount) = PayloadUtils
             .decodePayload(payload);
         if (token == address(0))

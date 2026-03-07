@@ -126,10 +126,10 @@ contract NameService {
         bytes32 hashPreRegisteredUsername,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -175,14 +175,14 @@ contract NameService {
      */
     function registrationUsername(
         address user,
-        string memory username,
+        string calldata username,
         uint256 lockNumber,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -255,15 +255,15 @@ contract NameService {
      */
     function makeOffer(
         address user,
-        string memory username,
+        string calldata username,
         uint256 amount,
         uint256 expirationDate,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external returns (uint256 offerID) {
         core.validateAndConsumeNonce(
             user,
@@ -354,14 +354,14 @@ contract NameService {
      */
     function withdrawOffer(
         address user,
-        string memory username,
+        string calldata username,
         uint256 offerID,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -441,14 +441,14 @@ contract NameService {
      */
     function acceptOffer(
         address user,
-        string memory username,
+        string calldata username,
         uint256 offerID,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -530,13 +530,13 @@ contract NameService {
      */
     function renewUsername(
         address user,
-        string memory username,
+        string calldata username,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -627,14 +627,14 @@ contract NameService {
      */
     function addCustomMetadata(
         address user,
-        string memory identity,
-        string memory value,
+        string calldata identity,
+        string calldata value,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -713,14 +713,14 @@ contract NameService {
      */
     function removeCustomMetadata(
         address user,
-        string memory identity,
+        string calldata identity,
         uint256 key,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -810,13 +810,13 @@ contract NameService {
      */
     function flushCustomMetadata(
         address user,
-        string memory identity,
+        string calldata identity,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -907,13 +907,13 @@ contract NameService {
      */
     function flushUsername(
         address user,
-        string memory username,
+        string calldata username,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -1112,7 +1112,7 @@ contract NameService {
         uint256 amount,
         uint256 priorityFee,
         uint256 nonce,
-        bytes memory signature
+        bytes calldata signature
     ) internal {
         core.pay(
             user,
@@ -1148,7 +1148,7 @@ contract NameService {
      * @return Hash of the username and random number
      */
     function hashUsername(
-        string memory _username,
+        string calldata _username,
         uint256 _randomNumber
     ) public pure returns (bytes32) {
         return keccak256(abi.encodePacked(_username, _randomNumber));
@@ -1165,7 +1165,7 @@ contract NameService {
      * @return True if the identity exists and is valid
      */
     function verifyIfIdentityExists(
-        string memory _identity
+        string calldata _identity
     ) public view returns (bool) {
         if (identityDetails[_identity].flagNotAUsername == 0x01) {
             if (
@@ -1192,7 +1192,7 @@ contract NameService {
      * @return True if the username exists (will revert if not)
      */
     function strictVerifyIfIdentityExist(
-        string memory _username
+        string calldata _username
     ) public view returns (bool) {
         if (identityDetails[_username].flagNotAUsername == 0x01) {
             if (
@@ -1219,7 +1219,7 @@ contract NameService {
      * @return Address of the username owner
      */
     function getOwnerOfIdentity(
-        string memory _username
+        string calldata _username
     ) public view returns (address) {
         return identityDetails[_username].owner;
     }
@@ -1231,7 +1231,7 @@ contract NameService {
      * @return answer Address of the username owner (reverts if username doesn't exist)
      */
     function verifyStrictAndGetOwnerOfIdentity(
-        string memory _username
+        string calldata _username
     ) public view returns (address answer) {
         if (strictVerifyIfIdentityExist(_username))
             answer = identityDetails[_username].owner;
@@ -1247,7 +1247,7 @@ contract NameService {
      * @return price The cost in Principal Tokens to renew the username
      */
     function seePriceToRenew(
-        string memory _identity
+        string calldata _identity
     ) public view returns (uint256 price) {
         if (identityDetails[_identity].expirationDate >= block.timestamp) {
             if (usernameOffers[_identity][0].expirationDate != 0) {
@@ -1310,7 +1310,7 @@ contract NameService {
      * @return price Total cost in Principal Tokens (10x reward amount per metadata entry)
      */
     function getPriceToFlushCustomMetadata(
-        string memory _identity
+        string calldata _identity
     ) public view returns (uint256 price) {
         price =
             (10 * core.getRewardAmount()) *
@@ -1324,7 +1324,7 @@ contract NameService {
      * @return price Total cost in Principal Tokens (metadata flush cost + 1x reward amount)
      */
     function getPriceToFlushUsername(
-        string memory _identity
+        string calldata _identity
     ) public view returns (uint256 price) {
         price =
             ((10 * core.getRewardAmount()) *
@@ -1341,7 +1341,7 @@ contract NameService {
      * @return True if the username is available for registration
      */
     function isUsernameAvailable(
-        string memory _username
+        string calldata _username
     ) public view returns (bool) {
         if (identityDetails[_username].expirationDate == 0) {
             return true;
@@ -1359,7 +1359,7 @@ contract NameService {
      * @return Owner address and expiration timestamp
      */
     function getIdentityBasicMetadata(
-        string memory _username
+        string calldata _username
     ) public view returns (address, uint256) {
         return (
             identityDetails[_username].owner,
@@ -1374,7 +1374,7 @@ contract NameService {
      * @return Number of custom metadata entries
      */
     function getAmountOfCustomMetadata(
-        string memory _username
+        string calldata _username
     ) public view returns (uint256) {
         return identityDetails[_username].customMetadataMaxSlots;
     }
@@ -1386,7 +1386,7 @@ contract NameService {
      * @return Array of all custom metadata strings
      */
     function getFullCustomMetadataOfIdentity(
-        string memory _username
+        string calldata _username
     ) public view returns (string[] memory) {
         string[] memory _customMetadata = new string[](
             identityDetails[_username].customMetadataMaxSlots
@@ -1409,7 +1409,7 @@ contract NameService {
      * @return The metadata string at the specified index
      */
     function getSingleCustomMetadataOfIdentity(
-        string memory _username,
+        string calldata _username,
         uint256 _key
     ) public view returns (string memory) {
         return identityCustomMetadata[_username][_key];
@@ -1422,7 +1422,7 @@ contract NameService {
      * @return Maximum number of metadata slots
      */
     function getCustomMetadataMaxSlotsOfIdentity(
-        string memory _username
+        string calldata _username
     ) public view returns (uint256) {
         return identityDetails[_username].customMetadataMaxSlots;
     }
@@ -1436,7 +1436,7 @@ contract NameService {
      * @return offers Array of all offer metadata structures
      */
     function getOffersOfUsername(
-        string memory _username
+        string calldata _username
     ) public view returns (Structs.OfferMetadata[] memory offers) {
         offers = new Structs.OfferMetadata[](
             identityDetails[_username].offerMaxSlots
@@ -1455,7 +1455,7 @@ contract NameService {
      * @return offer The complete offer metadata structure
      */
     function getSingleOfferOfUsername(
-        string memory _username,
+        string calldata _username,
         uint256 _offerID
     ) public view returns (Structs.OfferMetadata memory offer) {
         return usernameOffers[_username][_offerID];
@@ -1468,7 +1468,7 @@ contract NameService {
      * @return length Total number of offers that have been made
      */
     function getLengthOfOffersUsername(
-        string memory _username
+        string calldata _username
     ) public view returns (uint256 length) {
         do {
             length++;
@@ -1482,7 +1482,7 @@ contract NameService {
      * @return The expiration timestamp in seconds since Unix epoch
      */
     function getExpireDateOfIdentity(
-        string memory _identity
+        string calldata _identity
     ) public view returns (uint256) {
         return identityDetails[_identity].expirationDate;
     }
@@ -1496,7 +1496,7 @@ contract NameService {
      * @return The current registration price in Principal Tokens
      */
     function getPriceOfRegistration(
-        string memory username
+        string calldata username
     ) public view returns (uint256) {
         return
             identityDetails[username].offerMaxSlots > 0

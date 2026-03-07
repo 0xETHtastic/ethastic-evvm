@@ -211,7 +211,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
     /// @param externalChainStationAddressString String representation for Axelar protocol
     function _setExternalChainAddress(
         address externalChainStationAddress,
-        string memory externalChainStationAddressString
+        string calldata externalChainStationAddressString
     ) external onlyAdmin {
         if (fuseSetExternalChainAddress != 0x01) revert();
 
@@ -392,7 +392,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
         uint256 priorityFee,
         uint256 amount,
         uint256 nonce,
-        bytes memory signature
+        bytes calldata signature
     ) external onlyFisherExecutor {
         core.validateAndConsumeNonce(
             from,
@@ -475,7 +475,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
         uint256 priorityFee,
         uint256 amount,
         uint256 nonce,
-        bytes memory signature
+        bytes calldata signature
     ) external onlyFisherExecutor {
         if (tokenAddress == core.getEvvmMetadata().principalTokenAddress)
             revert Error.PrincipalTokenIsNotWithdrawable();
@@ -850,7 +850,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
     /// @param externalChainStationAddressString String representation for Axelar protocol
     function proposeExternalChainAddress(
         address externalChainStationAddress,
-        string memory externalChainStationAddressString
+        string calldata externalChainStationAddressString
     ) external onlyAdmin {
         if (fuseSetExternalChainAddress == 0x01) revert();
 
@@ -983,7 +983,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
     /// @notice Decodes cross-chain payload and credits EVVM balance
     /// @dev Extracts token, recipient, and amount from payload and adds to EVVM balance
     /// @param payload Encoded transfer data containing token, recipient, and amount
-    function decodeAndDeposit(bytes memory payload) internal {
+    function decodeAndDeposit(bytes calldata payload) internal {
         (address token, address from, uint256 amount) = PayloadUtils
             .decodePayload(payload);
         executerCore(true, from, token, amount);

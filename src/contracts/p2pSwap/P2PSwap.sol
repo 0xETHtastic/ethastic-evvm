@@ -110,10 +110,10 @@ contract P2PSwap is EvvmService {
         uint256 amountB,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external returns (uint256 market, uint256 orderId) {
         core.validateAndConsumeNonce(
             user,
@@ -220,10 +220,10 @@ contract P2PSwap is EvvmService {
         uint256 orderId,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -321,10 +321,10 @@ contract P2PSwap is EvvmService {
         uint256 amountOfTokenBToFill,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         core.validateAndConsumeNonce(
             user,
@@ -451,10 +451,10 @@ contract P2PSwap is EvvmService {
         uint256 amountOfTokenBToFill,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay,
+        bytes calldata signaturePay,
         uint256 maxFillFixedFee ///@dev for testing purposes
     ) external {
         core.validateAndConsumeNonce(

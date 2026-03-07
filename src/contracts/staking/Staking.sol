@@ -163,7 +163,7 @@ contract Staking {
     function goldenStaking(
         bool isStaking,
         uint256 amountOfStaking,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         if (msg.sender != goldenFisher.current)
             revert Error.SenderIsNotGoldenFisher();
@@ -197,10 +197,10 @@ contract Staking {
         bool isStaking,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         if (!allowPresaleStaking.flag || allowPublicStaking.flag)
             revert Error.PresaleStakingDisabled();
@@ -254,10 +254,10 @@ contract Staking {
         uint256 amountOfStaking,
         address originExecutor,
         uint256 nonce,
-        bytes memory signature,
+        bytes calldata signature,
         uint256 priorityFeePay,
         uint256 noncePay,
-        bytes memory signaturePay
+        bytes calldata signaturePay
     ) external {
         if (!allowPublicStaking.flag) revert Error.PublicStakingDisabled();
 
