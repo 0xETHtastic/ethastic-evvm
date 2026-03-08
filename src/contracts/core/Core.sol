@@ -310,7 +310,7 @@ contract Core is Storage {
     ) external returns (uint256 successfulTransactions, bool[] memory results) {
         bool isSenderStaker = isAddressStaker(msg.sender);
         address to_aux;
-        Structs.BatchData memory payment;
+        Structs.BatchData calldata payment;
         results = new bool[](batchData.length);
 
         for (uint256 iteration = 0; iteration < batchData.length; iteration++) {
@@ -466,7 +466,7 @@ contract Core is Storage {
 
         if (isAsyncExec) {
             bytes1 statusNonce = asyncNonceStatus(from, nonce);
-            if (asyncNonceStatus(from, nonce) == 0x01)
+            if (statusNonce == 0x01)
                 revert Error.AsyncNonceAlreadyUsed();
 
             if (
