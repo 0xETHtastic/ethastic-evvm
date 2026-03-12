@@ -575,7 +575,7 @@ contract TreasuryExternalChainStation is
             SignatureRecover.recoverSigner(
                 AdvancedStrings.buildSignaturePayload(
                     evvmID,
-                    hostChainAddress.currentAddress,
+                    fisherExecutor.current,
                     Hash.hashDataForFisherBridge(
                         addressToReceive,
                         tokenAddress,
@@ -673,7 +673,7 @@ contract TreasuryExternalChainStation is
             SignatureRecover.recoverSigner(
                 AdvancedStrings.buildSignaturePayload(
                     evvmID,
-                    hostChainAddress.currentAddress,
+                    fisherExecutor.current,
                     Hash.hashDataForFisherBridge(
                         addressToReceive,
                         address(0),

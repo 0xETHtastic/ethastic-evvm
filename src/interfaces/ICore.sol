@@ -119,6 +119,7 @@ interface ICore {
         uint256 amount,
         uint256 priorityFee,
         address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes memory signature
@@ -160,6 +161,7 @@ interface ICore {
         uint256 amount,
         uint256 priorityFee,
         address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes memory signature
@@ -180,7 +182,7 @@ interface ICore {
     function rejectProposalAdmin() external;
     function rejectUpgrade() external;
     function removeAmountFromUser(address user, address token, uint256 amount) external;
-    function reserveAsyncNonce(uint256 nonce, address serviceAddress) external;
+    function reserveAsyncNonce(uint256 nonce, address senderExecutor) external;
     function revokeAsyncNonce(uint256 nonce) external;
     function setEvvmID(uint256 newEvvmID) external;
     function setPointStaker(address user, bytes1 answer) external;
@@ -188,6 +190,7 @@ interface ICore {
     function setTokenStatusOnDenyList(address token, bool status) external;
     function validateAndConsumeNonce(
         address user,
+        address senderExecutor,
         bytes32 hashPayload,
         address originExecutor,
         uint256 nonce,

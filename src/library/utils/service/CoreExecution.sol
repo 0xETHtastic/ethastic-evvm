@@ -40,6 +40,7 @@ abstract contract CoreExecution {
         address token,
         uint256 amount,
         uint256 priorityFee,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes memory signature
@@ -52,6 +53,7 @@ abstract contract CoreExecution {
             amount,
             priorityFee,
             address(this),
+            originExecutor,
             nonce,
             isAsyncExec,
             signature
@@ -74,6 +76,7 @@ abstract contract CoreExecution {
         address token,
         uint256 amount,
         uint256 priorityFee,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes memory signature
@@ -85,6 +88,7 @@ abstract contract CoreExecution {
             amount,
             priorityFee,
             address(this),
+            originExecutor,
             nonce,
             isAsyncExec,
             signature

@@ -134,19 +134,20 @@ library AdvancedStrings {
 
     /**
      * @notice Builds EIP-191 signature payload for Core.sol validation
-     * @dev Format: "{evvmId},{serviceAddress},{hashPayload},{nonce},{isAsyncExec}"
+     * @dev Format: "{evvmId},{senderExecutor},{hashPayload},{nonce},{isAsyncExec}"
      * @param evvmId Chain-specific EVVM instance identifier
-     * @param serviceAddress Service contract requesting validation
+     * @param senderExecutor Service contract requesting validation
      * @param hashPayload Function-specific parameter hash
+     * @param originExecutor Original executor address
      * @param nonce Sequential or async nonce
      * @param isAsyncExec Nonce type (true=async, false=sync)
      * @return Comma-separated payload string for signature
      */
     function buildSignaturePayload(
         uint256 evvmId,
-        address serviceAddress,
+        address senderExecutor, 
         bytes32 hashPayload,
-        address executor,
+        address originExecutor, 
         uint256 nonce,
         bool isAsyncExec
     ) internal pure returns (string memory) {
@@ -154,11 +155,11 @@ library AdvancedStrings {
             string.concat(
                 uintToString(evvmId),
                 ",",
-                addressToString(serviceAddress),
+                addressToString(senderExecutor),
                 ",",
                 bytes32ToString(hashPayload),
                 ",",
-                addressToString(executor),
+                addressToString(originExecutor),
                 ",",
                 uintToString(nonce),
                 ",",

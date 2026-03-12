@@ -234,53 +234,26 @@ contract Core is Storage {
         uint256 amount,
         uint256 priorityFee,
         address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes calldata signature
     ) external {
-        if (
-            SignatureRecover.recoverSigner(
-                AdvancedStrings.buildSignaturePayload(
-                    evvmMetadata.EvvmID,
-                    address(this),
-                    Hash.hashDataForPay(
-                        to_address,
-                        to_identity,
-                        token,
-                        amount,
-                        priorityFee
-                    ),
-                    senderExecutor,
-                    nonce,
-                    isAsyncExec
-                ),
-                signature
-            ) != from
-        ) revert Error.InvalidSignature();
-
-        if (!_canExecuteUserTransaction(from))
-            revert Error.UserCannotExecuteTransaction();
-
-        if (isAsyncExec) {
-            bytes1 statusNonce = asyncNonceStatus(from, nonce);
-            if (statusNonce == 0x01) revert Error.AsyncNonceAlreadyUsed();
-
-            if (
-                statusNonce == 0x02 &&
-                asyncNonceReservedPointers[from][nonce] != address(this)
-            ) revert Error.AsyncNonceIsReservedByAnotherService();
-
-            asyncNonce[from][nonce] = true;
-        } else {
-            if (nonce != nextSyncNonce[from]) revert Error.SyncNonceMismatch();
-
-            unchecked {
-                ++nextSyncNonce[from];
-            }
-        }
-
-        if ((senderExecutor != address(0)) && (msg.sender != senderExecutor))
-            revert Error.SenderIsNotTheSenderExecutor();
+        validateAndConsumeNonce(
+            from,
+            senderExecutor,
+            Hash.hashDataForPay(
+                to_address,
+                to_identity,
+                token,
+                amount,
+                priorityFee
+            ),
+            originExecutor,
+            nonce,
+            isAsyncExec,
+            signature
+        );
 
         address to = !AdvancedStrings.equal(to_identity, "")
             ? NameService(nameServiceAddress).verifyStrictAndGetOwnerOfIdentity(
@@ -316,60 +289,26 @@ contract Core is Storage {
         for (uint256 iteration = 0; iteration < batchData.length; iteration++) {
             payment = batchData[iteration];
 
-            if (
-                SignatureRecover.recoverSigner(
-                    AdvancedStrings.buildSignaturePayload(
-                        evvmMetadata.EvvmID,
-                        address(this),
-                        Hash.hashDataForPay(
-                            payment.to_address,
-                            payment.to_identity,
-                            payment.token,
-                            payment.amount,
-                            payment.priorityFee
-                        ),
-                        payment.senderExecutor,
-                        payment.nonce,
-                        payment.isAsyncExec
+            try
+                this.validateAndConsumeNonce(
+                    payment.from,
+                    payment.senderExecutor,
+                    Hash.hashDataForPay(
+                        payment.to_address,
+                        payment.to_identity,
+                        payment.token,
+                        payment.amount,
+                        payment.priorityFee
                     ),
+                    payment.originExecutor,
+                    payment.nonce,
+                    payment.isAsyncExec,
                     payment.signature
-                ) !=
-                payment.from ||
-                !_canExecuteUserTransaction(payment.from)
-            ) {
+                )
+            {} catch {
                 results[iteration] = false;
                 continue;
             }
-
-            if (payment.isAsyncExec) {
-                bytes1 statusNonce = asyncNonceStatus(
-                    payment.from,
-                    payment.nonce
-                );
-                if (
-                    statusNonce == 0x01 ||
-                    (statusNonce == 0x02 &&
-                        asyncNonceReservedPointers[payment.from][
-                            payment.nonce
-                        ] !=
-                        address(this))
-                ) {
-                    results[iteration] = false;
-                    continue;
-                }
-
-                asyncNonce[payment.from][payment.nonce] = true;
-            } else {
-                if (payment.nonce != nextSyncNonce[payment.from]) {
-                    results[iteration] = false;
-                    continue;
-                }
-
-                unchecked {
-                    ++nextSyncNonce[payment.from];
-                }
-            }
-
             if (
                 (listStatus.current == 0x01 && !allowList[payment.token]) ||
                 (listStatus.current == 0x02 && denyList[payment.token])
@@ -379,8 +318,6 @@ contract Core is Storage {
             }
 
             if (
-                (payment.senderExecutor != address(0) &&
-                    msg.sender != payment.senderExecutor) ||
                 ((isSenderStaker ? payment.priorityFee : 0) + payment.amount >
                     balances[payment.from][payment.token])
             ) {
@@ -438,53 +375,20 @@ contract Core is Storage {
         uint256 amount,
         uint256 priorityFee,
         address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes calldata signature
     ) external {
-        if (
-            SignatureRecover.recoverSigner(
-                AdvancedStrings.buildSignaturePayload(
-                    evvmMetadata.EvvmID,
-                    address(this),
-                    Hash.hashDataForDispersePay(
-                        toData,
-                        token,
-                        amount,
-                        priorityFee
-                    ),
-                    senderExecutor,
-                    nonce,
-                    isAsyncExec
-                ),
-                signature
-            ) != from
-        ) revert Error.InvalidSignature();
-
-        if (!_canExecuteUserTransaction(from))
-            revert Error.UserCannotExecuteTransaction();
-
-        if (isAsyncExec) {
-            bytes1 statusNonce = asyncNonceStatus(from, nonce);
-            if (statusNonce == 0x01)
-                revert Error.AsyncNonceAlreadyUsed();
-
-            if (
-                statusNonce == 0x02 &&
-                asyncNonceReservedPointers[from][nonce] != address(this)
-            ) revert Error.AsyncNonceIsReservedByAnotherService();
-
-            asyncNonce[from][nonce] = true;
-        } else {
-            if (nonce != nextSyncNonce[from]) revert Error.SyncNonceMismatch();
-
-            unchecked {
-                ++nextSyncNonce[from];
-            }
-        }
-
-        if ((senderExecutor != address(0)) && (msg.sender != senderExecutor))
-            revert Error.SenderIsNotTheSenderExecutor();
+        validateAndConsumeNonce(
+            from,
+            senderExecutor,
+            Hash.hashDataForDispersePay(toData, token, amount, priorityFee),
+            originExecutor,
+            nonce,
+            isAsyncExec,
+            signature
+        );
 
         bool isSenderStaker = isAddressStaker(msg.sender);
 
@@ -545,9 +449,10 @@ contract Core is Storage {
     function caPay(address to, address token, uint256 amount) external {
         address from = msg.sender;
 
-        if (!CAUtils.verifyIfCA(from)) revert Error.NotAnCA();
+        if (!canExecuteUserTransaction(from))
+            revert Error.UserCannotExecuteTransaction();
 
-        _updateBalance(from, to, token, amount);
+        _updateBalance(msg.sender, to, token, amount);
 
         if (isAddressStaker(msg.sender)) _giveReward(msg.sender, 1);
     }
@@ -603,22 +508,27 @@ contract Core is Storage {
      */
     function validateAndConsumeNonce(
         address user,
+        address senderExecutor,
         bytes32 hashPayload,
         address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes calldata signature
-    ) external {
-        address servicePointer = msg.sender;
+    ) public {
+        address senderPointer = msg.sender;
+        address originPointer = tx.origin;
 
-        if (!CAUtils.verifyIfCA(servicePointer))
-            revert Error.MsgSenderIsNotAContract();
+        if (originExecutor != address(0) && originPointer != originExecutor)
+            revert Error.OriginIsNotTheOriginExecutor();
+
+        if (senderExecutor != address(0) && senderPointer != senderExecutor)
+            revert Error.ServiceSenderMismatch();
 
         if (
             SignatureRecover.recoverSigner(
                 AdvancedStrings.buildSignaturePayload(
                     evvmMetadata.EvvmID,
-                    servicePointer,
+                    senderExecutor,
                     hashPayload,
                     originExecutor,
                     nonce,
@@ -628,10 +538,7 @@ contract Core is Storage {
             ) != user
         ) revert Error.InvalidSignature();
 
-        if (originExecutor != address(0) && tx.origin != originExecutor)
-            revert Error.OriginIsNotTheOriginExecutor();
-
-        if (!_canExecuteUserTransaction(user))
+        if (!canExecuteUserTransaction(user))
             revert Error.UserCannotExecuteTransaction();
 
         if (isAsyncExec) {
@@ -641,7 +548,8 @@ contract Core is Storage {
 
             if (
                 statusNonce == 0x02 &&
-                asyncNonceReservedPointers[user][nonce] != servicePointer
+                (asyncNonceReservedPointers[user][nonce] != senderPointer ||
+                    asyncNonceReservedPointers[user][nonce] != originPointer)
             ) revert Error.AsyncNonceIsReservedByAnotherService();
 
             asyncNonce[user][nonce] = true;
@@ -679,17 +587,17 @@ contract Core is Storage {
      * - Cannot reserve already-used nonces
      *
      * @param nonce The async nonce value to reserve
-     * @param serviceAddress Service contract that can use nonce
+     * @param senderExecutor Service contract that can use nonce
      */
-    function reserveAsyncNonce(uint256 nonce, address serviceAddress) external {
-        if (serviceAddress == address(0)) revert Error.InvalidServiceAddress();
+    function reserveAsyncNonce(uint256 nonce, address senderExecutor) external {
+        if (senderExecutor == address(0)) revert Error.InvalidServiceAddress();
 
         if (asyncNonce[msg.sender][nonce]) revert Error.AsyncNonceAlreadyUsed();
 
         if (asyncNonceReservedPointers[msg.sender][nonce] != address(0))
             revert Error.AsyncNonceAlreadyReserved();
 
-        asyncNonceReservedPointers[msg.sender][nonce] = serviceAddress;
+        asyncNonceReservedPointers[msg.sender][nonce] = senderExecutor;
     }
 
     /**
@@ -1459,6 +1367,32 @@ contract Core is Storage {
         return timeToDeleteMaxSupply;
     }
 
+    //██ User Validation █████████████████████████████████████████████
+
+    /**
+     * @notice Validates if user can execute transactions
+     * @dev Checks with UserValidator if configured, allows all if not
+     *
+     * Validation Logic:
+     * - If no validator configured: Returns true (all allowed)
+     * - If validator configured: Delegates to validator.canExecute
+     * - Used by validateAndConsumeNonce before nonce consumption
+     *
+     * Integration:
+     * - Called during every transaction validation
+     * - Allows external filtering of user transactions
+     * - Supports compliance and security requirements
+     *
+     * @param user Address to check execution permission for
+     * @return True if user can execute, false if blocked
+     */
+    function canExecuteUserTransaction(
+        address user
+    ) public view returns (bool) {
+        if (userValidatorAddress.current == address(0)) return true;
+        return UserValidator(userValidatorAddress.current).canExecute(user);
+    }
+
     //░▒▓█ Internal Functions █████████████████████████████████████████████████████▓▒░
 
     /**
@@ -1565,31 +1499,5 @@ contract Core is Storage {
             (listStatus.current == 0x01 && !allowList[token]) ||
             (listStatus.current == 0x02 && denyList[token])
         ) revert Error.TokenIsDeniedForExecution();
-    }
-
-    //██ User Validation █████████████████████████████████████████████
-
-    /**
-     * @notice Validates if user can execute transactions
-     * @dev Checks with UserValidator if configured, allows all if not
-     *
-     * Validation Logic:
-     * - If no validator configured: Returns true (all allowed)
-     * - If validator configured: Delegates to validator.canExecute
-     * - Used by validateAndConsumeNonce before nonce consumption
-     *
-     * Integration:
-     * - Called during every transaction validation
-     * - Allows external filtering of user transactions
-     * - Supports compliance and security requirements
-     *
-     * @param user Address to check execution permission for
-     * @return True if user can execute, false if blocked
-     */
-    function _canExecuteUserTransaction(
-        address user
-    ) internal view returns (bool) {
-        if (userValidatorAddress.current == address(0)) return true;
-        return UserValidator(userValidatorAddress.current).canExecute(user);
     }
 }

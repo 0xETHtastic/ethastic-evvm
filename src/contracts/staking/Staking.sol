@@ -173,6 +173,7 @@ contract Staking {
                 Address: goldenFisher.current,
                 IsAService: false
             }),
+            address(0),
             isStaking,
             amountOfStaking,
             0,
@@ -195,6 +196,7 @@ contract Staking {
     function presaleStaking(
         address user,
         bool isStaking,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -207,6 +209,7 @@ contract Staking {
 
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForPresaleStake(isStaking, 1),
             originExecutor,
             nonce,
@@ -228,6 +231,7 @@ contract Staking {
 
         stakingBaseProcess(
             Structs.AccountMetadata({Address: user, IsAService: false}),
+            originExecutor,
             isStaking,
             1,
             priorityFeePay,
@@ -252,6 +256,7 @@ contract Staking {
         address user,
         bool isStaking,
         uint256 amountOfStaking,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -263,6 +268,7 @@ contract Staking {
 
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForPublicStake(isStaking, amountOfStaking),
             originExecutor,
             nonce,
@@ -272,6 +278,7 @@ contract Staking {
 
         stakingBaseProcess(
             Structs.AccountMetadata({Address: user, IsAService: false}),
+            originExecutor,
             isStaking,
             amountOfStaking,
             priorityFeePay,
@@ -396,6 +403,7 @@ contract Staking {
 
         stakingBaseProcess(
             Structs.AccountMetadata({Address: msg.sender, IsAService: true}),
+            address(0),
             true,
             serviceStakingData.amountOfStaking,
             0,
@@ -417,6 +425,7 @@ contract Staking {
     function serviceUnstaking(uint256 amountOfStaking) external onlyCA {
         stakingBaseProcess(
             Structs.AccountMetadata({Address: msg.sender, IsAService: true}),
+            address(0),
             false,
             amountOfStaking,
             0,
@@ -440,6 +449,7 @@ contract Staking {
      */
     function stakingBaseProcess(
         Structs.AccountMetadata memory account,
+        address originExecutor,
         bool isStaking,
         uint256 amountOfStaking,
         uint256 priorityFeePay,
@@ -456,12 +466,13 @@ contract Staking {
             ) revert Error.AddressMustWaitToStakeAgain();
 
             if (!account.IsAService)
-                makePay(
+                requestPay(
                     account.Address,
                     (PRICE_OF_STAKING * amountOfStaking),
                     priorityFeePay,
-                    isAsyncExecEvvm,
+                    originExecutor,
                     noncePay,
+                    isAsyncExecEvvm,
                     signaturePay
                 );
 
@@ -483,12 +494,13 @@ contract Staking {
             }
 
             if (priorityFeePay != 0 && !account.IsAService)
-                makePay(
+                requestPay(
                     account.Address,
                     0,
                     priorityFeePay,
-                    isAsyncExecEvvm,
+                    originExecutor,
                     noncePay,
+                    isAsyncExecEvvm,
                     signaturePay
                 );
 
@@ -591,12 +603,13 @@ contract Staking {
      * @param nonce Nonce for the EVVM transaction
      * @param signature Signature authorizing the payment
      */
-    function makePay(
+    function requestPay(
         address user,
         uint256 amount,
         uint256 priorityFee,
-        bool isAsyncExec,
+        address originExecutor,
         uint256 nonce,
+        bool isAsyncExec,
         bytes memory signature
     ) internal {
         core.pay(
@@ -607,6 +620,7 @@ contract Staking {
             amount,
             priorityFee,
             address(this),
+            originExecutor,
             nonce,
             isAsyncExec,
             signature

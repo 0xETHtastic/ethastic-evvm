@@ -396,6 +396,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
     ) external onlyFisherExecutor {
         core.validateAndConsumeNonce(
             from,
+            fisherExecutor.current,
             Hash.hashDataForFisherBridge(
                 addressToReceive,
                 tokenAddress,
@@ -485,6 +486,7 @@ contract TreasuryHostChainStation is OApp, OAppOptionsType3, AxelarExecutable {
 
         core.validateAndConsumeNonce(
             from,
+            fisherExecutor.current,
             Hash.hashDataForFisherBridge(
                 addressToReceive,
                 tokenAddress,

@@ -124,6 +124,7 @@ contract NameService {
     function preRegistrationUsername(
         address user,
         bytes32 hashPreRegisteredUsername,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -133,6 +134,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForPreRegistrationUsername(hashPreRegisteredUsername),
             originExecutor,
             nonce,
@@ -141,7 +143,14 @@ contract NameService {
         );
 
         if (priorityFeePay > 0)
-            requestPay(user, 0, priorityFeePay, noncePay, signaturePay);
+            requestPay(
+                user,
+                0,
+                priorityFeePay,
+                originExecutor,
+                noncePay,
+                signaturePay
+            );
 
         identityDetails[
             string.concat(
@@ -177,6 +186,7 @@ contract NameService {
         address user,
         string calldata username,
         uint256 lockNumber,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -186,6 +196,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForRegistrationUsername(username, lockNumber),
             originExecutor,
             nonce,
@@ -205,6 +216,7 @@ contract NameService {
             user,
             getPriceOfRegistration(username),
             priorityFeePay,
+            originExecutor,
             noncePay,
             signaturePay
         );
@@ -258,6 +270,7 @@ contract NameService {
         string calldata username,
         uint256 amount,
         uint256 expirationDate,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -267,6 +280,7 @@ contract NameService {
     ) external returns (uint256 offerID) {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForMakeOffer(username, amount, expirationDate),
             originExecutor,
             nonce,
@@ -284,7 +298,14 @@ contract NameService {
 
         if (amount == 0) revert Error.AmountMustBeGreaterThanZero();
 
-        requestPay(user, amount, priorityFeePay, noncePay, signaturePay);
+        requestPay(
+            user,
+            amount,
+            priorityFeePay,
+            originExecutor,
+            noncePay,
+            signaturePay
+        );
 
         while (usernameOffers[username][offerID].offerer != address(0))
             offerID++;
@@ -299,9 +320,7 @@ contract NameService {
 
         makeCaPay(
             msg.sender,
-            core.getRewardAmount() +
-                ((amount * 125) / 100_000) +
-                priorityFeePay
+            core.getRewardAmount() + ((amount * 125) / 100_000) + priorityFeePay
         );
 
         principalTokenTokenLockedForWithdrawOffers +=
@@ -356,6 +375,7 @@ contract NameService {
         address user,
         string calldata username,
         uint256 offerID,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -365,6 +385,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForWithdrawOffer(username, offerID),
             originExecutor,
             nonce,
@@ -376,7 +397,14 @@ contract NameService {
             revert Error.UserIsNotOwnerOfOffer();
 
         if (priorityFeePay > 0)
-            requestPay(user, 0, priorityFeePay, noncePay, signaturePay);
+            requestPay(
+                user,
+                0,
+                priorityFeePay,
+                originExecutor,
+                noncePay,
+                signaturePay
+            );
 
         makeCaPay(user, usernameOffers[username][offerID].amount);
 
@@ -443,6 +471,7 @@ contract NameService {
         address user,
         string calldata username,
         uint256 offerID,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -452,6 +481,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForAcceptOffer(username, offerID),
             originExecutor,
             nonce,
@@ -468,7 +498,14 @@ contract NameService {
         ) revert Error.OfferInactive();
 
         if (priorityFeePay > 0) {
-            requestPay(user, 0, priorityFeePay, noncePay, signaturePay);
+            requestPay(
+                user,
+                0,
+                priorityFeePay,
+                originExecutor,
+                noncePay,
+                signaturePay
+            );
         }
 
         makeCaPay(user, usernameOffers[username][offerID].amount);
@@ -531,6 +568,7 @@ contract NameService {
     function renewUsername(
         address user,
         string calldata username,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -540,6 +578,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForRenewUsername(username),
             originExecutor,
             nonce,
@@ -564,6 +603,7 @@ contract NameService {
             user,
             priceOfRenew,
             priorityFeePay,
+            originExecutor,
             noncePay,
             signaturePay
         );
@@ -629,6 +669,7 @@ contract NameService {
         address user,
         string calldata identity,
         string calldata value,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -638,6 +679,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForAddCustomMetadata(identity, value),
             originExecutor,
             nonce,
@@ -654,6 +696,7 @@ contract NameService {
             user,
             getPriceToAddCustomMetadata(),
             priorityFeePay,
+            originExecutor,
             noncePay,
             signaturePay
         );
@@ -715,6 +758,7 @@ contract NameService {
         address user,
         string calldata identity,
         uint256 key,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -724,6 +768,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForRemoveCustomMetadata(identity, key),
             originExecutor,
             nonce,
@@ -741,6 +786,7 @@ contract NameService {
             user,
             getPriceToRemoveCustomMetadata(),
             priorityFeePay,
+            originExecutor,
             noncePay,
             signaturePay
         );
@@ -811,6 +857,7 @@ contract NameService {
     function flushCustomMetadata(
         address user,
         string calldata identity,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -820,6 +867,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForFlushCustomMetadata(identity),
             originExecutor,
             nonce,
@@ -837,6 +885,7 @@ contract NameService {
             user,
             getPriceToFlushCustomMetadata(identity),
             priorityFeePay,
+            originExecutor,
             noncePay,
             signaturePay
         );
@@ -908,6 +957,7 @@ contract NameService {
     function flushUsername(
         address user,
         string calldata username,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -917,6 +967,7 @@ contract NameService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForFlushUsername(username),
             originExecutor,
             nonce,
@@ -937,6 +988,7 @@ contract NameService {
             user,
             getPriceToFlushUsername(username),
             priorityFeePay,
+            originExecutor,
             noncePay,
             signaturePay
         );
@@ -1111,6 +1163,7 @@ contract NameService {
         address user,
         uint256 amount,
         uint256 priorityFee,
+        address originExecutor,
         uint256 nonce,
         bytes calldata signature
     ) internal {
@@ -1122,6 +1175,7 @@ contract NameService {
             amount,
             priorityFee,
             address(this),
+            originExecutor,
             nonce,
             true,
             signature

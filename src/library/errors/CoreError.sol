@@ -101,8 +101,8 @@ library CoreError {
     /// @dev Thrown when using async nonce reserved by different service
     error AsyncNonceIsReservedByAnotherService();
 
-    /// @dev Thrown when validateAndConsumeNonce caller is EOA (contracts only)
-    error MsgSenderIsNotAContract();
+    /// @dev Thrown when msg.sender != service address only if diferent to address(0)
+    error ServiceSenderMismatch();
 
     /// @dev Thrown when reserving nonce with service == address(0)
     error InvalidServiceAddress();

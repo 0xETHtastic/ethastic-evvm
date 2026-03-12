@@ -108,6 +108,7 @@ contract P2PSwap is EvvmService {
         address tokenB,
         uint256 amountA,
         uint256 amountB,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -117,6 +118,7 @@ contract P2PSwap is EvvmService {
     ) external returns (uint256 market, uint256 orderId) {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForMakeOrder(tokenA, tokenB, amountA, amountB),
             originExecutor,
             nonce,
@@ -129,6 +131,7 @@ contract P2PSwap is EvvmService {
             tokenA,
             amountA,
             priorityFeePay,
+            originExecutor,
             noncePay,
             true,
             signaturePay
@@ -218,6 +221,7 @@ contract P2PSwap is EvvmService {
         address tokenA,
         address tokenB,
         uint256 orderId,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -227,6 +231,7 @@ contract P2PSwap is EvvmService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForCancelOrder(tokenA, tokenB, orderId),
             originExecutor,
             nonce,
@@ -244,6 +249,7 @@ contract P2PSwap is EvvmService {
                 core.getPrincipalTokenAddress(),
                 0,
                 priorityFeePay,
+                originExecutor,
                 noncePay,
                 true,
                 signaturePay
@@ -319,6 +325,7 @@ contract P2PSwap is EvvmService {
         address tokenB,
         uint256 orderId,
         uint256 amountOfTokenBToFill,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -328,6 +335,7 @@ contract P2PSwap is EvvmService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForDispatchOrder(tokenA, tokenB, orderId),
             originExecutor,
             nonce,
@@ -351,6 +359,7 @@ contract P2PSwap is EvvmService {
             tokenB,
             amountOfTokenBToFill,
             priorityFeePay,
+            originExecutor,
             noncePay,
             true,
             signaturePay
@@ -449,6 +458,7 @@ contract P2PSwap is EvvmService {
         address tokenB,
         uint256 orderId,
         uint256 amountOfTokenBToFill,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bytes calldata signature,
@@ -459,6 +469,7 @@ contract P2PSwap is EvvmService {
     ) external {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             Hash.hashDataForDispatchOrder(tokenA, tokenB, orderId),
             originExecutor,
             nonce,
@@ -487,6 +498,7 @@ contract P2PSwap is EvvmService {
             tokenB,
             amountOfTokenBToFill,
             priorityFeePay,
+            originExecutor,
             noncePay,
             true,
             signaturePay
