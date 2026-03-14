@@ -53,8 +53,6 @@ contract unitTestCorrect_Core_adminFunctions is Test, Constants {
         treasury = new Treasury(address(core));
         core.initializeSystemContracts(address(nameService), address(treasury));
 
-        //
-
         executeBeforeSetUp();
     }
 

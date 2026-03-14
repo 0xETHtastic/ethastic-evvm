@@ -518,11 +518,11 @@ contract Core is Storage {
         address senderPointer = msg.sender;
         address originPointer = tx.origin;
 
-        if (originExecutor != address(0) && originPointer != originExecutor)
-            revert Error.OriginIsNotTheOriginExecutor();
-
         if (senderExecutor != address(0) && senderPointer != senderExecutor)
-            revert Error.ServiceSenderMismatch();
+            revert Error.SenderMismatch();
+
+        if (originExecutor != address(0) && originPointer != originExecutor)
+            revert Error.OriginMismatch();
 
         if (
             SignatureRecover.recoverSigner(

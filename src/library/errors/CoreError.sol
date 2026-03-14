@@ -47,7 +47,7 @@ library CoreError {
     /// @dev Thrown when non-proposed admin attempts acceptAdmin before timelock
     error SenderIsNotTheProposedAdmin();
 
-    error OriginIsNotTheOriginExecutor();
+    error OriginMismatch();
 
     /// @dev Thrown when EOA calls caPay/disperseCaPay (contract-only functions)
     error NotAnCA();
@@ -102,7 +102,7 @@ library CoreError {
     error AsyncNonceIsReservedByAnotherService();
 
     /// @dev Thrown when msg.sender != service address only if diferent to address(0)
-    error ServiceSenderMismatch();
+    error SenderMismatch();
 
     /// @dev Thrown when reserving nonce with service == address(0)
     error InvalidServiceAddress();

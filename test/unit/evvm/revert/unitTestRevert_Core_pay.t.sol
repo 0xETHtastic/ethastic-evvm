@@ -53,12 +53,12 @@ contract unitTestRevert_Core_pay is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForPay(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 67,
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -80,6 +80,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -114,12 +115,12 @@ contract unitTestRevert_Core_pay is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForPay(
                 /* 🢃 different signer 🢃 */
                 COMMON_USER_NO_STAKER_3.PrivateKey,
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -141,6 +142,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -176,13 +178,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 /* 🢃 different receiver address 🢃 */
                 COMMON_USER_NO_STAKER_3.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -204,6 +206,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -239,13 +242,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(0),
                 /* 🢃 different receiver identity 🢃 */
                 "tofailure",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -267,6 +270,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -300,13 +304,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 /* 🢃 different token address 🢃 */
                 PRINCIPAL_TOKEN_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -328,6 +332,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -361,13 +366,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 /* 🢃 different amount 🢃 */
                 0.67 ether,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -389,6 +394,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -422,13 +428,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 /* 🢃 different priorityFee 🢃 */
                 0.420 ether,
+                address(0),
                 address(0),
                 0,
                 false
@@ -450,6 +456,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -483,12 +490,12 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 /* 🢃 different nonce 🢃 */
                 67,
@@ -511,6 +518,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -544,12 +552,12 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 /* 🢃 different isAsyncExec 🢃 */
@@ -572,6 +580,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -605,7 +614,6 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
@@ -613,6 +621,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
                 priorityFee,
                 /* 🢃 different executor 🢃 */
                 COMMON_USER_NO_STAKER_3.Address,
+                address(0),
                 0,
                 false
             )
@@ -634,6 +643,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             0,
             false,
             signaturePay
@@ -651,76 +661,6 @@ contract unitTestRevert_Core_pay is Test, Constants {
             core.getBalance(COMMON_USER_NO_STAKER_2.Address, ETHER_ADDRESS),
             0,
             "Receiver balance must be 0 because pay reverted"
-        );
-    }
-
-    function test__unit_revert__pay__SenderIsNotTheExecutor() external {
-        (uint256 amount, uint256 priorityFee) = _addBalance(
-            COMMON_USER_NO_STAKER_1,
-            ETHER_ADDRESS,
-            0.10 ether,
-            0.01 ether
-        );
-
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(
-            COMMON_USER_NO_STAKER_1.PrivateKey,
-            Erc191TestBuilder.buildMessageSignedForPay(
-                core.getEvvmID(),
-                address(core),
-                COMMON_USER_NO_STAKER_2.Address,
-                "",
-                ETHER_ADDRESS,
-                amount,
-                priorityFee,
-                COMMON_USER_NO_STAKER_3.Address,
-                0,
-                false
-            )
-        );
-        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(
-            v,
-            r,
-            s
-        );
-
-        /* 🢃 different executor 🢃 */
-        vm.startPrank(COMMON_USER_STAKER.Address);
-
-        vm.expectRevert(CoreError.SenderIsNotTheSenderExecutor.selector);
-        core.pay(
-            COMMON_USER_NO_STAKER_1.Address,
-            COMMON_USER_NO_STAKER_2.Address,
-            "",
-            ETHER_ADDRESS,
-            amount,
-            priorityFee,
-            COMMON_USER_NO_STAKER_3.Address,
-            0,
-            false,
-            signaturePay
-        );
-
-        vm.stopPrank();
-
-        assertEq(
-            core.getBalance(COMMON_USER_NO_STAKER_1.Address, ETHER_ADDRESS),
-            amount + priorityFee,
-            "Sender balance must be the same because pay reverted"
-        );
-
-        assertEq(
-            core.getBalance(COMMON_USER_NO_STAKER_2.Address, ETHER_ADDRESS),
-            0,
-            "Receiver balance must be 0 because pay reverted"
-        );
-
-        assertEq(
-            core.getBalance(
-                COMMON_USER_NO_STAKER_2.Address,
-                PRINCIPAL_TOKEN_ADDRESS
-            ),
-            0,
-            "Fisher balance must be 0 because pay reverted"
         );
     }
 
@@ -740,6 +680,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             amountBefore,
             priorityFeeBefore,
             address(0),
+            address(0),
             67,
             true,
             COMMON_USER_NO_STAKER_3.Address
@@ -756,12 +697,12 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 /* 🢃 async nonce already used 🢃 */
                 67,
@@ -784,6 +725,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             /* 🢃 async nonce already used 🢃 */
             67,
@@ -822,6 +764,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             amountBefore,
             priorityFeeBefore,
             address(0),
+            address(0),
             core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
             false,
             COMMON_USER_NO_STAKER_3.Address
@@ -838,13 +781,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
                 /* 🢃 sync nonce currently on 1 🢃 */
+                address(0),
                 address(0),
                 0,
                 false
@@ -867,6 +810,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             amount,
             priorityFee,
             /* 🢃 sync nonce currently on 1 🢃 */
+            address(0),
             address(0),
             0,
             false,
@@ -900,13 +844,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 /* 🢃 amount more than current balance 🢃 */
                 (amount + priorityFee) * 10,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -929,6 +873,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             /* 🢃 amount more than current balance 🢃 */
             (amount + priorityFee) * 10,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -964,13 +909,13 @@ contract unitTestRevert_Core_pay is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 COMMON_USER_NO_STAKER_2.Address,
                 "",
                 ETHER_ADDRESS,
                 amount,
                 /* 🢃 priorityFee more than current balance 🢃 */
                 (amount + priorityFee) * 10,
+                address(0),
                 address(0),
                 0,
                 false
@@ -993,6 +938,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             amount,
             /* 🢃 priorityFee more than current balance 🢃 */
             (amount + priorityFee) * 10,
+            address(0),
             address(0),
             0,
             false,
@@ -1029,7 +975,6 @@ contract unitTestRevert_Core_pay is Test, Constants {
         );
     }
 
-
     function test__unit_revert__pay__TokenIsDeniedForExecution_denyList()
         external
     {
@@ -1050,6 +995,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             100,
             0,
             address(0),
+            address(0),
             777,
             true
         );
@@ -1063,12 +1009,12 @@ contract unitTestRevert_Core_pay is Test, Constants {
             100,
             0,
             address(0),
+            address(0),
             777,
             true,
             signaturePay
         );
     }
-
 
     function test__unit_revert__pay__TokenIsDeniedForExecution_allowList()
         external
@@ -1089,6 +1035,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             100,
             0,
             address(0),
+            address(0),
             777,
             true
         );
@@ -1101,6 +1048,7 @@ contract unitTestRevert_Core_pay is Test, Constants {
             address(67),
             100,
             0,
+            address(0),
             address(0),
             777,
             true,
