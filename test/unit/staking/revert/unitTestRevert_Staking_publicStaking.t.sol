@@ -86,11 +86,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -99,6 +95,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -113,6 +110,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -137,20 +135,16 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             params.user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPublicStaking(
                 /* 🢃 Diferent evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(staking),
                 params.isStaking,
                 params.amountOfStaking,
+                address(0),
                 address(0),
                 params.nonce
             )
@@ -169,6 +163,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             staking.priceOfStaking() * params.amountOfStaking,
             params.priorityFeePay,
             address(staking),
+            address(0),
             params.noncePay,
             true
         );
@@ -179,6 +174,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -203,11 +199,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -217,6 +209,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             COMMON_USER_NO_STAKER_2,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -229,6 +222,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -253,11 +247,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -267,6 +257,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             /* 🢃 Different isStaking 🢃 */
             !params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -279,6 +270,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -303,11 +295,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -317,6 +305,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.isStaking,
             /* 🢃 Different amountOfStaking 🢃 */
             params.amountOfStaking + 1,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -329,6 +318,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -353,11 +343,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -366,6 +352,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             /* 🢃 Different nonce 🢃 */
             params.nonce + 1,
@@ -379,6 +366,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -398,6 +386,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             100001,
             0,
             111,
@@ -415,11 +404,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -428,6 +413,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -440,6 +426,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -459,6 +446,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             111,
             0,
             1111,
@@ -476,11 +464,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -489,6 +473,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -501,6 +486,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -520,6 +506,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             111,
             0,
             1111,
@@ -532,6 +519,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             USER,
             false,
             10,
+            address(0),
             address(0),
             112,
             0,
@@ -550,11 +538,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (
             params.signatureStaking,
@@ -563,6 +547,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.priorityFeePay,
@@ -575,6 +560,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -599,19 +585,15 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             signaturePay: ""
         });
 
-        _addBalance(
-            params.user,
-            params.amountOfStaking,
-            params.priorityFeePay
-        );
+        _addBalance(params.user, params.amountOfStaking, params.priorityFeePay);
 
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(
             params.user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPublicStaking(
                 core.getEvvmID(),
-                address(staking),
                 params.isStaking,
                 params.amountOfStaking,
+                address(0),
                 address(0),
                 params.nonce
             )
@@ -632,6 +614,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             /* 🢃 Different priorityFee 🢃 */
             params.priorityFeePay + 1,
             address(staking),
+            address(0),
             /* 🢃 Different noncePay 🢃 */
             params.noncePay + 1,
             /* 🢃 Diferent isAsyncExec 🢃 */
@@ -644,6 +627,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -676,6 +660,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -687,6 +672,7 @@ contract unitTestRevert_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,

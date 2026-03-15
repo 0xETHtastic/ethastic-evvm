@@ -77,7 +77,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForMakeOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -86,25 +86,33 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
                 amountB
             )
         );
-        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // payment signature to lock amountA
         (v, r, s) = vm.sign(
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
         );
-        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         vm.startPrank(executor.Address);
         (market, orderId) = p2pSwap.makeOrder(
@@ -113,6 +121,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             tokenB,
             amountA,
             amountB,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -136,7 +145,6 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
         uint256 amountB = 0.01 ether;
         uint256 priorityFee = 0;
         uint256 noncePay = 0;
-        
 
         uint256 fee = (amountB * 500) / 10_000;
 
@@ -169,7 +177,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -178,7 +186,11 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             )
         );
 
-        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // compute amount to fill
         uint256 amountToFill = amountB + fee;
@@ -187,19 +199,23 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountToFill,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
         );
 
-        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // make sure the order is there
         P2PSwapStructs.Order memory order = p2pSwap.getOrder(market, orderId);
@@ -214,6 +230,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             tokenB,
             orderId,
             amountToFill,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -294,7 +311,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -303,7 +320,11 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             )
         );
 
-        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // compute amount to fill
         uint256 amountToFill = amountB + fee;
@@ -312,19 +333,23 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountToFill,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
         );
 
-        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // make sure the order is there
         P2PSwapStructs.Order memory order = p2pSwap.getOrder(market, orderId);
@@ -339,6 +364,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             tokenB,
             orderId,
             amountToFill,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -383,7 +409,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -392,7 +418,11 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             )
         );
 
-        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // compute amount to fill
         uint256 amountToFill = amountB + fee;
@@ -401,19 +431,23 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountToFill,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
         );
 
-        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         vm.startPrank(COMMON_USER_STAKER.Address);
         vm.expectRevert();
@@ -423,6 +457,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             tokenB,
             1,
             amountToFill,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -455,7 +490,6 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
         uint256 amountB = 0.01 ether;
         uint256 priorityFee = 0;
         uint256 noncePay = 0;
-        
 
         uint256 fee = (amountB * 500) / 10_000;
 
@@ -490,7 +524,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -499,7 +533,11 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             )
         );
 
-        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // compute full amount expected (including fee)
         uint256 amountToFill = amountB + fee;
@@ -509,13 +547,13 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountB,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -540,6 +578,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             tokenB,
             orderId,
             amountToFill,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -572,7 +611,6 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
         uint256 amountB = 0.01 ether;
         uint256 priorityFee = 0;
         uint256 noncePay = 0;
-        
 
         uint256 fee = (amountB * 500) / 10_000;
 
@@ -605,7 +643,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -614,7 +652,11 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             )
         );
 
-        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signatureP2P = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // compute amount to fill
         uint256 amountToFill = amountB + fee;
@@ -624,18 +666,22 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountB,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
         );
-        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(v, r, s);
+        bytes memory signaturePay = Erc191TestBuilder.buildERC191Signature(
+            v,
+            r,
+            s
+        );
 
         // make sure the order is there
         P2PSwapStructs.Order memory order = p2pSwap.getOrder(market, orderId);
@@ -650,6 +696,7 @@ contract unitTestRevert_P2PSwap_dispatchOrder_fillPropotionalFee is
             tokenB,
             orderId,
             amountToFill,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,

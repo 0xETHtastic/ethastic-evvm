@@ -47,6 +47,7 @@ contract unitTestCorrect_Staking_goldenStaking is Test, Constants {
             totalOfMate,
             0,
             address(staking),
+            address(0),
             core.getNextCurrentSyncNonce(GOLDEN_STAKER.Address),
             false
         );

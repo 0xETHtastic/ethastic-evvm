@@ -93,6 +93,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
             address(0),
+            address(0),
             paramsNpf.nonce,
             paramsNpf.priorityFeePay,
             paramsNpf.noncePay
@@ -103,6 +104,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.user.Address,
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
+            address(0),
             address(0),
             paramsNpf.nonce,
             paramsNpf.signatureStaking,
@@ -172,6 +174,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
             address(0),
+            address(0),
             paramsPf.nonce,
             paramsPf.priorityFeePay,
             paramsPf.noncePay
@@ -182,6 +185,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.user.Address,
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
+            address(0),
             address(0),
             paramsPf.nonce,
             paramsPf.signatureStaking,
@@ -277,6 +281,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
             address(0),
+            address(0),
             paramsNpf.nonce,
             paramsNpf.priorityFeePay,
             paramsNpf.noncePay
@@ -287,6 +292,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.user.Address,
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
+            address(0),
             address(0),
             paramsNpf.nonce,
             paramsNpf.signatureStaking,
@@ -356,6 +362,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
             address(0),
+            address(0),
             paramsPf.nonce,
             paramsPf.priorityFeePay,
             paramsPf.noncePay
@@ -366,6 +373,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.user.Address,
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
+            address(0),
             address(0),
             paramsPf.nonce,
             paramsPf.signatureStaking,
@@ -431,6 +439,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             30,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -475,6 +484,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
             address(0),
+            address(0),
             paramsNpf.nonce,
             paramsNpf.priorityFeePay,
             paramsNpf.noncePay
@@ -485,6 +495,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.user.Address,
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
+            address(0),
             address(0),
             paramsNpf.nonce,
             paramsNpf.signatureStaking,
@@ -550,6 +561,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
             address(0),
+            address(0),
             paramsPf.nonce,
             paramsPf.priorityFeePay,
             paramsPf.noncePay
@@ -560,6 +572,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.user.Address,
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
+            address(0),
             address(0),
             paramsPf.nonce,
             paramsPf.signatureStaking,
@@ -623,6 +636,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             30,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -667,6 +681,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
             address(0),
+            address(0),
             paramsNpf.nonce,
             paramsNpf.priorityFeePay,
             paramsNpf.noncePay
@@ -677,6 +692,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsNpf.user.Address,
             paramsNpf.isStaking,
             paramsNpf.amountOfStaking,
+            address(0),
             address(0),
             paramsNpf.nonce,
             paramsNpf.signatureStaking,
@@ -742,6 +758,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
             address(0),
+            address(0),
             paramsPf.nonce,
             paramsPf.priorityFeePay,
             paramsPf.noncePay
@@ -752,6 +769,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             paramsPf.user.Address,
             paramsPf.isStaking,
             paramsPf.amountOfStaking,
+            address(0),
             address(0),
             paramsPf.nonce,
             paramsPf.signatureStaking,
@@ -817,6 +835,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -849,6 +868,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -859,6 +879,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -922,6 +943,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -954,6 +976,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -964,6 +987,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -1027,6 +1051,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1059,6 +1084,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -1069,6 +1095,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -1132,6 +1159,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1164,6 +1192,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -1174,6 +1203,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -1237,6 +1267,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1253,6 +1284,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             USER,
             false,
             10,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -1287,6 +1319,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -1297,6 +1330,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -1360,6 +1394,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1376,6 +1411,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             USER,
             false,
             10,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -1410,6 +1446,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -1420,6 +1457,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -1483,6 +1521,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1499,6 +1538,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             USER,
             false,
             10,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -1533,6 +1573,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -1543,6 +1584,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,
@@ -1606,6 +1648,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1622,6 +1665,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             USER,
             false,
             10,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -1656,6 +1700,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.isStaking,
             params.amountOfStaking,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFeePay,
             params.noncePay
@@ -1666,6 +1711,7 @@ contract unitTestCorrect_Staking_publicStaking is Test, Constants {
             params.user.Address,
             params.isStaking,
             params.amountOfStaking,
+            address(0),
             address(0),
             params.nonce,
             params.signatureStaking,

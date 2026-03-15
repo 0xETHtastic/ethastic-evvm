@@ -149,6 +149,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
             params.user,
             params.username,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -163,6 +164,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
         nameService.flushUsername(
             params.user.Address,
             params.username,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -214,6 +216,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
             params.user,
             params.username,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -228,6 +231,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
         nameService.flushUsername(
             params.user.Address,
             params.username,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -279,6 +283,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
             params.user,
             params.username,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -293,6 +298,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
         nameService.flushUsername(
             params.user.Address,
             params.username,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -342,6 +348,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
             params.user,
             params.username,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -356,6 +363,7 @@ contract unitTestCorrect_NameService_flushUsername is Test, Constants {
         nameService.flushUsername(
             params.user.Address,
             params.username,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,

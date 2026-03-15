@@ -128,13 +128,13 @@ contract fuzzTest_P2PSwap_makeOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 input.amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
