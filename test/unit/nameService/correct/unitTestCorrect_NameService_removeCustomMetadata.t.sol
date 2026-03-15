@@ -52,9 +52,11 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -69,6 +71,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             USERNAME,
             CUSTOM_METADATA_VALUE_1,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3
             ),
@@ -81,6 +84,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             USERNAME,
             CUSTOM_METADATA_VALUE_2,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5
             ),
@@ -92,6 +96,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             USER_USERNAME_OWNER,
             USERNAME,
             CUSTOM_METADATA_VALUE_3,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7
@@ -141,6 +146,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.identity,
             params1.key,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -152,6 +158,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.user.Address,
             params1.identity,
             params1.key,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -221,6 +228,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.identity,
             params1.key,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -232,6 +240,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.user.Address,
             params1.identity,
             params1.key,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -301,6 +310,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.identity,
             params1.key,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -312,6 +322,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.user.Address,
             params1.identity,
             params1.key,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -383,6 +394,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.identity,
             params1.key,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -394,6 +406,7 @@ contract unitTestCorrect_NameService_removeCustomMetadata is Test, Constants {
             params1.user.Address,
             params1.identity,
             params1.key,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,

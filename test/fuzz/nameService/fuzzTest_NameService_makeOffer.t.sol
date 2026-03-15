@@ -64,9 +64,11 @@ contract fuzzTest_NameService_makeOffer is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1

@@ -79,6 +79,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
                 params1.username,
                 params1.lockNumber,
                 address(0),
+                address(0),
                 params1.nonce,
                 params1.priorityFee,
                 params1.noncePay
@@ -91,6 +92,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
             keccak256(
                 abi.encodePacked(params1.username, uint256(params1.lockNumber))
             ),
+            address(0),
             address(0),
             params1.nonce,
             signatureNameServiceOne,
@@ -145,6 +147,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
                 params2.username,
                 params2.lockNumber,
                 address(0),
+                address(0),
                 params2.nonce,
                 params2.priorityFee,
                 params2.noncePay
@@ -156,6 +159,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
             keccak256(
                 abi.encodePacked(params2.username, uint256(params2.lockNumber))
             ),
+            address(0),
             address(0),
             params2.nonce,
             signatureNameServiceTwo,
@@ -232,6 +236,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
                 params1.username,
                 params1.lockNumber,
                 address(0),
+                address(0),
                 params1.nonce,
                 params1.priorityFee,
                 params1.noncePay
@@ -244,6 +249,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
             keccak256(
                 abi.encodePacked(params1.username, uint256(params1.lockNumber))
             ),
+            address(0),
             address(0),
             params1.nonce,
             signatureNameServiceOne,
@@ -298,6 +304,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
                 params2.username,
                 params2.lockNumber,
                 address(0),
+                address(0),
                 params2.nonce,
                 params2.priorityFee,
                 params2.noncePay
@@ -309,6 +316,7 @@ contract unitTestCorrect_NameService_preRegistrationUsername is
             keccak256(
                 abi.encodePacked(params2.username, uint256(params2.lockNumber))
             ),
+            address(0),
             address(0),
             params2.nonce,
             signatureNameServiceTwo,

@@ -75,12 +75,14 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             USERNAME_ONE,
             REGISTRATION_LOCK_NUMBER_ONE,
             address(0),
+            address(0),
             0
         );
         _executeFn_nameService_preRegistrationUsername(
             USER_TWO,
             USERNAME_TWO,
             REGISTRATION_LOCK_NUMBER_TWO,
+            address(0),
             address(0),
             0
         );
@@ -124,6 +126,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params1.username,
             params1.lockNumber,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -134,6 +137,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params1.user.Address,
             params1.username,
             params1.lockNumber,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -174,6 +178,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params2.username,
             params2.lockNumber,
             address(0),
+            address(0),
             params2.nonce,
             params2.priorityFee,
             params2.noncePay
@@ -184,6 +189,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params2.user.Address,
             params2.username,
             params2.lockNumber,
+            address(0),
             address(0),
             params2.nonce,
             params2.signatureNameService,
@@ -251,6 +257,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params1.username,
             params1.lockNumber,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -261,6 +268,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params1.user.Address,
             params1.username,
             params1.lockNumber,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -301,6 +309,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params2.username,
             params2.lockNumber,
             address(0),
+            address(0),
             params2.nonce,
             params2.priorityFee,
             params2.noncePay
@@ -311,6 +320,7 @@ contract unitTestCorrect_NameService_registrationUsername is Test, Constants {
             params2.user.Address,
             params2.username,
             params2.lockNumber,
+            address(0),
             address(0),
             params2.nonce,
             params2.signatureNameService,

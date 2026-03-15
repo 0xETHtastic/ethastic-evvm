@@ -48,9 +48,11 @@ contract fuzzTest_NameService_renewUsername is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -67,6 +69,7 @@ contract fuzzTest_NameService_renewUsername is Test, Constants {
             USERNAME,
             amount,
             EXPIRATION_DATE,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe

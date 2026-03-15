@@ -67,9 +67,11 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -106,6 +108,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.amount,
             params.expiratonDate,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -117,6 +120,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.username,
             params.amount,
             params.expiratonDate,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -181,6 +185,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.amount,
             params.expiratonDate,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -192,6 +197,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.username,
             params.amount,
             params.expiratonDate,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -256,6 +262,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.amount,
             params.expiratonDate,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -267,6 +274,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.username,
             params.amount,
             params.expiratonDate,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -331,6 +339,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.amount,
             params.expiratonDate,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -342,6 +351,7 @@ contract unitTestCorrect_NameService_makeOffer is Test, Constants {
             params.username,
             params.amount,
             params.expiratonDate,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
