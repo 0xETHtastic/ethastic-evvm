@@ -48,9 +48,11 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             "test",
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -65,6 +67,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             "test",
             0.001 ether,
             block.timestamp + 30 days,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3
@@ -103,9 +106,9 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForWithdrawOffer(
                 // 🢃 different evvmID 🢃
                 core.getEvvmID() + 1,
-                address(nameService),
                 "test",
                 offerID,
+                address(0),
                 address(0),
                 1001
             )
@@ -121,6 +124,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             0,
             totalPriorityFee,
             address(nameService),
+            address(0),
             2002,
             true
         );
@@ -132,6 +136,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             1001,
             signatureNameService,
@@ -175,6 +180,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "test",
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFee,
                 noncePay
@@ -187,6 +193,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -230,6 +237,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "differentTest",
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFee,
                 noncePay
@@ -242,6 +250,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -285,6 +294,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 // 🢃 different offerId 🢃
                 offerID + 1,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFee,
                 noncePay
@@ -297,6 +307,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -339,6 +350,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "test",
                 offerID,
                 address(0),
+                address(0),
                 // 🢃 different nameServiceNonce 🢃
                 nonce + 1,
                 totalPriorityFee,
@@ -352,6 +364,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -395,6 +408,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "test",
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFee,
                 noncePay
@@ -408,6 +422,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_3.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -451,6 +466,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "test",
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFee,
                 noncePay
@@ -463,6 +479,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -505,6 +522,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "test",
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 // 🢃 different totalPriorityFee 🢃
                 totalPriorityFee + 50,
@@ -519,6 +537,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -563,6 +582,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
                 "test",
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFee,
                 noncePay
@@ -575,6 +595,7 @@ contract unitTestRevert_NameService_withdrawOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             "test",
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,

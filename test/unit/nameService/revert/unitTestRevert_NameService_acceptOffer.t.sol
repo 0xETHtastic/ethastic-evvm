@@ -49,9 +49,11 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -66,6 +68,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             USERNAME,
             0.001 ether,
             block.timestamp + EXPIRATION_DATE_OF_OFFER,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3
@@ -104,9 +107,9 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForAcceptOffer(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(nameService),
                 USERNAME,
                 offerID,
+                address(0),
                 address(0),
                 10000000001
             )
@@ -122,6 +125,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             0,
             amountPriorityFee,
             address(nameService),
+            address(0),
             1001,
             true
         );
@@ -134,6 +138,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             0,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -187,6 +192,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -200,6 +206,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -253,6 +260,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 "diferent",
                 offerID,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -266,6 +274,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -319,6 +328,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 /* 🢃 different offerId 🢃 */
                 offerID + 1,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -332,6 +342,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -384,6 +395,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 /* 🢃 different nameServiceNonce 🢃 */
                 67,
                 amountPriorityFee,
@@ -398,6 +410,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -450,6 +463,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 diferentOfferID,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -463,6 +477,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             diferentOfferID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -518,6 +533,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -531,6 +547,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -586,6 +603,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 nonce,
                 amountPriorityFee,
                 1001
@@ -599,6 +617,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -652,6 +671,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -666,6 +686,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -710,6 +731,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 10000000001,
                 /* 🢃 different totalPriorityFee 🢃 */
                 10 ether,
@@ -725,6 +747,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,
@@ -780,6 +803,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
                 USERNAME,
                 offerID,
                 address(0),
+                address(0),
                 10000000001,
                 amountPriorityFee,
                 1001
@@ -793,6 +817,7 @@ contract unitTestRevert_NameService_acceptOffer is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             offerID,
+            address(0),
             address(0),
             10000000001,
             signatureNameService,

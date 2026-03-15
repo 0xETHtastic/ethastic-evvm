@@ -48,9 +48,11 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -95,8 +97,8 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForRenewUsername(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(nameService),
                 USERNAME,
+                address(0),
                 address(0),
                 nonce
             )
@@ -112,6 +114,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
             nameService.seePriceToRenew(USERNAME),
             totalPriorityFeeAmount,
             address(nameService),
+            address(0),
             noncePay,
             true
         );
@@ -125,6 +128,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -173,6 +177,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_2,
                 USERNAME,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -187,6 +192,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -235,6 +241,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 /* 🢃 different username 🢃 */
                 "differentUsername",
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -249,6 +256,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -296,6 +304,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 USERNAME,
                 address(0),
+                address(0),
                 /* 🢃 different nonce 🢃 */
                 nonce + 67,
                 totalPriorityFeeAmount,
@@ -311,6 +320,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -348,6 +358,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
             "testrevert",
             67,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffA
             )
@@ -376,6 +387,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 invalidUsername,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -387,6 +399,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             invalidUsername,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -426,6 +439,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_2,
                 USERNAME,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -441,6 +455,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
             /* 🢃 different user 🢃 */
             COMMON_USER_NO_STAKER_2.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -490,6 +505,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 USERNAME,
                 address(0),
+                address(0),
                 nonceLoopA + i,
                 0,
                 nonceLoopB + i,
@@ -512,6 +528,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 USERNAME,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -526,6 +543,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -574,6 +592,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 USERNAME,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -588,6 +607,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -635,6 +655,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 USERNAME,
                 address(0),
+                address(0),
                 nonce,
                 /* 🢃 different totalPriorityFee 🢃 */
                 totalPriorityFeeAmount + 50,
@@ -651,6 +672,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -693,6 +715,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 USERNAME,
                 address(0),
+                address(0),
                 nonce,
                 0,
                 noncePay
@@ -707,6 +730,7 @@ contract unitTestRevert_NameService_renewUsername is Test, Constants {
         nameService.renewUsername(
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
+            address(0),
             address(0),
             nonce,
             signatureNameService,

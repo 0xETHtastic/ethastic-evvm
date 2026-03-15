@@ -47,9 +47,11 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -104,9 +106,9 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForAddCustomMetadata(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(nameService),
                 USERNAME,
                 customMetadata,
+                address(0),
                 address(0),
                 nonce
             )
@@ -121,6 +123,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             nameService.getPriceToAddCustomMetadata(),
             totalPriorityFeeAmount,
             address(nameService),
+            address(0),
             noncePay,
             true
         );
@@ -132,6 +135,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -182,6 +186,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -194,6 +199,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -244,6 +250,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 "differentIdentity",
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -256,6 +263,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -306,6 +314,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 /* 🢃 different value 🢃 */
                 string.concat(USERNAME, ">2"),
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -318,6 +327,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -367,6 +377,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 /* 🢃 different nonce 🢃 */
                 nonce + 1,
                 totalPriorityFeeAmount,
@@ -380,6 +391,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -433,6 +445,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -446,6 +459,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -496,6 +510,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -508,6 +523,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -558,6 +574,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -570,6 +587,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -619,6 +637,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 /* 🢃 different totalPriorityFee 🢃 */
                 totalPriorityFeeAmount + 50,
@@ -633,6 +652,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -677,6 +697,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
                 USERNAME,
                 customMetadata,
                 address(0),
+                address(0),
                 nonce,
                 0,
                 noncePay
@@ -689,6 +710,7 @@ contract unitTestRevert_NameService_addCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             customMetadata,
+            address(0),
             address(0),
             nonce,
             signatureNameService,

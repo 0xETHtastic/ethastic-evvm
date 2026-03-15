@@ -36,9 +36,7 @@ import {CoreError} from "@evvm/testnet-contracts/library/errors/CoreError.sol";
 import {CoreError} from "@evvm/testnet-contracts/library/errors/CoreError.sol";
 
 contract unitTestRevert_NameService_registrationUsername is Test, Constants {
-    function executeBeforeSetUp() internal override {
-        
-    }
+    function executeBeforeSetUp() internal override {}
 
     function _addBalance(
         address user,
@@ -66,6 +64,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -84,9 +83,9 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForRegistrationUsername(
                 core.getEvvmID(),
-                address(core),
                 "test",
                 777,
+                address(0),
                 address(0),
                 222
             )
@@ -99,13 +98,13 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForPay(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(core),
                 address(nameService),
                 "",
                 PRINCIPAL_TOKEN_ADDRESS,
                 nameService.getPriceOfRegistration("test"),
                 totalPriorityFeeAmount,
                 address(nameService),
+                address(0),
                 222,
                 true
             )
@@ -122,6 +121,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             222,
             signatureNameService,
@@ -156,6 +156,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -175,6 +176,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "test",
                 777,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 10001
@@ -186,6 +188,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -220,6 +223,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -239,6 +243,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "invalid",
                 777,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 10001
@@ -250,6 +255,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -284,6 +290,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -303,6 +310,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 /* 🢃 different lockNumber 🢃 */
                 888,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 10001
@@ -314,6 +322,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -348,6 +357,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -366,6 +376,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "test",
                 777,
                 address(0),
+                address(0),
                 /* 🢃 different nameServiceNonce 🢃 */
                 67,
                 totalPriorityFeeAmount,
@@ -378,6 +389,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -413,6 +425,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "@test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -431,6 +444,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "@test",
                 777,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 10001
@@ -442,6 +456,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "@test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -476,9 +491,11 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -492,6 +509,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1,
             "test",
             777,
+            address(0),
             address(0),
             111
         );
@@ -511,6 +529,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "test",
                 777,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 10001
@@ -522,6 +541,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -557,6 +577,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -575,6 +596,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "test",
                 777,
                 address(0),
+                address(0),
                 /* 🢃 reuse nonce 111 🢃 */
                 111,
                 totalPriorityFeeAmount,
@@ -587,6 +609,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             /* 🢃 reuse nonce 111 🢃 */
             111,
@@ -622,6 +645,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -640,6 +664,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "test",
                 777,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 /* 🢃 different evvm nonce 🢃 */
@@ -652,6 +677,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,
@@ -686,6 +712,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             "test",
             777,
             address(0),
+            address(0),
             111
         );
 
@@ -708,6 +735,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
                 "test",
                 777,
                 address(0),
+                address(0),
                 10101,
                 totalPriorityFeeAmount,
                 10001
@@ -719,6 +747,7 @@ contract unitTestRevert_NameService_registrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             "test",
             777,
+            address(0),
             address(0),
             10101,
             signatureNameService,

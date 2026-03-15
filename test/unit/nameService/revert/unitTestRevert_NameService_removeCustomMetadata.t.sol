@@ -50,9 +50,11 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             USERNAME,
             1,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -66,6 +68,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1,
             USERNAME,
             CUSTOM_METADATA_VALUE_0,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4
@@ -116,9 +119,9 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForRemoveCustomMetadata(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(nameService),
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
+                address(0),
                 address(0),
                 nonce
             )
@@ -134,6 +137,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             nameService.getPriceToRemoveCustomMetadata(),
             totalPriorityFeeAmount,
             address(nameService),
+            address(0),
             noncePay,
             true
         );
@@ -145,6 +149,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -200,6 +205,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -212,6 +218,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -267,6 +274,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 "differentUsername",
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -279,6 +287,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -334,6 +343,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 /* 🢃 different key 🢃 */
                 INDEX_CUSTOM_METADATA + 1,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -346,6 +356,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -400,6 +411,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 /* 🢃 different nonce 🢃 */
                 nonce + 1,
                 totalPriorityFeeAmount,
@@ -413,6 +425,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -471,6 +484,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -484,6 +498,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -541,6 +556,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -553,6 +569,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -606,6 +623,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 /* 🢃 invalid key 🢃 */
                 INDEX_CUSTOM_METADATA + 1,
                 address(0),
+                address(0),
                 nonce,
                 totalPriorityFeeAmount,
                 noncePay
@@ -619,6 +637,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             USERNAME,
             /* 🢃 invalid key 🢃 */
             INDEX_CUSTOM_METADATA + 1,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -664,6 +683,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 nonce,
                 /* 🢃 different totalPriorityFee 🢃 */
                 totalPriorityFeeAmount + 50,
@@ -678,6 +698,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -727,6 +748,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
                 USERNAME,
                 INDEX_CUSTOM_METADATA,
                 address(0),
+                address(0),
                 nonce,
                 1 ether,
                 noncePay
@@ -739,6 +761,7 @@ contract unitTestRevert_NameService_removeCustomMetadata is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             USERNAME,
             INDEX_CUSTOM_METADATA,
+            address(0),
             address(0),
             nonce,
             signatureNameService,
