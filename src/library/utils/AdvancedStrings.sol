@@ -141,29 +141,28 @@ library AdvancedStrings {
      * @param originExecutor Original executor address
      * @param nonce Sequential or async nonce
      * @param isAsyncExec Nonce type (true=async, false=sync)
-     * @return Comma-separated payload string for signature
+     * @return payload Comma-separated payload string for signature
      */
     function buildSignaturePayload(
         uint256 evvmId,
-        address senderExecutor, 
+        address senderExecutor,
         bytes32 hashPayload,
-        address originExecutor, 
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec
-    ) internal pure returns (string memory) {
-        return
-            string.concat(
-                uintToString(evvmId),
-                ",",
-                addressToString(senderExecutor),
-                ",",
-                bytes32ToString(hashPayload),
-                ",",
-                addressToString(originExecutor),
-                ",",
-                uintToString(nonce),
-                ",",
-                boolToString(isAsyncExec)
-            );
+    ) internal pure returns (string memory payload) {
+        payload = string.concat(
+            uintToString(evvmId),
+            ",",
+            addressToString(senderExecutor),
+            ",",
+            bytes32ToString(hashPayload),
+            ",",
+            addressToString(originExecutor),
+            ",",
+            uintToString(nonce),
+            ",",
+            boolToString(isAsyncExec)
+        );
     }
 }
