@@ -92,7 +92,12 @@ contract fuzzTest_Core_batchPay is Test, Constants {
                 input.token[1] != PRINCIPAL_TOKEN_ADDRESS &&
                 !(input.isAsyncExec[0] &&
                     input.isAsyncExec[1] &&
-                    input.nonce[0] == input.nonce[1])
+                    input.nonce[0] == input.nonce[1]) &&
+                // batchPay does not support executors due to external call limitations
+                !input.useSenderExecutor[0] &&
+                !input.useSenderExecutor[1] &&
+                !input.useOriginExecutor[0] &&
+                !input.useOriginExecutor[1]
         );
 
         CoreStructs.BatchData[] memory batchData = new CoreStructs.BatchData[](

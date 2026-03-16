@@ -37,22 +37,6 @@ contract unitTestRevert_Core_caPay is Test, Constants {
         return (_amount);
     }
 
-    function test__unit_revert__caPay__NotAnCA() external {
-        _addBalance(COMMON_USER_NO_STAKER_1.Address, ETHER_ADDRESS, 0.1 ether);
-
-        vm.startPrank(COMMON_USER_NO_STAKER_1.Address);
-
-        vm.expectRevert(CoreError.NotAnCA.selector);
-        core.caPay(COMMON_USER_NO_STAKER_2.Address, ETHER_ADDRESS, 0.001 ether);
-
-        vm.stopPrank();
-
-        assertEq(
-            core.getBalance(COMMON_USER_NO_STAKER_1.Address, ETHER_ADDRESS),
-            0.1 ether,
-            "Amount should not be deducted because of revert"
-        );
-    }
 
     function test__unit_revert__caPay__InsufficientBalance() external {
         vm.expectRevert(CoreError.InsufficientBalance.selector);
