@@ -28,6 +28,7 @@ contract fuzzTest_Staking_publicStaking is Test, Constants {
             true,
             10,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -149,6 +150,7 @@ contract fuzzTest_Staking_publicStaking is Test, Constants {
                     input[i].isStaking,
                     input[i].stakingAmount,
                     address(0),
+                    address(0),
                     input[i].nonceStaking,
                     input[i].priorityFeeAmountEVVM,
                     input[i].noncePay,
@@ -181,6 +183,7 @@ contract fuzzTest_Staking_publicStaking is Test, Constants {
                         input[i].isStaking,
                         stakingFullAmountBefore,
                         address(0),
+                        address(0),
                         input[i].nonceStaking,
                         input[i].priorityFeeAmountEVVM,
                         input[i].noncePay,
@@ -197,6 +200,7 @@ contract fuzzTest_Staking_publicStaking is Test, Constants {
                         COMMON_USER_NO_STAKER_1,
                         input[i].isStaking,
                         input[i].stakingAmount,
+                        address(0),
                         address(0),
                         input[i].nonceStaking,
                         input[i].priorityFeeAmountEVVM,

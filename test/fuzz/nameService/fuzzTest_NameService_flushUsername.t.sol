@@ -48,9 +48,11 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USERNAME,
             44,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7
@@ -65,6 +67,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USERNAME,
             CUSTOM_METADATA_VALUE_1,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5
             ),
@@ -77,6 +80,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USERNAME,
             CUSTOM_METADATA_VALUE_2,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3
             ),
@@ -88,6 +92,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USER_USERNAME_OWNER,
             USERNAME,
             CUSTOM_METADATA_VALUE_3,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1

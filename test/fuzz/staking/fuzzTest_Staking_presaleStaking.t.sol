@@ -43,6 +43,7 @@ contract fuzzTest_Staking_presaleStaking is Test, Constants {
             COMMON_USER_NO_STAKER_1,
             true,
             address(0),
+            address(0),
             uint256(0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0),
             0,
             uint256(0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1),
@@ -164,6 +165,7 @@ contract fuzzTest_Staking_presaleStaking is Test, Constants {
                     COMMON_USER_NO_STAKER_1,
                     true,
                     address(0),
+                    address(0),
                     input[i].nonceStaking,
                     uint256(input[i].priorityFeeAmountEVVM),
                     input[i].noncePay,
@@ -201,6 +203,7 @@ contract fuzzTest_Staking_presaleStaking is Test, Constants {
                 _executeFn_staking_presaleStaking(
                     COMMON_USER_NO_STAKER_1,
                     false,
+                    address(0),
                     address(0),
                     input[i].nonceStaking,
                     uint256(input[i].priorityFeeAmountEVVM),

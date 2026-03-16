@@ -125,6 +125,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.identity,
             params.value,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -136,6 +137,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.user.Address,
             params.identity,
             params.value,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -215,6 +217,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.identity,
             params.value,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -226,6 +229,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.user.Address,
             params.identity,
             params.value,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,

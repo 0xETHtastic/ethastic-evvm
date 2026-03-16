@@ -47,9 +47,11 @@ contract fuzzTest_NameService_removeCustomMetadata is Test, Constants {
                 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
             ),
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -64,6 +66,7 @@ contract fuzzTest_NameService_removeCustomMetadata is Test, Constants {
                 USER_USERNAME_OWNER,
                 USERNAME,
                 string.concat("test>", AdvancedStrings.uintToString(i)),
+                address(0),
                 address(0),
                 uint256(
                     0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000
@@ -135,6 +138,7 @@ contract fuzzTest_NameService_removeCustomMetadata is Test, Constants {
             params.identity,
             params.key,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -146,6 +150,7 @@ contract fuzzTest_NameService_removeCustomMetadata is Test, Constants {
             params.user.Address,
             params.identity,
             params.key,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -229,6 +234,7 @@ contract fuzzTest_NameService_removeCustomMetadata is Test, Constants {
             params.identity,
             params.key,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -240,6 +246,7 @@ contract fuzzTest_NameService_removeCustomMetadata is Test, Constants {
             params.user.Address,
             params.identity,
             params.key,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,

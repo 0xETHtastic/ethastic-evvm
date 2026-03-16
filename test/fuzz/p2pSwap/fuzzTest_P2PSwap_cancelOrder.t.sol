@@ -70,7 +70,7 @@ contract fuzzTest_P2PSwap_cancelOrder is Test, Constants {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForMakeOrder(
                 core.getEvvmID(),
-               address(0),
+                address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -224,7 +224,6 @@ contract fuzzTest_P2PSwap_cancelOrder is Test, Constants {
         );
 
         // we already have signatureP2P above
-        address originExecutor = address(0);
         uint256 nonce = nextNonceP2PSwap;
         bytes memory signature = signatureP2P;
 
@@ -239,6 +238,7 @@ contract fuzzTest_P2PSwap_cancelOrder is Test, Constants {
                 0,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 nextnoncePay,
                 true
             )
@@ -256,7 +256,8 @@ contract fuzzTest_P2PSwap_cancelOrder is Test, Constants {
             tokenA,
             tokenB,
             orderId,
-            originExecutor,
+            address(0),
+            address(0),
             nonce,
             signature,
             priorityFee,
@@ -265,9 +266,8 @@ contract fuzzTest_P2PSwap_cancelOrder is Test, Constants {
         );
         vm.stopPrank();
 
-        P2PSwapStructs.MarketInformation memory marketInfo = p2pSwap.getMarketMetadata(
-            market
-        );
+        P2PSwapStructs.MarketInformation memory marketInfo = p2pSwap
+            .getMarketMetadata(market);
         assertEq(marketInfo.ordersAvailable, 0);
 
         assertEq(
