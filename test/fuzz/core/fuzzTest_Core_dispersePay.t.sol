@@ -61,9 +61,11 @@ contract fuzzTest_Core_dispersePay is Test, Constants {
             username,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -85,7 +87,8 @@ contract fuzzTest_Core_dispersePay is Test, Constants {
     }
 
     struct PayInputs {
-        bool usingExecutor;
+        bool usingSenderExecutor;
+        bool usingOriginExecutor;
         bool isUsingAsyncNonce;
         bool isExecutorStaker;
         address toAddressA;
@@ -147,7 +150,8 @@ contract fuzzTest_Core_dispersePay is Test, Constants {
             input.token,
             amount,
             priorityFee,
-            input.usingExecutor ? input.executor : address(0),
+            input.usingSenderExecutor ? input.executor : address(0),
+            input.usingOriginExecutor ? input.executor : address(0),
             nonce,
             input.isUsingAsyncNonce
         );
@@ -156,14 +160,15 @@ contract fuzzTest_Core_dispersePay is Test, Constants {
             input.executor,
             input.isExecutorStaker ? bytes1(0x01) : bytes1(0x00)
         );
-        vm.startPrank(input.executor);
+        vm.startPrank(input.executor, input.executor);
         core.dispersePay(
             COMMON_USER_NO_STAKER_1.Address,
             toData,
             input.token,
             amount,
             priorityFee,
-            input.usingExecutor ? input.executor : address(0),
+            input.usingSenderExecutor ? input.executor : address(0),
+            input.usingOriginExecutor ? input.executor : address(0),
             nonce,
             input.isUsingAsyncNonce,
             signaturePay
