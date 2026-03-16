@@ -177,7 +177,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_2,
             priorityFee_2,
-            executor.Address,
+            address(0),
             executor.Address,
             syncNonce_2,
             false,
@@ -188,7 +188,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_2,
                 priorityFee_2,
-                executor.Address,
+                address(0),
                 executor.Address,
                 syncNonce_2,
                 false
@@ -229,7 +229,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_4,
             priorityFee_4,
-            executor.Address,
+            address(0),
             executor.Address,
             syncNonce_4,
             false,
@@ -240,7 +240,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_4,
                 priorityFee_4,
-                executor.Address,
+                address(0),
                 executor.Address,
                 syncNonce_4,
                 false
@@ -259,7 +259,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             priorityFee_5,
             address(0),
             address(0),
-            syncNonce_1,
+            asyncNonce_1,
             true,
             signature = _executeSig_evvm_pay(
                 COMMON_USER_NO_STAKER_1,
@@ -270,7 +270,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 priorityFee_5,
                 address(0),
                 address(0),
-                syncNonce_1,
+                asyncNonce_1,
                 true
             )
         );
@@ -283,7 +283,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_6,
             priorityFee_6,
-            executor.Address,
+            address(0),
             executor.Address,
             asyncNonce_2,
             true,
@@ -294,7 +294,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_6,
                 priorityFee_6,
-                executor.Address,
+                address(0),
                 executor.Address,
                 asyncNonce_2,
                 true
@@ -335,7 +335,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_8,
             priorityFee_8,
-            executor.Address,
+            address(0),
             executor.Address,
             asyncNonce_4,
             true,
@@ -346,14 +346,14 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_8,
                 priorityFee_8,
-                executor.Address,
+                address(0),
                 executor.Address,
                 asyncNonce_4,
                 true
             )
         );
 
-        vm.startPrank(executor.Address);
+        vm.startPrank(executor.Address, executor.Address);
         (uint256 successfulTransactions, bool[] memory results) = core.batchPay(
             batchData
         );
@@ -529,7 +529,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_2,
             priorityFee_2,
-            executor.Address,
+            address(0),
             executor.Address,
             syncNonce_2,
             false,
@@ -540,7 +540,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_2,
                 priorityFee_2,
-                executor.Address,
+                address(0),
                 executor.Address,
                 syncNonce_2,
                 false
@@ -581,7 +581,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_4,
             priorityFee_4,
-            executor.Address,
+            address(0),
             executor.Address,
             syncNonce_4,
             false,
@@ -592,7 +592,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_4,
                 priorityFee_4,
-                executor.Address,
+                address(0),
                 executor.Address,
                 syncNonce_4,
                 false
@@ -611,7 +611,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             priorityFee_5,
             address(0),
             address(0),
-            syncNonce_1,
+            asyncNonce_1,
             true,
             signature = _executeSig_evvm_pay(
                 COMMON_USER_NO_STAKER_1,
@@ -622,7 +622,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 priorityFee_5,
                 address(0),
                 address(0),
-                syncNonce_1,
+                asyncNonce_1,
                 true
             )
         );
@@ -635,7 +635,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_6,
             priorityFee_6,
-            executor.Address,
+            address(0),
             executor.Address,
             asyncNonce_2,
             true,
@@ -646,7 +646,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_6,
                 priorityFee_6,
-                executor.Address,
+                address(0),
                 executor.Address,
                 asyncNonce_2,
                 true
@@ -687,7 +687,7 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
             ETHER_ADDRESS,
             amount_8,
             priorityFee_8,
-            executor.Address,
+            address(0),
             executor.Address,
             asyncNonce_4,
             true,
@@ -698,14 +698,14 @@ contract unitTestCorrect_Core_batchPay is Test, Constants {
                 ETHER_ADDRESS,
                 amount_8,
                 priorityFee_8,
-                executor.Address,
+                address(0),
                 executor.Address,
                 asyncNonce_4,
                 true
             )
         );
 
-        vm.startPrank(executor.Address);
+        vm.startPrank(executor.Address, executor.Address);
         (uint256 successfulTransactions, bool[] memory results) = core.batchPay(
             batchData
         );

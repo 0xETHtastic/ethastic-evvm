@@ -195,7 +195,7 @@ contract unitTestCorrect_Core_state is Test, Constants {
             inputs.testB,
             inputs.testC,
             inputs.testD,
-            COMMON_USER_NO_STAKER_2.Address,
+            address(helper),
             address(0),
             core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
             false
@@ -211,7 +211,7 @@ contract unitTestCorrect_Core_state is Test, Constants {
             inputs.testB,
             inputs.testC,
             inputs.testD,
-            COMMON_USER_NO_STAKER_2.Address,
+            address(helper),
             address(0),
             core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
             false,

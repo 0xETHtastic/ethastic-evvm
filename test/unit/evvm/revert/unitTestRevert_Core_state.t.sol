@@ -120,7 +120,7 @@ contract unitTestRevert_Core_state is Test, Constants {
             COMMON_USER_NO_STAKER_2.Address,
             COMMON_USER_NO_STAKER_2.Address
         );
-        vm.expectRevert(CoreError.SenderMismatch.selector);
+        vm.expectRevert(CoreError.OriginMismatch.selector);
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
             address(0),
