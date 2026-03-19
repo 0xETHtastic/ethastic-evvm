@@ -11,6 +11,7 @@ library CoreStructs {
         uint256 amount;
         uint256 priorityFee;
         address senderExecutor;
+        address originExecutor;
         uint256 nonce;
         bool isAsyncExec;
         bytes signature;
@@ -80,15 +81,14 @@ interface ICore {
     error InvalidServiceAddress();
     error InvalidSignature();
     error MaxSupplyDeletionNotAllowed();
-    error MsgSenderIsNotAContract();
     error NotAnCA();
-    error OriginIsNotTheOriginExecutor();
+    error OriginMismatch();
     error ProposalNotReadyToAccept();
     error RewardFlowDistributionChangeNotAllowed();
     error SenderIsNotAdmin();
     error SenderIsNotTheProposedAdmin();
-    error SenderIsNotTheSenderExecutor();
     error SenderIsNotTreasury();
+    error SenderMismatch();
     error SyncNonceMismatch();
     error TokenIsDeniedForExecution();
     error UserCannotExecuteTransaction();
@@ -110,6 +110,7 @@ interface ICore {
         external
         returns (uint256 successfulTransactions, bool[] memory results);
     function caPay(address to, address token, uint256 amount) external;
+    function canExecuteUserTransaction(address user) external view returns (bool);
     function cancelUserValidatorProposal() external;
     function disperseCaPay(CoreStructs.DisperseCaPayMetadata[] memory toData, address token, uint256 amount) external;
     function dispersePay(
