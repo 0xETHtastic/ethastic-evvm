@@ -134,7 +134,7 @@ library AdvancedStrings {
 
     /**
      * @notice Builds EIP-191 signature payload for Core.sol validation
-     * @dev Format: "{evvmId},{senderExecutor},{hashPayload},{nonce},{isAsyncExec}"
+     * @dev Format: "{evvmId},{senderExecutor},{hashPayload},{originExecutor},{nonce},{isAsyncExec}"
      * @param evvmId Chain-specific EVVM instance identifier
      * @param senderExecutor Service contract requesting validation
      * @param hashPayload Function-specific parameter hash

@@ -7,24 +7,7 @@ pragma solidity ^0.8.0;
  * @title CoreError - Error Definitions for EVVM Core
  * @author Mate labs
  * @notice Custom error definitions for Core.sol core contract
- * @dev Custom errors are more gas-efficient than require
- *      statements with strings and provide better error
- *      handling in client applications.
- *
- * Error Categories:
- * - Access Control: Unauthorized access attempts
- * - Validation: Invalid inputs or state conditions
- * - Balance Management: Insufficient funds or amounts
- * - Time-Lock: Governance time delay mechanisms
- * - Initialization: Setup and configuration errors
- *
- * Integration:
- * - Used exclusively by Core.sol core contract
- * - Includes payment and nonce validation errors
- * - Provides clear failure reasons for users
- *
- * @custom:scope Exclusive to Core.sol contract
- * @custom:security Clear failures without exposing state
+ * @dev Gas-efficient custom errors for all Core.sol failure conditions.
  */
 library CoreError {
     //░▒▓█ Access Control Errors ████████████████████████████████████████████████▓▒░
