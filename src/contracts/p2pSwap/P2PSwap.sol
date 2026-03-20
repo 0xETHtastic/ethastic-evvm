@@ -659,8 +659,10 @@ contract P2PSwap is EvvmService {
     // Admin tools
     //◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
 
-    /// @notice Proposes a new owner with a 1-day acceptance window.
-    /// @param _owner Proposed owner address.
+    /**
+     * @notice Proposes a new owner with a 1-day acceptance window.
+     * @param _owner Proposed owner address.
+     */
     function proposeOwner(address _owner) external {
         if (msg.sender != owner) {
             revert();
@@ -690,10 +692,12 @@ contract P2PSwap is EvvmService {
         owner_proposal = address(0);
     }
 
-    /// @notice Proposes new reward split percentages for fixed-fee fills.
-    /// @param _seller Seller share in basis points.
-    /// @param _service Service share in basis points.
-    /// @param _mateStaker Staker share in basis points.
+    /**
+     * @notice Proposes new reward split percentages for fixed-fee fills.
+     * @param _seller Seller share in basis points.
+     * @param _service Service share in basis points.
+     * @param _mateStaker Staker share in basis points.
+     */
     function proposeFillFixedPercentage(
         uint256 _seller,
         uint256 _service,
@@ -735,10 +739,12 @@ contract P2PSwap is EvvmService {
         rewardPercentage = rewardPercentage_proposal;
     }
 
-    /// @notice Proposes new reward split percentages for proportional-fee fills.
-    /// @param _seller Seller share in basis points.
-    /// @param _service Service share in basis points.
-    /// @param _mateStaker Staker share in basis points.
+    /**
+     * @notice Proposes new reward split percentages for proportional-fee fills.
+     * @param _seller Seller share in basis points.
+     * @param _service Service share in basis points.
+     * @param _mateStaker Staker share in basis points.
+     */
     function proposeFillPropotionalPercentage(
         uint256 _seller,
         uint256 _service,
@@ -777,8 +783,10 @@ contract P2PSwap is EvvmService {
         rewardPercentage = rewardPercentage_proposal;
     }
 
-    /// @notice Proposes a new proportional fee percentage.
-    /// @param _percentageFee New fee in basis points (e.g. 500 = 5%).
+    /**
+     * @notice Proposes a new proportional fee percentage.
+     * @param _percentageFee New fee in basis points (e.g. 500 = 5%).
+     */
     function proposePercentageFee(uint256 _percentageFee) external {
         if (msg.sender != owner) {
             revert();
@@ -807,8 +815,10 @@ contract P2PSwap is EvvmService {
         percentageFee.current = percentageFee.proposal;
     }
 
-    /// @notice Proposes a new maximum fixed fee cap.
-    /// @param _maxLimitFillFixedFee New cap amount.
+    /**
+     * @notice Proposes a new maximum fixed fee cap.
+     * @param _maxLimitFillFixedFee New cap amount.
+     */
     function proposeMaxLimitFillFixedFee(
         uint256 _maxLimitFillFixedFee
     ) external {
@@ -841,10 +851,12 @@ contract P2PSwap is EvvmService {
         maxLimitFillFixedFee.current = maxLimitFillFixedFee.proposal;
     }
 
-    /// @notice Proposes a fee withdrawal with a 1-day timelock.
-    /// @param _tokenToWithdraw Token address to withdraw.
-    /// @param _amountToWithdraw Amount to withdraw.
-    /// @param _to Recipient address.
+    /**
+     * @notice Proposes a fee withdrawal with a 1-day timelock.
+     * @param _tokenToWithdraw Token address to withdraw.
+     * @param _amountToWithdraw Amount to withdraw.
+     * @param _to Recipient address.
+     */
     function proposeWithdrawal(
         address _tokenToWithdraw,
         uint256 _amountToWithdraw,
@@ -887,8 +899,10 @@ contract P2PSwap is EvvmService {
         timeToWithdrawal = 0;
     }
 
-    /// @notice Stakes MATE tokens from the service balance.
-    /// @param amount Number of staking slots to purchase.
+    /**
+     * @notice Stakes MATE tokens from the service balance.
+     * @param amount Number of staking slots to purchase.
+     */
     function stake(uint256 amount) external {
         if (
             msg.sender != owner ||
@@ -899,17 +913,21 @@ contract P2PSwap is EvvmService {
         _makeStakeService(amount);
     }
 
-    /// @notice Unstakes MATE tokens back to the service balance.
-    /// @param amount Number of staking slots to release.
+    /**
+     * @notice Unstakes MATE tokens back to the service balance.
+     * @param amount Number of staking slots to release.
+     */
     function unstake(uint256 amount) external {
         if (msg.sender != owner) revert();
 
         _makeUnstakeService(amount);
     }
 
-    /// @notice Manually records an added balance for a token (admin only, for accounting).
-    /// @param _token Token address.
-    /// @param _amount Amount to add.
+    /**
+     * @notice Manually records an added balance for a token (admin only, for accounting).
+     * @param _token Token address.
+     * @param _amount Amount to add.
+     */
     function addBalance(address _token, uint256 _amount) external {
         if (msg.sender != owner) {
             revert();
@@ -920,9 +938,11 @@ contract P2PSwap is EvvmService {
     //◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
     //getters
     //◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
-    /// @notice Returns all active orders in a market.
-    /// @param market Market ID.
-    /// @return orders Array of orders with market and slot info.
+    /**
+     * @notice Returns all active orders in a market.
+     * @param market Market ID.
+     * @return orders Array of orders with market and slot info.
+     */
     function getAllMarketOrders(
         uint256 market
     ) public view returns (Structs.OrderForGetter[] memory orders) {
@@ -944,10 +964,12 @@ contract P2PSwap is EvvmService {
         return orders;
     }
 
-    /// @notice Returns a single order by market and order ID.
-    /// @param market Market ID.
-    /// @param orderId Order slot index.
-    /// @return order Order data.
+    /**
+     * @notice Returns a single order by market and order ID.
+     * @param market Market ID.
+     * @param orderId Order slot index.
+     * @return order Order data.
+     */
     function getOrder(
         uint256 market,
         uint256 orderId
@@ -956,10 +978,12 @@ contract P2PSwap is EvvmService {
         return order;
     }
 
-    /// @notice Returns all orders placed by a user in a specific market.
-    /// @param user Seller address.
-    /// @param market Market ID.
-    /// @return orders Array of matching orders.
+    /**
+     * @notice Returns all orders placed by a user in a specific market.
+     * @param user Seller address.
+     * @param market Market ID.
+     * @return orders Array of matching orders.
+     */
     function getMyOrdersInSpecificMarket(
         address user,
         uint256 market
@@ -982,10 +1006,12 @@ contract P2PSwap is EvvmService {
         return orders;
     }
 
-    /// @notice Returns the market ID for a token pair, or 0 if it doesn't exist.
-    /// @param tokenA Token A address.
-    /// @param tokenB Token B address.
-    /// @return Market ID.
+    /**
+     * @notice Returns the market ID for a token pair, or 0 if it doesn't exist.
+     * @param tokenA Token A address.
+     * @param tokenB Token B address.
+     * @return Market ID.
+     */
     function findMarket(
         address tokenA,
         address tokenB
@@ -993,17 +1019,21 @@ contract P2PSwap is EvvmService {
         return marketId[tokenA][tokenB];
     }
 
-    /// @notice Returns metadata for a specific market.
-    /// @param market Market ID.
-    /// @return Market info struct.
+    /**
+     * @notice Returns metadata for a specific market.
+     * @param market Market ID.
+     * @return Market info struct.
+     */
     function getMarketMetadata(
         uint256 market
     ) public view returns (Structs.MarketInformation memory) {
         return marketMetadata[market];
     }
 
-    /// @notice Returns metadata for all markets.
-    /// @return Array of all market info structs.
+    /**
+     * @notice Returns metadata for all markets.
+     * @return Array of all market info structs.
+     */
     function getAllMarketsMetadata()
         public
         view
@@ -1017,9 +1047,11 @@ contract P2PSwap is EvvmService {
         return markets;
     }
 
-    /// @notice Returns the accumulated service fee balance for a token.
-    /// @param token Token address.
-    /// @return Accumulated fee balance.
+    /**
+     * @notice Returns the accumulated service fee balance for a token.
+     * @param token Token address.
+     * @return Accumulated fee balance.
+     */
     function getBalanceOfContract(
         address token
     ) external view returns (uint256) {
@@ -1079,8 +1111,10 @@ contract P2PSwap is EvvmService {
         return maxLimitFillFixedFee.current;
     }
 
-    /// @notice Returns the details of the pending withdrawal proposal.
-    /// @return Token address, amount, recipient, and deadline.
+    /**
+     * @notice Returns the details of the pending withdrawal proposal.
+     * @return Token address, amount, recipient, and deadline.
+     */
     function getProposedWithdrawal()
         external
         view
