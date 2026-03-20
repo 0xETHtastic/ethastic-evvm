@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Codename: "Kitsuragi"
 
-Named after [Kim Kitsuragi](https://en.wikipedia.org/wiki/Kim_Kitsuragi) from [Disco Elysium](https://en.wikipedia.org/wiki/Disco_Elysium). Just as Kim methodically verifies every action before it proceeds, this release makes `canExecuteUserTransaction` public and introduces `senderExecutor`/`originExecutor`  every transaction must pass through a transparent checkpoint that enforces strict rules while remaining accessible to any external service.
+Named after [Kim Kitsuragi](https://en.wikipedia.org/wiki/Kim_Kitsuragi) from [Disco Elysium](https://en.wikipedia.org/wiki/Disco_Elysium). Just as Kim methodically verifies every action before it proceeds, this release makes `canExecuteUserTransaction` public and introduces `senderExecutor`/`originExecutor` every transaction must pass through a transparent checkpoint that enforces strict rules while remaining accessible to any external service.
 
 ### Changed
 - **Use of executors**:
