@@ -42,33 +42,56 @@ import {
  */
 
 contract P2PSwap is EvvmService {
+    /// @notice Current contract owner.
     address owner;
+    /// @notice Proposed new owner pending acceptance.
     address owner_proposal;
+    /// @notice Deadline for accepting the owner proposal.
     uint256 owner_timeToAccept;
 
+    /// @notice Fee split percentages for order fills (seller/service/staker).
     Structs.Percentage rewardPercentage;
+    /// @notice Pending proposal for new fee split percentages.
     Structs.Percentage rewardPercentage_proposal;
+    /// @notice Deadline for accepting the reward percentage proposal.
     uint256 rewardPercentage_timeToAcceptNewChange;
 
+    /// @notice Proportional fee applied to fills in basis points (500 = 5%).
     ProposalStructs.UintTypeProposal percentageFee;
 
+    /// @notice Maximum cap for fixed-fee fills.
     ProposalStructs.UintTypeProposal maxLimitFillFixedFee;
 
+    /// @notice Token pending admin withdrawal.
     address tokenToWithdraw;
+    /// @notice Amount pending admin withdrawal.
     uint256 amountToWithdraw;
+    /// @notice Recipient of the pending withdrawal.
     address recipientToWithdraw;
+    /// @notice Deadline for executing the withdrawal.
     uint256 timeToWithdrawal;
 
+    /// @notice Total number of markets created.
     uint256 marketCount;
 
+    /// @notice Maps a token pair to its market ID.
     mapping(address tokenA => mapping(address tokenB => uint256 id)) marketId;
 
+    /// @notice Stores metadata for each market.
     mapping(uint256 id => Structs.MarketInformation info) marketMetadata;
 
+    /// @notice Stores orders within each market indexed by slot.
     mapping(uint256 idMarket => mapping(uint256 idOrder => Structs.Order)) ordersInsideMarket;
 
+    /// @notice Accumulated service fees per token.
     mapping(address => uint256) balancesOfContract;
 
+    /**
+     * @notice Initializes P2PSwap with Core, Staking, and owner addresses.
+     * @param _coreAddress Core contract address.
+     * @param _stakingAddress Staking contract address.
+     * @param _owner Initial owner address.
+     */
     constructor(
         address _coreAddress,
         address _stakingAddress,
@@ -93,8 +116,9 @@ contract P2PSwap is EvvmService {
      * @param tokenB Address of the token being bought.
      * @param amountA Amount of tokenA offered.
      * @param amountB Amount of tokenB requested.
-     * @param originExecutor executor address for signature validation.
-     * @param nonce Nonce for service execution (async).
+     * @param senderExecutor Address of the calling service (must match msg.sender).
+     * @param originExecutor Origin address for signature validation.
+     * @param nonce Async nonce for this operation.
      * @param signature Seller's authorization signature.
      * @param priorityFeePay Optional priority fee for the executor.
      * @param noncePay Nonce for the Core payment (locks tokenA).
@@ -177,44 +201,19 @@ contract P2PSwap is EvvmService {
     }
 
     /**
-     * @notice Cancels existing order and refunds locked tokens
-     * @dev Validates ownership, refunds tokenA, deletes order
-     *
-     * Cancellation Flow:
-     * 1. Validates signature via Core.sol
-     * 2. Validates user is order owner
-     * 3. Processes optional priority fee
-     * 4. Refunds locked tokenA to user
-     * 5. Deletes order (sets seller to address(0))
-     * 6. Rewards staker if applicable
-     *
-     * Core.sol Integration:
-     * - Validates signature with State.validateAndConsumeNonce
-     * - Uses async nonce (isAsyncExec = true)
-     * - Hash includes tokenA, tokenB, orderId
-     * - Prevents replay attacks and double cancellation
-     *
-     * Core.sol Integration:
-     * - Refunds tokenA via makeCaPay (order.amountA)
-     * - Priority fee via requestPay (if > 0)
-     * - Staker reward: 2-3x MATE via _rewardExecutor
-     * - makeCaPay handles staker priority fee distribution
-     *
-     * Security:
-     * - Only order owner can cancel
-     * - Atomic refund + deletion
-     * - Market slot becomes available for reuse
-     *
-     * @param user Address that owns the order
-     * @param tokenA Token A in pair
-     * @param tokenB Token B in pair
-     * @param orderId Order ID to cancel
-     * @param originExecutor Executor address for signature validation
-     * @param nonce Nonce for service execution (async)
-     * @param signature Signature for cancellation authorization
-     * @param priorityFeePay Optional priority fee for staker
-     * @param noncePay Nonce for EVVM payment transaction
-     * @param signaturePay Signature for EVVM payment
+     * @notice Cancels an existing order and refunds locked tokenA to the seller.
+     * @dev Only the order owner can cancel. The market slot is recycled for new orders.
+     * @param user Order owner address.
+     * @param tokenA Token being sold.
+     * @param tokenB Token being bought.
+     * @param orderId Order slot to cancel.
+     * @param senderExecutor Address of the calling service (must match msg.sender).
+     * @param originExecutor Origin address for signature validation.
+     * @param nonce Async nonce for this operation.
+     * @param signature Cancellation authorization signature.
+     * @param priorityFeePay Optional priority fee for the executor.
+     * @param noncePay Nonce for the priority fee payment.
+     * @param signaturePay Signature for the priority fee payment.
      */
     function cancelOrder(
         address user,
@@ -271,53 +270,20 @@ contract P2PSwap is EvvmService {
     }
 
     /**
-     * @notice Fills order using proportional fee model
-     * @dev Fee = amountB * percentageFee.current / 10,000
-     *
-     * Proportional Fee Execution Flow:
-     * 1. Validates signature via Core.sol
-     * 2. Validates market and order exist
-     * 3. Calculates fee: (amountB * percentageFee.current) / 10,000
-     * 4. Validates amountOfTokenBToFill >= amountB + fee
-     * 5. Collects tokenB + fee via Evvm.requestPay
-     * 6. Handles overpayment refund if any
-     * 7. Distributes payments (seller, service, staker)
-     * 8. Transfers tokenA to buyer via Evvm.makeCaPay
-     * 9. Rewards staker (4-5x MATE)
-     * 10. Deletes order
-     *
-     * Core.sol Integration:
-     * - Validates signature with State.validateAndConsumeNonce
-     * - Uses async nonce (isAsyncExec = true)
-     * - Hash includes tokenA, tokenB, orderId
-     * - Prevents double filling
-     *
-     * Core.sol Integration:
-     * - Collects tokenB via requestPay (amountB + fee)
-     * - Distributes via makeDisperseCaPay:
-     *   * Seller: amountB + (fee * seller%)
-     *   * Staker: priorityFee + (fee * staker%)
-     *   * Service: fee * service% (accumulated)
-     * - Transfers tokenA to buyer via makeCaPay
-     * - Staker reward: 4-5x MATE via _rewardExecutor
-     *
-     * Fee Calculation:
-     * - Base: amountB (order requirement)
-     * - Fee: (amountB * percentageFee.current) / 10,000
-     * - Total: amountB + fee
-     * - Example: 5% fee = 500 / 10,000
-     *
-     * @param user Address filling the order (buyer)
-     * @param tokenA Token A in pair
-     * @param tokenB Token B in pair
-     * @param orderId Order ID to fill
-     * @param amountOfTokenBToFill Amount of tokenB buyer is paying (must cover order + fee)
-     * @param originExecutor Executor address for signature validation
-     * @param nonce Nonce for service execution (async)
-     * @param signature Signature for dispatch authorization
-     * @param priorityFeePay Optional priority fee for staker
-     * @param noncePay Nonce for EVVM payment transaction
-     * @param signaturePay Signature for EVVM payment
+     * @notice Fills an order using a proportional fee (fee = amountB * percentageFee / 10,000).
+     * @dev Overpayment above amountB + fee is automatically refunded to the buyer.
+     * @param user Buyer address filling the order.
+     * @param tokenA Token being bought by the filler.
+     * @param tokenB Token being sold by the filler.
+     * @param orderId Order slot to fill.
+     * @param amountOfTokenBToFill Amount of tokenB to pay (must cover order amount + fee).
+     * @param senderExecutor Address of the calling service (must match msg.sender).
+     * @param originExecutor Origin address for signature validation.
+     * @param nonce Async nonce for this operation.
+     * @param signature Fill authorization signature.
+     * @param priorityFeePay Optional priority fee for the executor.
+     * @param noncePay Nonce for the payment.
+     * @param signaturePay Signature for the payment.
      */
     function dispatchOrder_fillPropotionalFee(
         address user,
@@ -392,65 +358,21 @@ contract P2PSwap is EvvmService {
     }
 
     /**
-     * @notice Fills order using fixed/capped fee model
-     * @dev Fee = min(proportionalFee, maxLimitFillFixedFee.current)
-     * with -10% tolerance
-     *
-     * Fixed Fee Execution Flow:
-     * 1. Validates signature via Core.sol
-     * 2. Validates market and order exist
-     * 3. Calculates capped fee and 10% tolerance
-     * 4. Validates amountOfTokenBToFill >= amountB + fee - 10%
-     * 5. Collects tokenB + amount via Evvm.requestPay
-     * 6. Calculates final fee based on actual payment
-     * 7. Handles overpayment refund if any
-     * 8. Distributes payments (seller, service, staker)
-     * 9. Transfers tokenA to buyer via Evvm.makeCaPay
-     * 10. Rewards staker (4-5x MATE)
-     * 11. Deletes order
-     *
-     * Core.sol Integration:
-     * - Validates signature with State.validateAndConsumeNonce
-     * - Uses async nonce (isAsyncExec = true)
-     * - Hash includes tokenA, tokenB, orderId
-     * - Prevents double filling
-     *
-     * Core.sol Integration:
-     * - Collects tokenB via requestPay (variable amount)
-     * - Distributes via makeDisperseCaPay:
-     *   * Seller: amountB + (finalFee * seller%)
-     *   * Staker: priorityFee + (finalFee * staker%)
-     *   * Service: finalFee * service% (accumulated)
-     * - Transfers tokenA to buyer via makeCaPay
-     * - Staker reward: 4-5x MATE via _rewardExecutor
-     *
-     * Fee Calculation:
-     * - Base: amountB (order requirement)
-     * - ProportionalFee: (amountB * percentageFee.current) / 10,000
-     * - Fee: min(proportionalFee, maxLimitFillFixedFee.current)
-     * - Tolerance: fee * 10% (fee10)
-     * - MinRequired: amountB + fee - fee10
-     * - FullRequired: amountB + fee
-     * - FinalFee: Based on actual payment amount
-     *
-     * Tolerance Range:
-     * - Accepts payment between [amountB + 90% fee] and
-     *   [amountB + 100% fee]
-     * - Calculates actual fee from payment received
-     * - Enables flexible fee payment for users
-     *
-     * @param user Address filling the order (buyer)
-     * @param tokenA Token A in pair
-     * @param tokenB Token B in pair
-     * @param orderId Order ID to fill
-     * @param amountOfTokenBToFill Amount of tokenB buyer is paying (must cover order + fee)
-     * @param originExecutor Executor address for signature validation
-     * @param nonce Nonce for service execution (async)
-     * @param signature Signature for dispatch authorization
-     * @param priorityFeePay Optional priority fee for staker
-     * @param noncePay Nonce for EVVM payment transaction
-     * @param signaturePay Signature for EVVM payment
-     * @param maxFillFixedFee Max fee cap (for testing)
+     * @notice Fills an order using a capped fixed fee (min of proportional fee and maxLimitFillFixedFee).
+     * @dev Accepts payment within a 10% tolerance window below the full fee. Final fee is derived from actual payment.
+     * @param user Buyer address filling the order.
+     * @param tokenA Token being bought by the filler.
+     * @param tokenB Token being sold by the filler.
+     * @param orderId Order slot to fill.
+     * @param amountOfTokenBToFill Amount of tokenB to pay.
+     * @param senderExecutor Address of the calling service (must match msg.sender).
+     * @param originExecutor Origin address for signature validation.
+     * @param nonce Async nonce for this operation.
+     * @param signature Fill authorization signature.
+     * @param priorityFeePay Optional priority fee for the executor.
+     * @param noncePay Nonce for the payment.
+     * @param signaturePay Signature for the payment.
+     * @param maxFillFixedFee Fee cap override (for testing).
      */
     function dispatchOrder_fillFixedFee(
         address user,
@@ -536,6 +458,11 @@ contract P2PSwap is EvvmService {
         _clearOrderAndUpdateMarket(market, orderId);
     }
 
+    /**
+     * @dev Computes proportional fill fee as a percentage of the order amount.
+     * @param amount Order tokenB amount.
+     * @return fee Fee in tokenB units.
+     */
     function calculateFillPropotionalFee(
         uint256 amount
     ) internal view returns (uint256 fee) {
@@ -543,6 +470,13 @@ contract P2PSwap is EvvmService {
         fee = (amount * percentageFee.current) / 10_000;
     }
 
+    /**
+     * @dev Computes the capped fixed fee and its 10% tolerance window.
+     * @param amount Order tokenB amount.
+     * @param maxFillFixedFee Absolute fee cap.
+     * @return fee Capped fee amount.
+     * @return fee10 10% of the fee (tolerance window).
+     */
     function calculateFillFixedFee(
         uint256 amount,
         uint256 maxFillFixedFee
@@ -700,6 +634,12 @@ contract P2PSwap is EvvmService {
         makeDisperseCaPay(toData, token, sellerAmount + executorAmount);
     }
 
+    /**
+     * @dev Registers a new market for a token pair.
+     * @param tokenA Token A address.
+     * @param tokenB Token B address.
+     * @return New market ID.
+     */
     function createMarket(
         address tokenA,
         address tokenB
@@ -719,6 +659,8 @@ contract P2PSwap is EvvmService {
     // Admin tools
     //◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
 
+    /// @notice Proposes a new owner with a 1-day acceptance window.
+    /// @param _owner Proposed owner address.
     function proposeOwner(address _owner) external {
         if (msg.sender != owner) {
             revert();
@@ -727,6 +669,7 @@ contract P2PSwap is EvvmService {
         owner_timeToAccept = block.timestamp + 1 days;
     }
 
+    /// @notice Cancels the pending owner proposal.
     function rejectProposeOwner() external {
         if (
             msg.sender != owner_proposal || block.timestamp > owner_timeToAccept
@@ -736,6 +679,7 @@ contract P2PSwap is EvvmService {
         owner_proposal = address(0);
     }
 
+    /// @notice Accepts the pending owner proposal, transferring ownership.
     function acceptOwner() external {
         if (
             msg.sender != owner_proposal || block.timestamp > owner_timeToAccept
@@ -746,6 +690,10 @@ contract P2PSwap is EvvmService {
         owner_proposal = address(0);
     }
 
+    /// @notice Proposes new reward split percentages for fixed-fee fills.
+    /// @param _seller Seller share in basis points.
+    /// @param _service Service share in basis points.
+    /// @param _mateStaker Staker share in basis points.
     function proposeFillFixedPercentage(
         uint256 _seller,
         uint256 _service,
@@ -765,6 +713,7 @@ contract P2PSwap is EvvmService {
         rewardPercentage_timeToAcceptNewChange = block.timestamp + 1 days;
     }
 
+    /// @notice Cancels the pending fixed-fee reward percentage proposal.
     function rejectProposeFillFixedPercentage() external {
         if (
             msg.sender != owner ||
@@ -775,6 +724,7 @@ contract P2PSwap is EvvmService {
         rewardPercentage_proposal = Structs.Percentage(0, 0, 0);
     }
 
+    /// @notice Applies the pending fixed-fee reward percentage proposal.
     function acceptFillFixedPercentage() external {
         if (
             msg.sender != owner ||
@@ -785,6 +735,10 @@ contract P2PSwap is EvvmService {
         rewardPercentage = rewardPercentage_proposal;
     }
 
+    /// @notice Proposes new reward split percentages for proportional-fee fills.
+    /// @param _seller Seller share in basis points.
+    /// @param _service Service share in basis points.
+    /// @param _mateStaker Staker share in basis points.
     function proposeFillPropotionalPercentage(
         uint256 _seller,
         uint256 _service,
@@ -801,6 +755,7 @@ contract P2PSwap is EvvmService {
         rewardPercentage_timeToAcceptNewChange = block.timestamp + 1 days;
     }
 
+    /// @notice Cancels the pending proportional-fee reward percentage proposal.
     function rejectProposeFillPropotionalPercentage() external {
         if (
             msg.sender != owner ||
@@ -811,6 +766,7 @@ contract P2PSwap is EvvmService {
         rewardPercentage_proposal = Structs.Percentage(0, 0, 0);
     }
 
+    /// @notice Applies the pending proportional-fee reward percentage proposal.
     function acceptFillPropotionalPercentage() external {
         if (
             msg.sender != owner ||
@@ -821,6 +777,8 @@ contract P2PSwap is EvvmService {
         rewardPercentage = rewardPercentage_proposal;
     }
 
+    /// @notice Proposes a new proportional fee percentage.
+    /// @param _percentageFee New fee in basis points (e.g. 500 = 5%).
     function proposePercentageFee(uint256 _percentageFee) external {
         if (msg.sender != owner) {
             revert();
@@ -829,6 +787,7 @@ contract P2PSwap is EvvmService {
         percentageFee.timeToAccept = block.timestamp + 1 days;
     }
 
+    /// @notice Cancels the pending percentage fee proposal.
     function rejectProposePercentageFee() external {
         if (
             msg.sender != owner || block.timestamp > percentageFee.timeToAccept
@@ -838,6 +797,7 @@ contract P2PSwap is EvvmService {
         percentageFee.proposal = 0;
     }
 
+    /// @notice Applies the pending percentage fee proposal.
     function acceptPercentageFee() external {
         if (
             msg.sender != owner || block.timestamp > percentageFee.timeToAccept
@@ -847,6 +807,8 @@ contract P2PSwap is EvvmService {
         percentageFee.current = percentageFee.proposal;
     }
 
+    /// @notice Proposes a new maximum fixed fee cap.
+    /// @param _maxLimitFillFixedFee New cap amount.
     function proposeMaxLimitFillFixedFee(
         uint256 _maxLimitFillFixedFee
     ) external {
@@ -857,6 +819,7 @@ contract P2PSwap is EvvmService {
         maxLimitFillFixedFee.timeToAccept = block.timestamp + 1 days;
     }
 
+    /// @notice Cancels the pending max fixed fee proposal.
     function rejectProposeMaxLimitFillFixedFee() external {
         if (
             msg.sender != owner ||
@@ -867,6 +830,7 @@ contract P2PSwap is EvvmService {
         maxLimitFillFixedFee.proposal = 0;
     }
 
+    /// @notice Applies the pending max fixed fee proposal.
     function acceptMaxLimitFillFixedFee() external {
         if (
             msg.sender != owner ||
@@ -877,6 +841,10 @@ contract P2PSwap is EvvmService {
         maxLimitFillFixedFee.current = maxLimitFillFixedFee.proposal;
     }
 
+    /// @notice Proposes a fee withdrawal with a 1-day timelock.
+    /// @param _tokenToWithdraw Token address to withdraw.
+    /// @param _amountToWithdraw Amount to withdraw.
+    /// @param _to Recipient address.
     function proposeWithdrawal(
         address _tokenToWithdraw,
         uint256 _amountToWithdraw,
@@ -894,6 +862,7 @@ contract P2PSwap is EvvmService {
         timeToWithdrawal = block.timestamp + 1 days;
     }
 
+    /// @notice Cancels the pending withdrawal proposal.
     function rejectProposeWithdrawal() external {
         if (msg.sender != owner || block.timestamp > timeToWithdrawal) {
             revert();
@@ -904,6 +873,7 @@ contract P2PSwap is EvvmService {
         timeToWithdrawal = 0;
     }
 
+    /// @notice Executes the pending withdrawal after the timelock.
     function acceptWithdrawal() external {
         if (msg.sender != owner || block.timestamp > timeToWithdrawal) {
             revert();
@@ -917,6 +887,8 @@ contract P2PSwap is EvvmService {
         timeToWithdrawal = 0;
     }
 
+    /// @notice Stakes MATE tokens from the service balance.
+    /// @param amount Number of staking slots to purchase.
     function stake(uint256 amount) external {
         if (
             msg.sender != owner ||
@@ -927,12 +899,17 @@ contract P2PSwap is EvvmService {
         _makeStakeService(amount);
     }
 
+    /// @notice Unstakes MATE tokens back to the service balance.
+    /// @param amount Number of staking slots to release.
     function unstake(uint256 amount) external {
         if (msg.sender != owner) revert();
 
         _makeUnstakeService(amount);
     }
 
+    /// @notice Manually records an added balance for a token (admin only, for accounting).
+    /// @param _token Token address.
+    /// @param _amount Amount to add.
     function addBalance(address _token, uint256 _amount) external {
         if (msg.sender != owner) {
             revert();
@@ -943,6 +920,9 @@ contract P2PSwap is EvvmService {
     //◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
     //getters
     //◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢
+    /// @notice Returns all active orders in a market.
+    /// @param market Market ID.
+    /// @return orders Array of orders with market and slot info.
     function getAllMarketOrders(
         uint256 market
     ) public view returns (Structs.OrderForGetter[] memory orders) {
@@ -964,6 +944,10 @@ contract P2PSwap is EvvmService {
         return orders;
     }
 
+    /// @notice Returns a single order by market and order ID.
+    /// @param market Market ID.
+    /// @param orderId Order slot index.
+    /// @return order Order data.
     function getOrder(
         uint256 market,
         uint256 orderId
@@ -972,6 +956,10 @@ contract P2PSwap is EvvmService {
         return order;
     }
 
+    /// @notice Returns all orders placed by a user in a specific market.
+    /// @param user Seller address.
+    /// @param market Market ID.
+    /// @return orders Array of matching orders.
     function getMyOrdersInSpecificMarket(
         address user,
         uint256 market
@@ -994,6 +982,10 @@ contract P2PSwap is EvvmService {
         return orders;
     }
 
+    /// @notice Returns the market ID for a token pair, or 0 if it doesn't exist.
+    /// @param tokenA Token A address.
+    /// @param tokenB Token B address.
+    /// @return Market ID.
     function findMarket(
         address tokenA,
         address tokenB
@@ -1001,12 +993,17 @@ contract P2PSwap is EvvmService {
         return marketId[tokenA][tokenB];
     }
 
+    /// @notice Returns metadata for a specific market.
+    /// @param market Market ID.
+    /// @return Market info struct.
     function getMarketMetadata(
         uint256 market
     ) public view returns (Structs.MarketInformation memory) {
         return marketMetadata[market];
     }
 
+    /// @notice Returns metadata for all markets.
+    /// @return Array of all market info structs.
     function getAllMarketsMetadata()
         public
         view
@@ -1020,24 +1017,31 @@ contract P2PSwap is EvvmService {
         return markets;
     }
 
+    /// @notice Returns the accumulated service fee balance for a token.
+    /// @param token Token address.
+    /// @return Accumulated fee balance.
     function getBalanceOfContract(
         address token
     ) external view returns (uint256) {
         return balancesOfContract[token];
     }
 
+    /// @notice Returns the proposed new owner address.
     function getOwnerProposal() external view returns (address) {
         return owner_proposal;
     }
 
+    /// @notice Returns the current owner address.
     function getOwner() external view returns (address) {
         return owner;
     }
 
+    /// @notice Returns the deadline for accepting the owner proposal.
     function getOwnerTimeToAccept() external view returns (uint256) {
         return owner_timeToAccept;
     }
 
+    /// @notice Returns the pending fee split percentage proposal.
     function getRewardPercentageProposal()
         external
         view
@@ -1046,6 +1050,7 @@ contract P2PSwap is EvvmService {
         return rewardPercentage_proposal;
     }
 
+    /// @notice Returns the current fee split percentages.
     function getRewardPercentage()
         external
         view
@@ -1054,22 +1059,28 @@ contract P2PSwap is EvvmService {
         return rewardPercentage;
     }
 
+    /// @notice Returns the proposed new percentage fee.
     function getProposalPercentageFee() external view returns (uint256) {
         return percentageFee.proposal;
     }
 
+    /// @notice Returns the current percentage fee in basis points.
     function getPercentageFee() external view returns (uint256) {
         return percentageFee.current;
     }
 
+    /// @notice Returns the proposed new max fixed fee cap.
     function getMaxLimitFillFixedFeeProposal() external view returns (uint256) {
         return maxLimitFillFixedFee.proposal;
     }
 
+    /// @notice Returns the current max fixed fee cap.
     function getMaxLimitFillFixedFee() external view returns (uint256) {
         return maxLimitFillFixedFee.current;
     }
 
+    /// @notice Returns the details of the pending withdrawal proposal.
+    /// @return Token address, amount, recipient, and deadline.
     function getProposedWithdrawal()
         external
         view
