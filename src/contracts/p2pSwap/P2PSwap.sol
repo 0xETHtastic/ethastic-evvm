@@ -10,13 +10,9 @@ import {
     P2PSwapStructs as Structs
 } from "@evvm/testnet-contracts/library/structs/P2PSwapStructs.sol";
 
-import {Staking} from "@evvm/testnet-contracts/contracts/staking/Staking.sol";
 import {EvvmService} from "@evvm/testnet-contracts/library/EvvmService.sol";
 import {CoreStructs} from "@evvm/testnet-contracts/interfaces/ICore.sol";
 
-import {
-    AdvancedStrings
-} from "@evvm/testnet-contracts/library/utils/AdvancedStrings.sol";
 import {
     ProposalStructs
 } from "@evvm/testnet-contracts/library/utils/governance/ProposalStructs.sol";
