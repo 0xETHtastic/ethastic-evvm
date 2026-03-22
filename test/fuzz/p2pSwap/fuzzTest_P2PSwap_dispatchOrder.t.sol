@@ -70,7 +70,7 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForMakeOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+               address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -90,13 +90,13 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -114,6 +114,7 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             tokenB,
             amountA,
             amountB,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -191,7 +192,7 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 input.nonceP2PSwap,
                 tokenA,
@@ -212,13 +213,13 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountToFill,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -242,6 +243,7 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             tokenB,
             orderId,
             amountToFill,
+            address(0),
             address(0),
             input.nonceP2PSwap,
             signatureP2P,
@@ -358,7 +360,7 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispatchOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+                address(0),
                 address(0),
                 input.nonceP2PSwap,
                 tokenA,
@@ -379,13 +381,13 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             COMMON_USER_NO_STAKER_2.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenB,
                 amountToFill,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -409,6 +411,7 @@ contract fuzzTest_P2PSwap_dispatchOrder is Test, Constants {
             tokenB,
             orderId,
             amountToFill,
+            address(0),
             address(0),
             input.nonceP2PSwap,
             signatureP2P,

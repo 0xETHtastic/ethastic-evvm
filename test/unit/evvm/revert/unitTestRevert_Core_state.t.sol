@@ -45,7 +45,7 @@ contract unitTestRevert_Core_state is Test, Constants {
         bool testD;
     }
 
-    function test__unit_revert__validateAndConsumeNonce__MsgSenderIsNotAContract()
+    function test__unit_revert__validateAndConsumeNonce__SenderMismatch()
         external
     {
         InputsValidateAndConsumeNonce
@@ -58,21 +58,24 @@ contract unitTestRevert_Core_state is Test, Constants {
             });
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            WILDCARD_USER.Address,
             address(0),
             67,
             true
         );
 
-        /* 🢃 non CA tries to interact 🢃 */
-        vm.startPrank(COMMON_USER_NO_STAKER_2.Address);
-        vm.expectRevert(CoreError.MsgSenderIsNotAContract.selector);
+        vm.startPrank(
+            COMMON_USER_NO_STAKER_2.Address,
+            COMMON_USER_NO_STAKER_2.Address
+        );
+        vm.expectRevert(CoreError.SenderMismatch.selector);
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            WILDCARD_USER.Address,
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -83,6 +86,54 @@ contract unitTestRevert_Core_state is Test, Constants {
                 )
             ),
             address(0),
+            67,
+            true,
+            signature
+        );
+        vm.stopPrank();
+    }
+
+    function test__unit_revert__validateAndConsumeNonce__OriginMismatch()
+        external
+    {
+        InputsValidateAndConsumeNonce
+            memory inputs = InputsValidateAndConsumeNonce({
+                user: COMMON_USER_NO_STAKER_1,
+                testA: "textTest",
+                testB: 123,
+                testC: address(321),
+                testD: false
+            });
+        bytes memory signature = _executeSig_state_test(
+            COMMON_USER_NO_STAKER_1,
+            inputs.testA,
+            inputs.testB,
+            inputs.testC,
+            inputs.testD,
+            address(0),
+            WILDCARD_USER.Address,
+            67,
+            true
+        );
+
+        vm.startPrank(
+            COMMON_USER_NO_STAKER_2.Address,
+            COMMON_USER_NO_STAKER_2.Address
+        );
+        vm.expectRevert(CoreError.OriginMismatch.selector);
+        core.validateAndConsumeNonce(
+            COMMON_USER_NO_STAKER_1.Address,
+            address(0),
+            keccak256(
+                abi.encode(
+                    "StateTest",
+                    inputs.testA,
+                    inputs.testB,
+                    inputs.testC,
+                    inputs.testD
+                )
+            ),
+            WILDCARD_USER.Address,
             67,
             true,
             signature
@@ -103,11 +154,11 @@ contract unitTestRevert_Core_state is Test, Constants {
             });
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             67,
             true
@@ -116,6 +167,7 @@ contract unitTestRevert_Core_state is Test, Constants {
         vm.expectRevert(CoreError.InvalidSignature.selector);
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             /* 🢃 diferent input compared to signature 🢃 */
             keccak256(
                 abi.encode(
@@ -152,11 +204,11 @@ contract unitTestRevert_Core_state is Test, Constants {
             });
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             67,
             true
@@ -165,6 +217,7 @@ contract unitTestRevert_Core_state is Test, Constants {
         vm.expectRevert(CoreError.UserCannotExecuteTransaction.selector);
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -195,22 +248,22 @@ contract unitTestRevert_Core_state is Test, Constants {
 
         _executeFn_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             "textTest",
             123,
             address(321),
             false,
+            address(0),
             address(0),
             67,
             true
         );
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             67,
             true
@@ -219,6 +272,7 @@ contract unitTestRevert_Core_state is Test, Constants {
         vm.expectRevert(CoreError.AsyncNonceAlreadyUsed.selector);
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -253,11 +307,11 @@ contract unitTestRevert_Core_state is Test, Constants {
 
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             67,
             true
@@ -268,6 +322,7 @@ contract unitTestRevert_Core_state is Test, Constants {
         );
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -300,11 +355,11 @@ contract unitTestRevert_Core_state is Test, Constants {
         );
         _executeFn_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             "textTest",
             123,
             address(321),
             false,
+            address(0),
             address(0),
             currentSyncNonce,
             false
@@ -312,11 +367,11 @@ contract unitTestRevert_Core_state is Test, Constants {
 
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             currentSyncNonce,
             false
@@ -325,6 +380,7 @@ contract unitTestRevert_Core_state is Test, Constants {
         vm.expectRevert(CoreError.SyncNonceMismatch.selector);
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -341,45 +397,6 @@ contract unitTestRevert_Core_state is Test, Constants {
         );
     }
 
-    function test__unit_correct__validateAndConsumeNonce_OriginIsNotTheOriginExecutor()
-        external
-    {
-        InputsValidateAndConsumeNonce
-            memory inputs = InputsValidateAndConsumeNonce({
-                user: COMMON_USER_NO_STAKER_1,
-                testA: "textTest",
-                testB: 123,
-                testC: address(321),
-                testD: false
-            });
-        bytes memory signature = _executeSig_state_test(
-            COMMON_USER_NO_STAKER_1,
-            address(helper),
-            inputs.testA,
-            inputs.testB,
-            inputs.testC,
-            inputs.testD,
-            COMMON_USER_NO_STAKER_2.Address,
-            67,
-            true
-        );
-
-        vm.startPrank(WILDCARD_USER.Address, WILDCARD_USER.Address);
-        vm.expectRevert(CoreError.OriginIsNotTheOriginExecutor.selector);
-        helper.StateTest(
-            COMMON_USER_NO_STAKER_1.Address,
-            inputs.testA,
-            inputs.testB,
-            inputs.testC,
-            inputs.testD,
-            COMMON_USER_NO_STAKER_2.Address,
-            67,
-            true,
-            signature
-        );
-        vm.stopPrank();
-    }
-
     function test__unit_revert__reserveAsyncNonce__InvalidServiceAddress()
         external
     {
@@ -394,11 +411,11 @@ contract unitTestRevert_Core_state is Test, Constants {
     {
         _executeFn_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             "textTest",
             123,
             address(321),
             false,
+            address(0),
             address(0),
             67,
             true
@@ -428,11 +445,11 @@ contract unitTestRevert_Core_state is Test, Constants {
     {
         _executeFn_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             "textTest",
             123,
             address(321),
             false,
+            address(0),
             address(0),
             67,
             true

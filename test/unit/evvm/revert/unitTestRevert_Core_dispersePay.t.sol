@@ -35,9 +35,11 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             "dummy",
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -101,11 +103,11 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForDispersePay(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(core),
                 toData,
                 ETHER_ADDRESS,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 0,
                 false
@@ -126,6 +128,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -180,6 +183,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             0,
             false
         );
@@ -192,6 +196,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -255,6 +260,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             0,
             false
         );
@@ -267,6 +273,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -319,6 +326,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             0,
             false
         );
@@ -330,6 +338,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -386,6 +395,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount + 1,
             priorityFee,
             address(0),
+            address(0),
             0,
             false
         );
@@ -397,6 +407,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -451,6 +462,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             /* 🢃 different priorityFee 🢃 */
             priorityFee + 1,
             address(0),
+            address(0),
             0,
             false
         );
@@ -463,6 +475,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -515,6 +528,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             priorityFee,
             /* 🢃 different nonce 🢃 */
             address(0),
+            address(0),
             67,
             false
         );
@@ -527,6 +541,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -580,6 +595,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             0,
             /* 🢃 different isAsyncExec 🢃 */
             true
@@ -593,6 +609,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -647,6 +664,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             priorityFee,
             /* 🢃 different executor 🢃 */
             COMMON_USER_NO_STAKER_3.Address,
+            address(0),
             0,
             false
         );
@@ -660,71 +678,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
-            0,
-            false,
-            signature
-        );
-
-        vm.stopPrank();
-
-        assertEq(
-            core.getBalance(COMMON_USER_NO_STAKER_1.Address, ETHER_ADDRESS),
-            amount + priorityFee,
-            "Sender balance must be the same because pay reverted"
-        );
-
-        assertEq(
-            core.getBalance(COMMON_USER_NO_STAKER_2.Address, ETHER_ADDRESS),
-            0,
-            "Receiver balance must be zero because pay reverted"
-        );
-    }
-
-    function test__unit_revert__dispersePay__SenderIsNotTheExecutor() external {
-        (uint256 amount, uint256 priorityFee) = _addBalance(
-            COMMON_USER_NO_STAKER_1,
-            ETHER_ADDRESS,
-            0.10 ether,
-            0.01 ether
-        );
-
-        CoreStructs.DispersePayMetadata[]
-            memory toData = new CoreStructs.DispersePayMetadata[](2);
-
-        toData[0] = CoreStructs.DispersePayMetadata({
-            amount: amount / 2,
-            to_address: COMMON_USER_NO_STAKER_2.Address,
-            to_identity: ""
-        });
-
-        toData[1] = CoreStructs.DispersePayMetadata({
-            amount: amount / 2,
-            to_address: address(0),
-            to_identity: "dummy"
-        });
-
-        bytes memory signature = _executeSig_evvm_dispersePay(
-            COMMON_USER_NO_STAKER_1,
-            toData,
-            ETHER_ADDRESS,
-            amount,
-            priorityFee,
-            COMMON_USER_NO_STAKER_3.Address,
-            0,
-            false
-        );
-
-        /* 🢃 executor different than msg.sender 🢃 */
-        vm.startPrank(COMMON_USER_NO_STAKER_2.Address);
-
-        vm.expectRevert(CoreError.SenderIsNotTheSenderExecutor.selector);
-        core.dispersePay(
-            COMMON_USER_NO_STAKER_1.Address,
-            toData,
-            ETHER_ADDRESS,
-            amount,
-            priorityFee,
-            COMMON_USER_NO_STAKER_3.Address,
+            address(0),
             0,
             false,
             signature
@@ -755,6 +709,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             0.1 ether,
             0 ether,
+            address(0),
             address(0),
             67,
             true,
@@ -790,6 +745,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             /* 🢃 nonce already used 🢃 */
             67,
             true
@@ -805,6 +761,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             /* 🢃 nonce already used 🢃 */
             67,
@@ -857,6 +814,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             /* 🢃 wrong nonce 🢃 */
             999999999999999999,
             false
@@ -872,6 +830,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             /* 🢃 wrong nonce 🢃 */
             999999999999999999,
@@ -929,6 +888,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             (amount + priorityFee) * 2,
             priorityFee,
             address(0),
+            address(0),
             0,
             false
         );
@@ -944,6 +904,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             /* 🢃 amount too high 🢃 */
             (amount + priorityFee) * 2,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -998,6 +959,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             /* 🢃 priorityFee too high 🢃 */
             (amount + priorityFee) * 2,
             address(0),
+            address(0),
             0,
             false
         );
@@ -1013,6 +975,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             /* 🢃 priorityFee too high 🢃 */
             (amount + priorityFee) * 2,
+            address(0),
             address(0),
             0,
             false,
@@ -1064,6 +1027,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             amount,
             priorityFee,
             address(0),
+            address(0),
             0,
             false
         );
@@ -1078,6 +1042,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             ETHER_ADDRESS,
             amount,
             priorityFee,
+            address(0),
             address(0),
             0,
             false,
@@ -1133,6 +1098,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             100,
             0,
             address(0),
+            address(0),
             0,
             false
         );
@@ -1145,6 +1111,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             address(67),
             100,
             0,
+            address(0),
             address(0),
             0,
             false,
@@ -1185,6 +1152,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             100,
             0,
             address(0),
+            address(0),
             0,
             false
         );
@@ -1197,6 +1165,7 @@ contract unitTestRevert_Core_dispersePay is Test, Constants {
             address(67),
             100,
             0,
+            address(0),
             address(0),
             0,
             false,

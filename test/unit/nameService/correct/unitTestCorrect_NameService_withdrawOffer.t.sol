@@ -53,9 +53,11 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -70,6 +72,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             USERNAME,
             AMOUNT_OFFER,
             EXPIRATION_DATE,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
@@ -119,6 +122,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -131,6 +135,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -193,6 +198,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -205,6 +211,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -267,6 +274,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -279,6 +287,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -339,6 +348,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -351,6 +361,7 @@ contract unitTestCorrect_NameService_withdrawOffer is Test, Constants {
             params.username,
             params.offerID,
             address(0),
+            address(0), 
             params.nonce,
             params.signatureNameService,
             params.priorityFee,

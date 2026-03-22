@@ -218,7 +218,8 @@ abstract contract Constants is Test {
         address tokenAddress,
         uint256 amount,
         uint256 priorityFee,
-        address executor,
+        address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec
     ) internal virtual returns (bytes memory signaturePay) {
@@ -226,13 +227,13 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 toAddress,
                 toIdentity,
                 tokenAddress,
                 amount,
                 priorityFee,
-                executor,
+                senderExecutor,
+                originExecutor,
                 nonce,
                 isAsyncExec
             )
@@ -247,7 +248,8 @@ abstract contract Constants is Test {
         address tokenAddress,
         uint256 amount,
         uint256 priorityFee,
-        address executor,
+        address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         address fisher
@@ -259,12 +261,13 @@ abstract contract Constants is Test {
             tokenAddress,
             amount,
             priorityFee,
-            executor,
+            senderExecutor,
+            originExecutor,
             nonce,
             isAsyncExec
         );
 
-        vm.startPrank(fisher);
+        vm.startPrank(fisher, fisher);
         core.pay(
             user.Address,
             toAddress,
@@ -272,7 +275,8 @@ abstract contract Constants is Test {
             tokenAddress,
             amount,
             priorityFee,
-            executor,
+            senderExecutor,
+            originExecutor,
             nonce,
             isAsyncExec,
             signature
@@ -286,7 +290,8 @@ abstract contract Constants is Test {
         address tokenAddress,
         uint256 amount,
         uint256 priorityFee,
-        address executor,
+        address senderExecutor,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec
     ) internal virtual returns (bytes memory signaturePay) {
@@ -294,12 +299,12 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForDispersePay(
                 core.getEvvmID(),
-                address(core),
                 toData,
                 tokenAddress,
                 amount,
                 priorityFee,
-                executor,
+                senderExecutor,
+                originExecutor,
                 nonce,
                 isAsyncExec
             )
@@ -311,6 +316,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         uint256 lockNumber,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFeeAmount,
@@ -324,8 +330,8 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPreRegistrationUsername(
                 core.getEvvmID(),
-                address(nameService),
                 keccak256(abi.encodePacked(username, lockNumber)),
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -341,6 +347,7 @@ abstract contract Constants is Test {
                 0,
                 priorityFeeAmount,
                 address(nameService),
+                originExecutor,
                 noncePay,
                 true
             )
@@ -351,6 +358,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         uint256 lockNumber,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce
     ) internal virtual {
@@ -361,6 +369,7 @@ abstract contract Constants is Test {
                 user,
                 username,
                 lockNumber,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 0,
@@ -370,6 +379,7 @@ abstract contract Constants is Test {
         nameService.preRegistrationUsername(
             user.Address,
             keccak256(abi.encodePacked(username, uint256(lockNumber))),
+            senderExecutor,
             originExecutor,
             nonce,
             signature,
@@ -383,6 +393,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         uint256 lockNumber,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -400,9 +411,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForRegistrationUsername(
                 core.getEvvmID(),
-                address(nameService),
                 username,
                 lockNumber,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -417,6 +428,7 @@ abstract contract Constants is Test {
             nameService.getPriceOfRegistration(username),
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -426,8 +438,10 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         uint256 lockNumber,
+        address senderExecutorPreRegister,
         address originExecutorPreRegister,
         uint256 noncePreRegister,
+        address senderExecutorRegister,
         address originExecutorRegister,
         uint256 nonceRegister,
         uint256 noncePay
@@ -436,6 +450,7 @@ abstract contract Constants is Test {
             user,
             username,
             lockNumber,
+            senderExecutorPreRegister,
             originExecutorPreRegister,
             noncePreRegister
         );
@@ -455,6 +470,7 @@ abstract contract Constants is Test {
                 user,
                 username,
                 lockNumber,
+                senderExecutorRegister,
                 originExecutorRegister,
                 nonceRegister,
                 0,
@@ -465,6 +481,7 @@ abstract contract Constants is Test {
             user.Address,
             username,
             lockNumber,
+            senderExecutorRegister,
             originExecutorRegister,
             nonceRegister,
             signatureNameService,
@@ -479,6 +496,7 @@ abstract contract Constants is Test {
         string memory usernameToMakeOffer,
         uint256 amountToOffer,
         uint256 expirationDate,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -496,10 +514,10 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForMakeOffer(
                 core.getEvvmID(),
-                address(nameService),
                 usernameToMakeOffer,
                 amountToOffer,
                 expirationDate,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -514,6 +532,7 @@ abstract contract Constants is Test {
             amountToOffer,
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -524,6 +543,7 @@ abstract contract Constants is Test {
         string memory usernameToMakeOffer,
         uint256 amountToOffer,
         uint256 expirationDate,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -544,18 +564,20 @@ abstract contract Constants is Test {
                 usernameToMakeOffer,
                 amountToOffer,
                 expirationDate,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 priorityFee,
                 noncePay
             );
 
-        vm.startPrank(fisher.Address);
+        vm.startPrank(fisher.Address, fisher.Address);
         offerID = nameService.makeOffer(
             user.Address,
             usernameToMakeOffer,
             amountToOffer,
             expirationDate,
+            senderExecutor,
             originExecutor,
             nonce,
             signatureNameService,
@@ -570,6 +592,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory usernameToFindOffer,
         uint256 index,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -583,9 +606,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForWithdrawOffer(
                 core.getEvvmID(),
-                address(nameService),
                 usernameToFindOffer,
                 index,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -601,6 +624,7 @@ abstract contract Constants is Test {
                 0,
                 priorityFee,
                 address(nameService),
+                originExecutor,
                 noncePay,
                 true
             )
@@ -611,6 +635,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory usernameToFindOffer,
         uint256 index,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -624,9 +649,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForAcceptOffer(
                 core.getEvvmID(),
-                address(nameService),
                 usernameToFindOffer,
                 index,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -642,6 +667,7 @@ abstract contract Constants is Test {
                 0,
                 priorityFee,
                 address(nameService),
+                originExecutor,
                 noncePay,
                 true
             )
@@ -651,6 +677,7 @@ abstract contract Constants is Test {
     function _executeSig_nameService_renewUsername(
         AccountData memory user,
         string memory usernameToRenew,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -664,8 +691,8 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForRenewUsername(
                 core.getEvvmID(),
-                address(nameService),
                 usernameToRenew,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -680,6 +707,7 @@ abstract contract Constants is Test {
             nameService.seePriceToRenew(usernameToRenew),
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -688,6 +716,7 @@ abstract contract Constants is Test {
     function _executeFn_nameService_renewUsername(
         AccountData memory user,
         string memory usernameToRenew,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -700,17 +729,19 @@ abstract contract Constants is Test {
         ) = _executeSig_nameService_renewUsername(
                 user,
                 usernameToRenew,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 priorityFee,
                 noncePay
             );
 
-        vm.startPrank(fisher.Address);
+        vm.startPrank(fisher.Address, fisher.Address);
 
         nameService.renewUsername(
             user.Address,
             usernameToRenew,
+            senderExecutor,
             originExecutor,
             nonce,
             signatureNameService,
@@ -726,6 +757,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         string memory customMetadata,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -739,9 +771,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForAddCustomMetadata(
                 core.getEvvmID(),
-                address(nameService),
                 username,
                 customMetadata,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -756,6 +788,7 @@ abstract contract Constants is Test {
             nameService.getPriceToAddCustomMetadata(),
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -765,6 +798,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         string memory customMetadata,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 noncePay
@@ -782,6 +816,7 @@ abstract contract Constants is Test {
                 user,
                 username,
                 customMetadata,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 0,
@@ -792,6 +827,7 @@ abstract contract Constants is Test {
             user.Address,
             username,
             customMetadata,
+            senderExecutor,
             originExecutor,
             nonce,
             signatureNameService,
@@ -805,6 +841,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         string memory username,
         uint256 indexCustomMetadata,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -818,9 +855,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForRemoveCustomMetadata(
                 core.getEvvmID(),
-                address(nameService),
                 username,
                 indexCustomMetadata,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -836,6 +873,7 @@ abstract contract Constants is Test {
             nameService.getPriceToRemoveCustomMetadata(),
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -844,6 +882,7 @@ abstract contract Constants is Test {
     function _executeSig_nameService_flushCustomMetadata(
         AccountData memory user,
         string memory username,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -857,8 +896,8 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForFlushCustomMetadata(
                 core.getEvvmID(),
-                address(nameService),
                 username,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -873,6 +912,7 @@ abstract contract Constants is Test {
             nameService.getPriceToFlushCustomMetadata(username),
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -881,6 +921,7 @@ abstract contract Constants is Test {
     function _executeSig_nameService_flushUsername(
         AccountData memory user,
         string memory username,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -894,8 +935,8 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForFlushUsername(
                 core.getEvvmID(),
-                address(nameService),
                 username,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -910,6 +951,7 @@ abstract contract Constants is Test {
             nameService.getPriceToFlushUsername(username),
             priorityFee,
             address(nameService),
+            originExecutor,
             noncePay,
             true
         );
@@ -928,6 +970,7 @@ abstract contract Constants is Test {
                 (staking.priceOfStaking() * amount),
                 0,
                 address(staking),
+                address(0),
                 core.getNextCurrentSyncNonce(GOLDEN_STAKER.Address),
                 false
             )
@@ -952,6 +995,7 @@ abstract contract Constants is Test {
     function _executeSig_staking_presaleStaking(
         AccountData memory user,
         bool isStaking,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -965,9 +1009,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPresaleStaking(
                 core.getEvvmID(),
-                address(staking),
                 isStaking,
                 1,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -982,6 +1026,7 @@ abstract contract Constants is Test {
             isStaking ? staking.priceOfStaking() : 0,
             priorityFee,
             address(staking),
+            originExecutor,
             noncePay,
             true
         );
@@ -990,6 +1035,7 @@ abstract contract Constants is Test {
     function _executeFn_staking_presaleStaking(
         AccountData memory user,
         bool isStaking,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFee,
@@ -1002,17 +1048,19 @@ abstract contract Constants is Test {
         ) = _executeSig_staking_presaleStaking(
                 user,
                 isStaking,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 priorityFee,
                 noncePay
             );
 
-        vm.startPrank(fisher.Address);
+        vm.startPrank(fisher.Address, fisher.Address);
 
         staking.presaleStaking(
             user.Address,
             isStaking,
+            senderExecutor,
             originExecutor,
             nonce,
             signatureStaking,
@@ -1028,6 +1076,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         bool isStaking,
         uint256 amountOfStaking,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFeePay,
@@ -1041,9 +1090,9 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPublicStaking(
                 core.getEvvmID(),
-                address(staking),
                 isStaking,
                 amountOfStaking,
+                senderExecutor,
                 originExecutor,
                 nonce
             )
@@ -1058,6 +1107,7 @@ abstract contract Constants is Test {
             isStaking ? staking.priceOfStaking() * amountOfStaking : 0,
             priorityFeePay,
             address(staking),
+            originExecutor,
             noncePay,
             true
         );
@@ -1067,6 +1117,7 @@ abstract contract Constants is Test {
         AccountData memory user,
         bool isStaking,
         uint256 amountOfStaking,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         uint256 priorityFeePay,
@@ -1080,18 +1131,20 @@ abstract contract Constants is Test {
                 user,
                 isStaking,
                 amountOfStaking,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 priorityFeePay,
                 noncePay
             );
 
-        vm.startPrank(fisher.Address);
+        vm.startPrank(fisher.Address, fisher.Address);
 
         staking.publicStaking(
             user.Address,
             isStaking,
             amountOfStaking,
+            senderExecutor,
             originExecutor,
             nonce,
             signatureStaking,
@@ -1105,11 +1158,11 @@ abstract contract Constants is Test {
 
     function _executeSig_state_test(
         AccountData memory user,
-        address servicePointer,
         string memory testA,
         uint256 testB,
         address testC,
         bool testD,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bool isAsyncExec
@@ -1118,11 +1171,11 @@ abstract contract Constants is Test {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForStateTest(
                 core.getEvvmID(),
-                servicePointer,
                 testA,
                 testB,
                 testC,
                 testD,
+                senderExecutor,
                 originExecutor,
                 nonce,
                 isAsyncExec
@@ -1133,22 +1186,22 @@ abstract contract Constants is Test {
 
     function _executeFn_state_test(
         AccountData memory user,
-        address servicePointer,
         string memory testA,
         uint256 testB,
         address testC,
         bool testD,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bool isAsyncExec
     ) internal virtual {
         bytes memory signature = _executeSig_state_test(
             user,
-            servicePointer,
             testA,
             testB,
             testC,
             testD,
+            senderExecutor,
             originExecutor,
             nonce,
             isAsyncExec
@@ -1156,6 +1209,7 @@ abstract contract Constants is Test {
 
         core.validateAndConsumeNonce(
             user.Address,
+            senderExecutor,
             keccak256(abi.encode("StateTest", testA, testB, testC, testD)),
             originExecutor,
             nonce,
@@ -1236,12 +1290,12 @@ contract TestERC20 is ERC20 {
         _mint(to, amount);
     }
 
-    function name() public view override returns (string memory) {
+    function name() public pure override returns (string memory) {
         return "TestToken";
     }
 
     /// @dev Returns the symbol of the token.
-    function symbol() public view override returns (string memory) {
+    function symbol() public pure override returns (string memory) {
         return "TTK";
     }
 }
@@ -1264,9 +1318,7 @@ contract HelperCa {
     ) public {
         core.disperseCaPay(toData, token, totalAmount);
     }
-
 }
-
 
 contract HelperStateTest {
     Core core;
@@ -1281,6 +1333,7 @@ contract HelperStateTest {
         uint256 testB,
         address testC,
         bool testD,
+        address senderExecutor,
         address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
@@ -1288,6 +1341,7 @@ contract HelperStateTest {
     ) public {
         core.validateAndConsumeNonce(
             user,
+            senderExecutor,
             keccak256(abi.encode("StateTest", testA, testB, testC, testD)),
             originExecutor,
             nonce,

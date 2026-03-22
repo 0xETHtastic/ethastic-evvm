@@ -73,7 +73,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForMakeOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+               address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -90,13 +90,13 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             user.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -110,6 +110,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             tokenB,
             amountA,
             amountB,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -161,7 +162,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForCancelOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+               address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -176,13 +177,13 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -196,6 +197,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             tokenA,
             tokenB,
             orderId,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -268,7 +270,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForCancelOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+               address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -282,13 +284,13 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -302,6 +304,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             tokenA,
             tokenB,
             orderId,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -334,7 +337,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForCancelOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+               address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -348,13 +351,13 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay,
                 true
             )
@@ -368,6 +371,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             tokenA,
             tokenB,
             1,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,
@@ -422,7 +426,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForCancelOrder(
                 core.getEvvmID(),
-                address(p2pSwap),
+               address(0),
                 address(0),
                 nonceP2PSwap,
                 tokenA,
@@ -441,13 +445,13 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(p2pSwap),
                 "",
                 tokenA,
                 amountA,
                 priorityFee,
                 address(p2pSwap),
+                address(0),
                 noncePay, // we use the same nonce here
                 true
             )
@@ -465,6 +469,7 @@ contract unitTestRevert_P2PSwap_cancelOrder is Test, Constants {
             tokenA,
             tokenB,
             orderId,
+            address(0),
             address(0),
             nonceP2PSwap,
             signatureP2P,

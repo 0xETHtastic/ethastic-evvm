@@ -63,8 +63,8 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForPreRegistrationUsername(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(core),
                 keccak256(abi.encodePacked("test", uint256(10101))),
+                address(0),
                 address(0),
                 nonce
             )
@@ -78,6 +78,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
         nameService.preRegistrationUsername(
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked("test", uint256(10101))),
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -115,6 +116,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
                 username,
                 lockNumber,
                 address(0),
+                address(0),
                 nonce,
                 0,
                 0
@@ -126,6 +128,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
         nameService.preRegistrationUsername(
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked(username, uint256(lockNumber))),
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -162,6 +165,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
                 username,
                 lockNumber,
                 address(0),
+                address(0),
                 /* 🢃 different nonce 🢃 */
                 nonce + 67,
                 0,
@@ -174,6 +178,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
         nameService.preRegistrationUsername(
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked(username, uint256(lockNumber))),
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -211,6 +216,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
                 "wrongusername",
                 67,
                 address(0),
+                address(0),
                 nonce,
                 0,
                 0
@@ -222,6 +228,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
         nameService.preRegistrationUsername(
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked(username, uint256(lockNumber))),
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -256,6 +263,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
             "testdifferent",
             67,
             address(0),
+            address(0),
             nonce
         );
 
@@ -266,6 +274,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
                 COMMON_USER_NO_STAKER_1,
                 username,
                 lockNumber,
+                address(0),
                 address(0),
                 /* 🢃 nonce already used 🢃 */
                 nonce,
@@ -280,6 +289,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked(username, lockNumber)),
             /* 🢃 nonce already used 🢃 */
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -317,6 +327,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
                 username,
                 lockNumber,
                 address(0),
+                address(0),
                 nonce,
                 0.0001 ether,
                 6767
@@ -328,6 +339,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
         nameService.preRegistrationUsername(
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked(username, uint256(lockNumber))),
+            address(0),
             address(0),
             nonce,
             signatureNameService,
@@ -365,6 +377,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
                 username,
                 lockNumber,
                 address(0),
+                address(0),
                 nonce,
                 0.1 ether,
                 676767
@@ -377,6 +390,7 @@ contract unitTestRevert_NameService_preRegistrationUsername is Test, Constants {
         nameService.preRegistrationUsername(
             COMMON_USER_NO_STAKER_1.Address,
             keccak256(abi.encodePacked(username, uint256(lockNumber))),
+            address(0),
             address(0),
             nonce,
             signatureNameService,

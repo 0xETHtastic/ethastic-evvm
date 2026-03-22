@@ -51,9 +51,11 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -111,6 +113,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params1.identity,
             params1.value,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -122,6 +125,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params1.user.Address,
             params1.identity,
             params1.value,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -170,6 +174,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params2.identity,
             params2.value,
             address(0),
+            address(0),
             params2.nonce,
             params2.priorityFee,
             params2.noncePay
@@ -181,6 +186,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params2.user.Address,
             params2.identity,
             params2.value,
+            address(0),
             address(0),
             params2.nonce,
             params2.signatureNameService,
@@ -253,6 +259,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params1.identity,
             params1.value,
             address(0),
+            address(0),
             params1.nonce,
             params1.priorityFee,
             params1.noncePay
@@ -268,6 +275,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params1.user.Address,
             params1.identity,
             params1.value,
+            address(0),
             address(0),
             params1.nonce,
             params1.signatureNameService,
@@ -316,6 +324,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params2.identity,
             params2.value,
             address(0),
+            address(0),
             params2.nonce,
             params2.priorityFee,
             params2.noncePay
@@ -331,6 +340,7 @@ contract unitTestCorrect_NameService_addCustomMetadata is Test, Constants {
             params2.user.Address,
             params2.identity,
             params2.value,
+            address(0),
             address(0),
             params2.nonce,
             params2.signatureNameService,

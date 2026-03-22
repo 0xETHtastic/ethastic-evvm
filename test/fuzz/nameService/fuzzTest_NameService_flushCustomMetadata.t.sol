@@ -46,9 +46,11 @@ contract fuzzTest_NameService_flushCustomMetadata is Test, Constants {
                 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
             ),
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -63,6 +65,7 @@ contract fuzzTest_NameService_flushCustomMetadata is Test, Constants {
                 USER_USERNAME_OWNER,
                 USERNAME,
                 string.concat("test>", AdvancedStrings.uintToString(i)),
+                address(0),
                 address(0),
                 uint256(
                     0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000
@@ -139,7 +142,9 @@ contract fuzzTest_NameService_flushCustomMetadata is Test, Constants {
             params.signaturePay
         ) = _executeSig_nameService_flushCustomMetadata(
             params.user,
-            params.identity,address(0),
+            params.identity,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -149,7 +154,9 @@ contract fuzzTest_NameService_flushCustomMetadata is Test, Constants {
 
         nameService.flushCustomMetadata(
             params.user.Address,
-            params.identity,address(0),
+            params.identity,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -217,7 +224,9 @@ contract fuzzTest_NameService_flushCustomMetadata is Test, Constants {
             params.signaturePay
         ) = _executeSig_nameService_flushCustomMetadata(
             params.user,
-            params.identity,address(0),
+            params.identity,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -227,7 +236,9 @@ contract fuzzTest_NameService_flushCustomMetadata is Test, Constants {
 
         nameService.flushCustomMetadata(
             params.user.Address,
-            params.identity,address(0),
+            params.identity,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,

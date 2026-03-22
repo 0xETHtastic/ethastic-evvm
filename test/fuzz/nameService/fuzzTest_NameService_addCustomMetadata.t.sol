@@ -48,9 +48,11 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -123,6 +125,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.identity,
             params.value,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -134,6 +137,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.user.Address,
             params.identity,
             params.value,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,
@@ -213,6 +217,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.identity,
             params.value,
             address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -224,6 +229,7 @@ contract fuzzTest_NameService_addCustomMetadata is Test, Constants {
             params.user.Address,
             params.identity,
             params.value,
+            address(0),
             address(0),
             params.nonce,
             params.signatureNameService,

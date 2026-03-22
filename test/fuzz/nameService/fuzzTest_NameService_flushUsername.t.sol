@@ -48,9 +48,11 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USERNAME,
             44,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7
@@ -65,6 +67,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USERNAME,
             CUSTOM_METADATA_VALUE_1,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5
             ),
@@ -77,6 +80,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USERNAME,
             CUSTOM_METADATA_VALUE_2,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3
             ),
@@ -88,6 +92,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
             USER_USERNAME_OWNER,
             USERNAME,
             CUSTOM_METADATA_VALUE_3,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -126,7 +131,7 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
         bool isAsyncExecEvvm;
     }
 
-    function test__fuzz__flushUsername__noStaker(Input memory input) external {
+    function test__fuzz__flushUsername__noStaker(Input calldata input) external {
         vm.assume(
             input.nonce <
                 uint256(
@@ -143,64 +148,71 @@ contract fuzzTest_NameService_flushUsername is Test, Constants {
 
         vm.assume(input.nonceAsyncEVVM != input.nonce);
 
-        Params memory params = Params({
-            user: USER_USERNAME_OWNER,
-            username: USERNAME,
-            nonce: input.nonce,
-            signatureNameService: "",
-            priorityFee: uint256(input.priorityFee),
-            noncePay: input.nonceAsyncEVVM,
-            signaturePay: ""
-        });
+        uint256 priorityFee = uint256(input.priorityFee);
+        uint256 amountOfSlotsBefore;
+        
+        {
+            Params memory params = Params({
+                user: USER_USERNAME_OWNER,
+                username: USERNAME,
+                nonce: input.nonce,
+                signatureNameService: "",
+                priorityFee: priorityFee,
+                noncePay: input.nonceAsyncEVVM,
+                signaturePay: ""
+            });
 
-        _addBalance(params.user, params.username, params.priorityFee);
+            _addBalance(params.user, params.username, params.priorityFee);
 
-        (
-            params.signatureNameService,
-            params.signaturePay
-        ) = _executeSig_nameService_flushUsername(
-            params.user,
-            params.username,
-            address(0),
-            params.nonce,
-            params.priorityFee,
-            params.noncePay
-        );
+            (
+                params.signatureNameService,
+                params.signaturePay
+            ) = _executeSig_nameService_flushUsername(
+                params.user,
+                params.username,
+                address(0),
+                address(0),
+                params.nonce,
+                params.priorityFee,
+                params.noncePay
+            );
 
-        uint256 amountOfSlotsBefore = nameService.getAmountOfCustomMetadata(
-            params.username
-        );
+            amountOfSlotsBefore = nameService.getAmountOfCustomMetadata(
+                params.username
+            );
 
-        vm.startPrank(FISHER_NO_STAKER.Address);
+            vm.startPrank(FISHER_NO_STAKER.Address);
 
-        nameService.flushUsername(
-            params.user.Address,
-            params.username,
-            address(0),
-            params.nonce,
-            params.signatureNameService,
-            params.priorityFee,
-            params.noncePay,
-            params.signaturePay
-        );
+            nameService.flushUsername(
+                params.user.Address,
+                params.username,
+                address(0),
+                address(0),
+                params.nonce,
+                params.signatureNameService,
+                params.priorityFee,
+                params.noncePay,
+                params.signaturePay
+            );
 
-        vm.stopPrank();
+            vm.stopPrank();
+        }
 
         (address user, uint256 expirationDate) = nameService
-            .getIdentityBasicMetadata(params.username);
+            .getIdentityBasicMetadata(USERNAME);
 
         assertEq(user, address(0), "username owner should be flushed");
         assertEq(expirationDate, 0, "username expire date should be flushed");
 
         assertEq(
-            core.getBalance(params.user.Address, PRINCIPAL_TOKEN_ADDRESS),
+            core.getBalance(USER_USERNAME_OWNER.Address, PRINCIPAL_TOKEN_ADDRESS),
             0,
             "username owner balance should be zeroed"
         );
         assertEq(
             core.getBalance(FISHER_NO_STAKER.Address, PRINCIPAL_TOKEN_ADDRESS),
             ((5 * core.getRewardAmount()) * amountOfSlotsBefore) +
-                params.priorityFee,
+                priorityFee,
             "fisher no staker balance should be increased correctly"
         );
     }

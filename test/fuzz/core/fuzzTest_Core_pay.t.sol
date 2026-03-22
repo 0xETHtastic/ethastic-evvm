@@ -61,9 +61,11 @@ contract fuzzTest_Core_pay is Test, Constants {
             username,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -85,7 +87,8 @@ contract fuzzTest_Core_pay is Test, Constants {
     }
 
     struct PayInputsToAddress {
-        bool usingExecutor;
+        bool usingSenderExecutor;
+        bool usingOriginExecutor;
         bool isUsingAsyncNonce;
         bool isExecutorStaker;
         address toAddress;
@@ -126,7 +129,8 @@ contract fuzzTest_Core_pay is Test, Constants {
             input.token,
             amount,
             priorityFee,
-            input.usingExecutor ? input.executor : address(0),
+            input.usingSenderExecutor ? input.executor : address(0),
+            input.usingOriginExecutor ? input.executor : address(0),
             nonce,
             input.isUsingAsyncNonce
         );
@@ -135,7 +139,7 @@ contract fuzzTest_Core_pay is Test, Constants {
             input.executor,
             input.isExecutorStaker ? bytes1(0x01) : bytes1(0x00)
         );
-        vm.startPrank(input.executor);
+        vm.startPrank(input.executor, input.executor);
         core.pay(
             COMMON_USER_NO_STAKER_1.Address,
             input.toAddress,
@@ -143,7 +147,8 @@ contract fuzzTest_Core_pay is Test, Constants {
             input.token,
             amount,
             priorityFee,
-            input.usingExecutor ? input.executor : address(0),
+            input.usingSenderExecutor ? input.executor : address(0),
+            input.usingOriginExecutor ? input.executor : address(0),
             nonce,
             input.isUsingAsyncNonce,
             signaturePay
@@ -176,7 +181,8 @@ contract fuzzTest_Core_pay is Test, Constants {
     }
 
     struct PayInputsToIdentity {
-        bool usingExecutor;
+        bool usingSenderExecutor;
+        bool usingOriginExecutor;
         bool isUsingAsyncNonce;
         bool isExecutorStaker;
         address token;
@@ -218,7 +224,8 @@ contract fuzzTest_Core_pay is Test, Constants {
             input.token,
             amount,
             priorityFee,
-            input.usingExecutor ? input.executor : address(0),
+            input.usingSenderExecutor ? input.executor : address(0),
+            input.usingOriginExecutor ? input.executor : address(0),
             nonce,
             input.isUsingAsyncNonce
         );
@@ -227,7 +234,7 @@ contract fuzzTest_Core_pay is Test, Constants {
             input.executor,
             input.isExecutorStaker ? bytes1(0x01) : bytes1(0x00)
         );
-        vm.startPrank(input.executor);
+        vm.startPrank(input.executor, input.executor);
         core.pay(
             COMMON_USER_NO_STAKER_1.Address,
             address(0),
@@ -235,7 +242,8 @@ contract fuzzTest_Core_pay is Test, Constants {
             input.token,
             amount,
             priorityFee,
-            input.usingExecutor ? input.executor : address(0),
+            input.usingSenderExecutor ? input.executor : address(0),
+            input.usingOriginExecutor ? input.executor : address(0),
             nonce,
             input.isUsingAsyncNonce,
             signaturePay

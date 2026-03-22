@@ -27,15 +27,16 @@ contract fuzzTest_Core_batchPay is Test, Constants {
     AccountData COMMON_USER_NO_STAKER_3 = WILDCARD_USER;
 
     function executeBeforeSetUp() internal override {
-        
         _executeFn_nameService_registrationUsername(
             COMMON_USER_NO_STAKER_2,
             "dummy",
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -71,7 +72,8 @@ contract fuzzTest_Core_batchPay is Test, Constants {
     struct PayMultipleFuzzTestInput {
         bool useStaker;
         bool[2] useToAddress;
-        bool[2] useExecutor;
+        bool[2] useSenderExecutor;
+        bool[2] useOriginExecutor;
         address[2] token;
         uint16[2] amount;
         uint16[2] priorityFee;
@@ -90,7 +92,12 @@ contract fuzzTest_Core_batchPay is Test, Constants {
                 input.token[1] != PRINCIPAL_TOKEN_ADDRESS &&
                 !(input.isAsyncExec[0] &&
                     input.isAsyncExec[1] &&
-                    input.nonce[0] == input.nonce[1])
+                    input.nonce[0] == input.nonce[1]) &&
+                // batchPay does not support executors due to external call limitations
+                !input.useSenderExecutor[0] &&
+                !input.useSenderExecutor[1] &&
+                !input.useOriginExecutor[0] &&
+                !input.useOriginExecutor[1]
         );
 
         CoreStructs.BatchData[] memory batchData = new CoreStructs.BatchData[](
@@ -112,7 +119,8 @@ contract fuzzTest_Core_batchPay is Test, Constants {
             input.token[0],
             input.amount[0],
             input.priorityFee[0],
-            input.useExecutor[0] ? FISHER.Address : address(0),
+            input.useSenderExecutor[0] ? FISHER.Address : address(0),
+            input.useOriginExecutor[0] ? FISHER.Address : address(0),
             input.isAsyncExec[0]
                 ? input.nonce[0]
                 : core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
@@ -128,7 +136,8 @@ contract fuzzTest_Core_batchPay is Test, Constants {
             input.token[1],
             input.amount[1],
             input.priorityFee[1],
-            input.useExecutor[1] ? FISHER.Address : address(0),
+            input.useSenderExecutor[1] ? FISHER.Address : address(0),
+            input.useOriginExecutor[1] ? FISHER.Address : address(0),
             input.isAsyncExec[1]
                 ? input.nonce[1]
                 : (
@@ -172,14 +181,17 @@ contract fuzzTest_Core_batchPay is Test, Constants {
                             )
                     ),
                 isAsyncExec: input.isAsyncExec[i],
-                senderExecutor: input.useExecutor[i]
+                senderExecutor: input.useSenderExecutor[i]
+                    ? FISHER.Address
+                    : address(0),
+                originExecutor: input.useOriginExecutor[i]
                     ? FISHER.Address
                     : address(0),
                 signature: signature[i]
             });
         }
 
-        vm.startPrank(FISHER.Address);
+        vm.startPrank(FISHER.Address, FISHER.Address);
         (uint256 successfulTransactions, bool[] memory status) = core.batchPay(
             batchData
         );

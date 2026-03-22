@@ -50,11 +50,11 @@ contract unitTestCorrect_Core_state is Test, Constants {
             });
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             67,
             true
@@ -62,6 +62,7 @@ contract unitTestCorrect_Core_state is Test, Constants {
 
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -94,11 +95,11 @@ contract unitTestCorrect_Core_state is Test, Constants {
             });
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(this),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             address(0),
             core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
             false
@@ -106,6 +107,7 @@ contract unitTestCorrect_Core_state is Test, Constants {
 
         core.validateAndConsumeNonce(
             COMMON_USER_NO_STAKER_1.Address,
+            address(0),
             keccak256(
                 abi.encode(
                     "StateTest",
@@ -141,11 +143,11 @@ contract unitTestCorrect_Core_state is Test, Constants {
             });
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(helper),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             COMMON_USER_NO_STAKER_2.Address,
             core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
             false
@@ -161,7 +163,56 @@ contract unitTestCorrect_Core_state is Test, Constants {
             inputs.testB,
             inputs.testC,
             inputs.testD,
+            address(0),
             COMMON_USER_NO_STAKER_2.Address,
+            core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
+            false,
+            signature
+        );
+        vm.stopPrank();
+
+        assertEq(
+            core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
+            1,
+            "Sync nonce should be incremented after successful consumption"
+        );
+    }
+
+    function test__unit_correct__validateAndConsumeNonce_senderExecutor()
+        external
+    {
+        InputsValidateAndConsumeNonce
+            memory inputs = InputsValidateAndConsumeNonce({
+                user: COMMON_USER_NO_STAKER_1,
+                testA: "textTest",
+                testB: 123,
+                testC: address(321),
+                testD: false
+            });
+        bytes memory signature = _executeSig_state_test(
+            COMMON_USER_NO_STAKER_1,
+            inputs.testA,
+            inputs.testB,
+            inputs.testC,
+            inputs.testD,
+            address(helper),
+            address(0),
+            core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
+            false
+        );
+
+        vm.startPrank(
+            COMMON_USER_NO_STAKER_2.Address,
+            COMMON_USER_NO_STAKER_2.Address
+        );
+        helper.StateTest(
+            COMMON_USER_NO_STAKER_1.Address,
+            inputs.testA,
+            inputs.testB,
+            inputs.testC,
+            inputs.testD,
+            address(helper),
+            address(0),
             core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
             false,
             signature

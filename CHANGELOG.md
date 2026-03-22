@@ -5,12 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2026-03-22
+
+### Codename: "Kitsuragi"
+
+Named after [Kim Kitsuragi](https://en.wikipedia.org/wiki/Kim_Kitsuragi) from [Disco Elysium](https://en.wikipedia.org/wiki/Disco_Elysium). Just as Kim methodically verifies every action before it proceeds, this release makes `canExecuteUserTransaction` public and introduces `senderExecutor`/`originExecutor` every transaction must pass through a transparent checkpoint that enforces strict rules while remaining accessible to any external service.
+
+### Changed
+
+- **Use of executors**:
+  - All services must now specify `senderExecutor` and `originExecutor` as inputs for transactions. The signature verification in `Core.sol` validates that `senderExecutor` matches the actual caller (`msg.sender`) and `originExecutor` matches the transaction origin (`tx.origin`) when set. This enables flexible multi-service transaction flows while ensuring only authorized executors can process transactions on behalf of users.
+  - When a service dispatches payments (e.g., `pay` in `Core.sol`), both `originExecutor` and `senderExecutor` must be set to the service address. This provides clear tracking of payment origins across the EVVM ecosystem and enables complex multi-service transaction flows with full accountability for payment execution.
+
+- **Signature standardization**: To reflect the executor-based transaction flow, the standardized signature payload has been updated:
+
+```
+"<evvmID>,<senderExecutor>,<hashPayload>,<originExecutor>,<nonce>,<isAsyncExec>"
+```
+
+- **Core.sol**:
+  - Refactored `_canExecuteUserTransaction` function to `canExecuteUserTransaction` and made it `public` to allow external services to check if a user transaction can be executed based on the current state of the system, including nonce validation and user validation logic.
+  - Change signature and nonce consumption logic in `canExecuteUserTransaction` to be flexible on what service wnat to call, if you put on `senderExecutor` `address(0)` any service with the same signature structure can call it and consume but if you want to restrict it to a specific service you can put the service address and only that service will be able to call it and consume the nonce, this allows for more flexible multi-service transaction flows while maintaining security against attacks.
+
+- **Gas Optimization**:
+  - Refactored input handling modifiers across all services to use `calldata` instead of `memory` for external function parameters, reducing gas costs for transactions that involve large data inputs by avoiding unnecessary copying of data into memory.
+  - Updated algorithms accross services whose use `for` loops to use `unchecked` blocks where safe to do so, eliminating redundant overflow checks and further reducing gas costs in scenarios with multiple iterations.
+
+- **Core.sol**: Refactored `breakerSetupNameServiceAddress` variable from `bytes1` to `bool` for better gas efficiency.
+
+- **Documentation**: Updated NatSpec documentation across all contracts to reflect changes in transaction execution flow, signature structure, and input handling for improved clarity and maintainability.
+
+- **Testing**: Refactored and added tests to cover new executor-based transaction flow, signature structure, and input handling changes, including scenarios for authorized and unauthorized executors, multi-service transaction flows, and gas optimization effects.
+
 ## [3.0.3] - 2026-03-05
 
 ### Changed
+
 - **Dependencies**: Updated bun and forge dependencies to latest versions for improved performance and security.
 
 ### Fixed
+
 - **EvvmService.sol**: Fixed visibility of `getPrincipalTokenAddress` and `getEvvmID` functions to `public`.
 
 ## [3.0.2] - 2026-02-28
@@ -29,8 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tests**:
   - Added comprehensive tests for the new token list management functionality in `Core.sol`, including tests for proposing, accepting, and rejecting list status changes, as well as verifying token interaction allowances based on the active list.
   - Added tests for the `rewardFlowDistribution` flag to ensure it correctly stops reward distribution when 99.99% of total supply is distributed and allows re-enabling if needed.
-  - Added tests for the new admin functions to delete total supply and change base reward amount, including checks for proper timelock enforcement and access control.  
-
+  - Added tests for the new admin functions to delete total supply and change base reward amount, including checks for proper timelock enforcement and access control.
 
 ### Changed
 
@@ -46,7 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **CLI:** Fixed bug where all `.executables/*` files were the Linux ELF build; running `./evvm`/`evvm.bat` on macOS or Windows produced “cannot execute binary file”. Wrapper scripts now detect exit‑126 failures, fall back to `bun run cli/index.ts` if Bun is installed, and emit a clear error otherwise. (Proper platform binaries are now produced by CI.) 
+- **CLI:** Fixed bug where all `.executables/*` files were the Linux ELF build; running `./evvm`/`evvm.bat` on macOS or Windows produced “cannot execute binary file”. Wrapper scripts now detect exit‑126 failures, fall back to `bun run cli/index.ts` if Bun is installed, and emit a clear error otherwise. (Proper platform binaries are now produced by CI.)
 
 ## [3.0.1] - 2026-02-19
 
@@ -63,9 +96,12 @@ Named after [Ichiban Kasuga](https://en.wikipedia.org/wiki/Ichiban_Kasuga) from 
 ### Added
 
 - **Changelog**: Added codenames to releases for a more engaging and memorable version history. The codename will change only in major and minor releases; patch releases are reserved for bug fixes and small improvements that do not require a codename change.
-- **Signature standardization**: Implemented a standardized signature payload construction method in `AdvancedStrings.sol` to ensure consistent signature generation and verification across all EVVM services, improving security and interoperability
-  - This standard consists of concatenating the following parameters in order:
-    `"<evvmID>,<serviceAddress>,<hashInput>,<executor>,<nonce>,<isAsyncExec>"` where `hashInput` is a service-specific hash of the relevant transaction data using `keccak256(abi.encode("functionName", param1, param2, ...))` and `executor` represents the address executing the transaction (origin executor service transactions and sender for payment transactions on `Core.sol`). This standardization allows for a single signature verification method in `Core.sol` that can be used across all services, eliminating inconsistencies and potential security vulnerabilities from service-specific signature implementations.
+- **Signature standardization**: Implemented a standardized signature payload construction method in `AdvancedStrings.sol` to ensure consistent signature generation and verification across all EVVM services, improving security and interoperability:
+
+```
+"<evvmID>,<senderExecutor>,<hashPayload>,<originExecutor>,<nonce>,<isAsyncExec>"
+```
+
 - **Core.sol**:
   - A new core contract to:
     - Manage treasury deposits and withdrawals

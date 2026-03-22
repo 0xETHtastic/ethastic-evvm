@@ -40,6 +40,7 @@ abstract contract CoreExecution {
         address token,
         uint256 amount,
         uint256 priorityFee,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes memory signature
@@ -52,6 +53,7 @@ abstract contract CoreExecution {
             amount,
             priorityFee,
             address(this),
+            originExecutor,
             nonce,
             isAsyncExec,
             signature
@@ -74,6 +76,7 @@ abstract contract CoreExecution {
         address token,
         uint256 amount,
         uint256 priorityFee,
+        address originExecutor,
         uint256 nonce,
         bool isAsyncExec,
         bytes memory signature
@@ -85,6 +88,7 @@ abstract contract CoreExecution {
             amount,
             priorityFee,
             address(this),
+            originExecutor,
             nonce,
             isAsyncExec,
             signature
@@ -123,7 +127,6 @@ abstract contract CoreExecution {
 
     /**
      * @notice Gets next sequential sync nonce for user
-     * @dev View function returning core.getNextCurrentSyncNonce(user). Auto-increments after each use.
      * @param user User address to query
      * @return Next sync nonce for user
      */
@@ -135,7 +138,7 @@ abstract contract CoreExecution {
 
     /**
      * @notice Checks if async nonce was consumed
-     * @dev View function returning core.getIfUsedAsyncNonce(user, nonce). Reserved nonces return false until consumed.
+     * @dev Reserved nonces return false until consumed.
      * @param user User address to query
      * @param nonce Async nonce to check
      * @return true if consumed, false if available/reserved

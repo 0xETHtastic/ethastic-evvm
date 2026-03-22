@@ -36,7 +36,8 @@ contract fuzzTest_Core_state is Test, Constants {
         bool testD;
         uint256 nonceAsync;
         bool isAsyncExec;
-        bool callFromEOA;
+        bool usingSenderExecutor;
+        bool usingOriginExecutor;
     }
 
     function test__fuzz__validateAndConsumeNonce(
@@ -44,12 +45,14 @@ contract fuzzTest_Core_state is Test, Constants {
     ) external {
         bytes memory signature = _executeSig_state_test(
             COMMON_USER_NO_STAKER_1,
-            address(helper),
             inputs.testA,
             inputs.testB,
             inputs.testC,
             inputs.testD,
-            inputs.callFromEOA ? COMMON_USER_NO_STAKER_2.Address : address(0),
+            inputs.usingSenderExecutor ? address(helper) : address(0),
+            inputs.usingOriginExecutor
+                ? COMMON_USER_NO_STAKER_2.Address
+                : address(0),
             inputs.isAsyncExec
                 ? inputs.nonceAsync
                 : core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
@@ -66,7 +69,10 @@ contract fuzzTest_Core_state is Test, Constants {
             inputs.testB,
             inputs.testC,
             inputs.testD,
-            inputs.callFromEOA ? COMMON_USER_NO_STAKER_2.Address : address(0),
+            inputs.usingSenderExecutor ? address(helper) : address(0),
+            inputs.usingOriginExecutor
+                ? COMMON_USER_NO_STAKER_2.Address
+                : address(0),
             inputs.isAsyncExec
                 ? inputs.nonceAsync
                 : core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
@@ -95,22 +101,22 @@ contract fuzzTest_Core_state is Test, Constants {
     struct InputsReserveAsyncNonce {
         address user;
         uint256 nonceAsync;
-        address serviceAddress;
+        address senderExecutor;
     }
 
     function test__fuzz__reserveAsyncNonce(
         InputsReserveAsyncNonce memory inputs
     ) external {
         vm.assume(inputs.user != address(0));
-        vm.assume(inputs.serviceAddress != address(0));
+        vm.assume(inputs.senderExecutor != address(0));
 
         vm.startPrank(inputs.user);
-        core.reserveAsyncNonce(inputs.nonceAsync, inputs.serviceAddress);
+        core.reserveAsyncNonce(inputs.nonceAsync, inputs.senderExecutor);
         vm.stopPrank();
 
         assertEq(
             core.getAsyncNonceReservation(inputs.user, inputs.nonceAsync),
-            inputs.serviceAddress,
+            inputs.senderExecutor,
             "Async nonce reservation should store the correct service address"
         );
         assertEq(
@@ -126,10 +132,10 @@ contract fuzzTest_Core_state is Test, Constants {
         InputsReserveAsyncNonce memory inputs
     ) external {
         vm.assume(inputs.user != address(0));
-        vm.assume(inputs.serviceAddress != address(0));
+        vm.assume(inputs.senderExecutor != address(0));
 
         vm.startPrank(inputs.user);
-        core.reserveAsyncNonce(inputs.nonceAsync, inputs.serviceAddress);
+        core.reserveAsyncNonce(inputs.nonceAsync, inputs.senderExecutor);
         core.revokeAsyncNonce(inputs.nonceAsync);
         vm.stopPrank();
 

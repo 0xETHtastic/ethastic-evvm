@@ -74,6 +74,7 @@ contract fuzzTest_NameService_preRegistrationUsername is Test, Constants {
                 params.username,
                 params.lockNumber,
                 address(0),
+                address(0),
                 params.nonce,
                 params.priorityFee,
                 params.noncePay
@@ -86,6 +87,7 @@ contract fuzzTest_NameService_preRegistrationUsername is Test, Constants {
             keccak256(
                 abi.encodePacked(params.username, uint256(params.lockNumber))
             ),
+            address(0),
             address(0),
             params.nonce,
             signatureNameServiceOne,
@@ -154,6 +156,7 @@ contract fuzzTest_NameService_preRegistrationUsername is Test, Constants {
                 params.username,
                 params.lockNumber,
                 address(0),
+                address(0),
                 params.nonce,
                 params.priorityFee,
                 params.noncePay
@@ -166,6 +169,7 @@ contract fuzzTest_NameService_preRegistrationUsername is Test, Constants {
             keccak256(
                 abi.encodePacked(params.username, uint256(params.lockNumber))
             ),
+            address(0),
             address(0),
             params.nonce,
             signatureNameServiceOne,

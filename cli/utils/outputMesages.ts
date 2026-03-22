@@ -14,6 +14,7 @@ import type {
   CrossChainInputs,
   EvvmMetadata,
 } from "../types";
+import packageJson from "../../package.json" assert { type: "json" };
 
 /**
  * Creates a loading animation with auto-clearing and optional timeout on stop
@@ -26,7 +27,7 @@ import type {
 export function createLoadingAnimation(
   message: string,
   spinnerType: string = "bouncingBar",
-  stopTimeout: number = 0
+  stopTimeout: number = 0,
 ): {
   start: () => void;
   stop: (timeout?: number) => Promise<void>;
@@ -57,11 +58,11 @@ export function seccionTitle(title: string, subTitle?: string) {
   console.log();
   if (subTitle) {
     console.log(
-      `${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬${colors.reset} ${subTitle} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset}`
+      `${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬${colors.reset} ${subTitle} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset}`,
     );
   } else {
     console.log(
-      `${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset}`
+      `${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬${colors.reset}`,
     );
   }
   console.log();
@@ -71,16 +72,15 @@ export function sectionSubtitle(title: string, subTitle?: string) {
   console.log();
   if (subTitle) {
     console.log(
-      `${colors.evvmGreen}▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬${colors.reset} ${subTitle} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬${colors.reset}`
+      `${colors.evvmGreen}▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬${colors.reset} ${subTitle} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬${colors.reset}`,
     );
   } else {
     console.log(
-      `${colors.evvmGreen}▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬${colors.reset}`
+      `${colors.evvmGreen}▬▬${colors.reset} ${title} ${colors.evvmGreen}▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬${colors.reset}`,
     );
   }
   console.log();
 }
-
 
 /**
  * Displays a critical error message and exits the process
@@ -94,10 +94,10 @@ export function sectionSubtitle(title: string, subTitle?: string) {
 export function criticalError(message: string) {
   console.error(`${colors.red}🯀 Critical Error ${message}${colors.reset}`);
   console.log(
-    "Please try again. If the issue persists, create an issue on GitHub:"
+    "Please try again. If the issue persists, create an issue on GitHub:",
   );
   console.log(
-    `${colors.blue}https://github.com/EVVM-org/Testnet-Contracts/issues${colors.reset}`
+    `${colors.blue}https://github.com/EVVM-org/Testnet-Contracts/issues${colors.reset}`,
   );
 
   process.exit(1);
@@ -150,7 +150,7 @@ export function error(message: string, extraMessage: string = "") {
  */
 export function customErrorWithExit(
   message: string,
-  extraMessage: string = ""
+  extraMessage: string = "",
 ) {
   console.error(`${colors.red}🯀 ${message}${colors.reset}`);
   if (extraMessage) {
@@ -206,10 +206,10 @@ export function warningCrossChainSuportNotAvailable(
   chainName: string,
   chainId: number,
   crossChainProtocol: string = "Cross-chain protocol",
-  url: string = ""
+  url: string = "",
 ) {
   console.log(
-    `\n${colors.yellow}⚠ Warning:${colors.reset} ${crossChainProtocol} support not available on ${chainName} ${colors.darkGray}(${chainId})${colors.reset}`
+    `\n${colors.yellow}⚠ Warning:${colors.reset} ${crossChainProtocol} support not available on ${chainName} ${colors.darkGray}(${chainId})${colors.reset}`,
   );
   if (url !== "") {
     console.log(`  ${colors.darkGray}Check availability at:${colors.reset}`);
@@ -241,12 +241,12 @@ export function warningCrossChainSuportNotAvailable(
 export function infoWithChainData(
   message: string,
   chainName: string,
-  chainId: number
+  chainId: number,
 ) {
   console.log(
     chainName
       ? `${colors.blue}${message} on ${chainName} ${colors.darkGray}(${chainId})${colors.reset}`
-      : `${colors.blue}${message} on Chain ID ${chainId}${colors.reset}`
+      : `${colors.blue}${message} on Chain ID ${chainId}${colors.reset}`,
   );
 }
 
@@ -266,7 +266,7 @@ export function infoWithChainData(
  */
 export function chainIdNotSupported(chainId: number) {
   console.error(
-    `${colors.red}Host Chain ID ${chainId} is not supported.,${colors.reset}`
+    `${colors.red}Host Chain ID ${chainId} is not supported.,${colors.reset}`,
   );
   console.log(
     `\n${colors.yellow}Possible solutions:${colors.reset}
@@ -279,7 +279,7 @@ export function chainIdNotSupported(chainId: number) {
     
     ${colors.bright}• Local blockchains (Anvil/Hardhat):${colors.reset}
     Use an unregistered chain ID.
-    ${colors.darkGray}Example: Chain ID 31337 is registered, use 1337 instead.${colors.reset}`
+    ${colors.darkGray}Example: Chain ID 31337 is registered, use 1337 instead.${colors.reset}`,
   );
   process.exit(406);
 }
@@ -301,7 +301,7 @@ export function showEvvmLogo() {
 ░▒▓█▓▒░        ░▒▓█▓▓█▓▒░   ░▒▓█▓▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░
 ░▒▓█▓▒░        ░▒▓█▓▓█▓▒░   ░▒▓█▓▓█▓▒░ ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░
 ░▒▓████████▓▒░  ░▒▓██▓▒░     ░▒▓██▓▒░  ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░
-🮋 Version 3.0.0 "Ichiban" 🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋
+🮋 Version ${packageJson.version} "Kitsuragi" 🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋🮋
 ${colors.reset}`);
 }
 
@@ -320,7 +320,7 @@ ${colors.reset}`);
  */
 export function baseConfigurationSummary(
   addresses: BaseInputAddresses,
-  evvmMetadata: EvvmMetadata
+  evvmMetadata: EvvmMetadata,
 ) {
   sectionSubtitle("Configuration Summary");
   console.log(`${colors.bright}Addresses:${colors.reset}`);
@@ -362,7 +362,7 @@ export function baseConfigurationSummary(
 export function crossChainConfigurationSummary(
   externalChainData: ChainData,
   hostChainData: ChainData,
-  crossChainInputs: CrossChainInputs
+  crossChainInputs: CrossChainInputs,
 ) {
   sectionSubtitle("Cross-Chain Configuration Summary");
   console.log(`

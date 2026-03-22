@@ -44,9 +44,11 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1
@@ -93,10 +95,10 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             Erc191TestBuilder.buildMessageSignedForMakeOffer(
                 /* 🢃 different evvmID 🢃 */
                 core.getEvvmID() + 1,
-                address(nameService),
                 "test",
                 totalOfferAmount,
                 expirationDate,
+                address(0),
                 address(0),
                 10001
             )
@@ -112,6 +114,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             totalOfferAmount,
             priorityFeeAmount,
             address(nameService),
+            address(0),
             101,
             true
         );
@@ -124,6 +127,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -177,6 +181,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -190,6 +195,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -243,6 +249,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -256,6 +263,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -309,6 +317,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 /* 🢃 different dateExpire 🢃 */
                 expirationDate + 1,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -322,6 +331,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -375,6 +385,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount + 1,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -388,6 +399,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -440,6 +452,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 /* 🢃 different nameServiceNonce 🢃 */
                 67,
                 priorityFeeAmount,
@@ -454,6 +467,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -496,6 +510,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "testrevert",
             67,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffA
             )
@@ -524,6 +539,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -537,6 +553,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             invalidUsername,
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -591,6 +608,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -604,6 +622,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             unregisteredUsername,
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -657,6 +676,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -670,6 +690,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -723,6 +744,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -736,6 +758,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -785,6 +808,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "testrevert",
             67,
             address(0),
+            address(0),
             nonceToUse
         );
 
@@ -796,6 +820,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 "test",
                 totalOfferAmount,
                 expirationDate,
+                address(0),
                 address(0),
                 nonceToUse,
                 priorityFeeAmount,
@@ -810,6 +835,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             expirationDate,
             totalOfferAmount,
+            address(0),
             address(0),
             nonceToUse,
             signatureNameService,
@@ -862,6 +888,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 /* 🢃 different evvm nonce 🢃 */
@@ -876,6 +903,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,
@@ -932,6 +960,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
                 totalOfferAmount,
                 expirationDate,
                 address(0),
+                address(0),
                 10001,
                 priorityFeeAmount,
                 101
@@ -945,6 +974,7 @@ contract unitTestRevert_NameService_makeOffer is Test, Constants {
             "test",
             totalOfferAmount,
             expirationDate,
+            address(0),
             address(0),
             10001,
             signatureNameService,

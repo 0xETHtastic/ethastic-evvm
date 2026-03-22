@@ -97,12 +97,12 @@ contract unitTestCorrect_Core_proxy is Test, Constants {
             userToInteract.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 addressTo,
                 "",
                 tokenAddress,
                 amount,
                 priorityFee,
+                address(0),
                 address(0),
                 core.getNextCurrentSyncNonce(userToInteract.Address),
                 false
@@ -121,6 +121,7 @@ contract unitTestCorrect_Core_proxy is Test, Constants {
             tokenAddress,
             amount,
             priorityFee,
+            address(0),
             address(0),
             core.getNextCurrentSyncNonce(userToInteract.Address),
             false,

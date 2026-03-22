@@ -119,6 +119,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params1.user,
             params1.isStaking,
             address(0),
+            address(0),
             params1.nonceStake,
             params1.priorityFee,
             params1.noncePay
@@ -128,6 +129,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params1.user.Address,
             params1.isStaking,
+            address(0),
             address(0),
             params1.nonceStake,
             params1.signatureStake,
@@ -188,6 +190,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params2.user,
             params2.isStaking,
             address(0),
+            address(0),
             params2.nonceStake,
             params2.priorityFee,
             params2.noncePay
@@ -197,6 +200,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params2.user.Address,
             params2.isStaking,
+            address(0),
             address(0),
             params2.nonceStake,
             params2.signatureStake,
@@ -283,6 +287,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params1.user,
             params1.isStaking,
             address(0),
+            address(0),
             params1.nonceStake,
             params1.priorityFee,
             params1.noncePay
@@ -292,6 +297,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params1.user.Address,
             params1.isStaking,
+            address(0),
             address(0),
             params1.nonceStake,
             params1.signatureStake,
@@ -352,6 +358,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params2.user,
             params2.isStaking,
             address(0),
+            address(0),
             params2.nonceStake,
             params2.priorityFee,
             params2.noncePay
@@ -361,6 +368,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params2.user.Address,
             params2.isStaking,
+            address(0),
             address(0),
             params2.nonceStake,
             params2.signatureStake,
@@ -447,6 +455,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params1.user,
             params1.isStaking,
             address(0),
+            address(0),
             params1.nonceStake,
             params1.priorityFee,
             params1.noncePay
@@ -456,6 +465,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params1.user.Address,
             params1.isStaking,
+            address(0),
             address(0),
             params1.nonceStake,
             params1.signatureStake,
@@ -516,6 +526,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params2.user,
             params2.isStaking,
             address(0),
+            address(0),
             params2.nonceStake,
             params2.priorityFee,
             params2.noncePay
@@ -525,6 +536,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params2.user.Address,
             params2.isStaking,
+            address(0),
             address(0),
             params2.nonceStake,
             params2.signatureStake,
@@ -613,6 +625,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params1.user,
             params1.isStaking,
             address(0),
+            address(0),
             params1.nonceStake,
             params1.priorityFee,
             params1.noncePay
@@ -622,6 +635,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params1.user.Address,
             params1.isStaking,
+            address(0),
             address(0),
             params1.nonceStake,
             params1.signatureStake,
@@ -682,6 +696,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params2.user,
             params2.isStaking,
             address(0),
+            address(0),
             params2.nonceStake,
             params2.priorityFee,
             params2.noncePay
@@ -691,6 +706,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params2.user.Address,
             params2.isStaking,
+            address(0),
             address(0),
             params2.nonceStake,
             params2.signatureStake,
@@ -750,6 +766,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
                 USER,
                 true,
                 address(0),
+                address(0),
                 uint256(
                     0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00
                 ) + i,
@@ -796,6 +813,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             paramsUnstake.user,
             paramsUnstake.isStaking,
             address(0),
+            address(0),
             paramsUnstake.nonceStake,
             paramsUnstake.priorityFee,
             paramsUnstake.noncePay
@@ -805,6 +823,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             paramsUnstake.user.Address,
             paramsUnstake.isStaking,
+            address(0),
             address(0),
             paramsUnstake.nonceStake,
             paramsUnstake.signatureStake,
@@ -867,6 +886,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             paramsFullUnstake.user,
             paramsFullUnstake.isStaking,
             address(0),
+            address(0),
             paramsFullUnstake.nonceStake,
             paramsFullUnstake.priorityFee,
             paramsFullUnstake.noncePay
@@ -876,6 +896,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             paramsFullUnstake.user.Address,
             paramsFullUnstake.isStaking,
+            address(0),
             address(0),
             paramsFullUnstake.nonceStake,
             paramsFullUnstake.signatureStake,
@@ -934,6 +955,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             USER,
             true,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -949,6 +971,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         _executeFn_staking_presaleStaking(
             USER,
             false,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -985,6 +1008,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params.user,
             params.isStaking,
             address(0),
+            address(0),
             params.nonceStake,
             params.priorityFee,
             params.noncePay
@@ -996,6 +1020,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params.user.Address,
             params.isStaking,
+            address(0),
             address(0),
             params.nonceStake,
             params.signatureStake,
@@ -1052,6 +1077,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             USER,
             true,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
             ),
@@ -1067,6 +1093,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         _executeFn_staking_presaleStaking(
             USER,
             false,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2
@@ -1103,6 +1130,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
             params.user,
             params.isStaking,
             address(0),
+            address(0),
             params.nonceStake,
             params.priorityFee,
             params.noncePay
@@ -1114,6 +1142,7 @@ contract unitTestCorrect_Staking_presaleStaking is Test, Constants {
         staking.presaleStaking(
             params.user.Address,
             params.isStaking,
+            address(0),
             address(0),
             params.nonceStake,
             params.signatureStake,

@@ -132,6 +132,7 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
             USERNAME,
             input.lockNumber,
             address(0),
+            address(0),
             0
         );
 
@@ -154,7 +155,9 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
         ) = _executeSig_nameService_registrationUsername(
             params.user,
             USERNAME,
-            params.lockNumber,address(0),
+            params.lockNumber,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -164,7 +167,9 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
         nameService.registrationUsername(
             params.user.Address,
             USERNAME,
-            params.lockNumber,address(0),
+            params.lockNumber,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -196,7 +201,6 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
         );
     }
 
-
     function test__fuzz__registrationUsername__staker(
         Input memory input
     ) external {
@@ -211,6 +215,7 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
             USER,
             USERNAME,
             input.lockNumber,
+            address(0),
             address(0),
             0
         );
@@ -234,7 +239,9 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
         ) = _executeSig_nameService_registrationUsername(
             params.user,
             USERNAME,
-            params.lockNumber,address(0),
+            params.lockNumber,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -244,7 +251,9 @@ contract fuzzTest_NameService_registrationUsername is Test, Constants {
         nameService.registrationUsername(
             params.user.Address,
             USERNAME,
-            params.lockNumber,address(0),
+            params.lockNumber,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,

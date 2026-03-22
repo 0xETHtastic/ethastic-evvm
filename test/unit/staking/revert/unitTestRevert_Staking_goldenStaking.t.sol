@@ -59,13 +59,13 @@ contract unitTestRevert_Staking_goldenStaking is Test, Constants {
             COMMON_USER_NO_STAKER_1.PrivateKey,
             Erc191TestBuilder.buildMessageSignedForPay(
                 core.getEvvmID(),
-                address(core),
                 address(staking),
                 "",
                 PRINCIPAL_TOKEN_ADDRESS,
                 amount,
                 0,
                 address(staking),
+                address(0),
                 core.getNextCurrentSyncNonce(COMMON_USER_NO_STAKER_1.Address),
                 false
             )
@@ -149,6 +149,7 @@ contract unitTestRevert_Staking_goldenStaking is Test, Constants {
             /* 🢃 Different priorityFee (pf>0) 🢃 */
             100,
             address(staking),
+            address(0),
             core.getNextCurrentSyncNonce(GOLDEN_STAKER.Address),
             false
         );

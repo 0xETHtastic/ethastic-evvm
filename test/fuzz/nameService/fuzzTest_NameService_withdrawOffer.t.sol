@@ -50,9 +50,11 @@ contract fuzzTest_NameService_withdrawOffer is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -67,6 +69,7 @@ contract fuzzTest_NameService_withdrawOffer is Test, Constants {
             USERNAME,
             AMOUNT_OFFER,
             EXPIRATION_DATE,
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
@@ -134,7 +137,9 @@ contract fuzzTest_NameService_withdrawOffer is Test, Constants {
         ) = _executeSig_nameService_withdrawOffer(
             params.user,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -145,7 +150,9 @@ contract fuzzTest_NameService_withdrawOffer is Test, Constants {
         nameService.withdrawOffer(
             params.user.Address,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -218,7 +225,9 @@ contract fuzzTest_NameService_withdrawOffer is Test, Constants {
         ) = _executeSig_nameService_withdrawOffer(
             params.user,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -229,7 +238,9 @@ contract fuzzTest_NameService_withdrawOffer is Test, Constants {
         nameService.withdrawOffer(
             params.user.Address,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,

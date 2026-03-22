@@ -114,10 +114,8 @@ abstract contract CoreStorage {
     //░▒▓█ Reward Distribution State ██████████████████████████████████████████████████████▓▒░
 
     /**
-     * @notice This flag can be used to pause or resume the distribution of staking rewards
-     *         if the 99.99% of the maximum supply has been reached. If true the distribution of rewards
-     *         is active, if false the distribution of rewards is paused.
-     *
+     * @notice Governance-controlled flag to enable or disable staking reward distribution.
+     * @dev Defaults to true. Can only be toggled via governance once 99.99% of supply is minted.
      */
     ProposalStructs.BoolTypeProposal rewardFlowDistribution;
 
@@ -139,7 +137,7 @@ abstract contract CoreStorage {
     /**
      * @notice Internal guard to ensure system contracts are initialized only once.
      */
-    bytes1 breakerSetupNameServiceAddress;
+    bool breakerSetupNameServiceAddress;
 
     //░▒▓█ Staker Registry █████████████████████████████████████████████████████████████▓▒░
 
@@ -159,7 +157,7 @@ abstract contract CoreStorage {
     //░▒▓█ Nonce State ██████████████████████████████████████████████████████████▓▒░
 
     /**
-     * @notice (Unused but kept for storage alignment) Proposed address for user validation.
+     * @notice Proposal state for the active UserValidator contract address.
      */
     ProposalStructs.AddressTypeProposal userValidatorAddress;
 
@@ -183,25 +181,14 @@ abstract contract CoreStorage {
     //░▒▓█ Token allowlist/denylist ██████████████████████████████████████████████████████████▓▒░
 
     /**
-     * @notice Tracks what token addresses are denied for use in the EVVM
-     *         if a token is in the denylist, it cannot:
-     *         - be deposited to the EVVM
-     *         - be used for execution payments (transfers between accounts/services)
-     *         but it can:
-     *         - be withdrawn from the EVVM (users can get their tokens out, but not back in)
-     *         by default all the tokens are allowed until they are added to the
-     *         denyList, if the denyList is active (listStatus = 0x02)
+     * @notice Token denylist. Restricted tokens cannot be deposited or transferred, but can still be withdrawn.
+     * @dev Active when listStatus = 0x02.
      */
     mapping(address tokenAdress => bool isDenied) denyList;
 
     /**
-     * @notice Tracks what token addresses are allowed for use in the EVVM
-     *         if a token is in the allowList, it can:
-     *         - be deposited to the EVVM
-     *         - be used for execution payments (transfers between accounts/services)
-     *         - can be withdrawn from the EVVM
-     *         by default all the tokens are denied until they are added to the
-     *         allowList, if the allowList is active (listStatus = 0x01)
+     * @notice Token allowlist. Only listed tokens can be deposited and transferred.
+     * @dev Active when listStatus = 0x01.
      */
     mapping(address tokenAdress => bool isAllowed) allowList;
 }

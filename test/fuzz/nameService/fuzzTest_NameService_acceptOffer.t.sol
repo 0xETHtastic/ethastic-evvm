@@ -48,9 +48,11 @@ contract fuzzTest_NameService_acceptOffer is Test, Constants {
             USERNAME,
             444,
             address(0),
+            address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
             ),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
@@ -100,15 +102,14 @@ contract fuzzTest_NameService_acceptOffer is Test, Constants {
                     0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0
                 )
         );
-        vm.assume(
-            input.nonceAsyncEVVM != input.nonce
-        );
+        vm.assume(input.nonceAsyncEVVM != input.nonce);
 
         uint offerID = _executeFn_nameService_makeOffer(
             USER,
             USERNAME,
             input.amountToOffer,
             block.timestamp + (uint256(input.expirationDateDays) * 1 days),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
@@ -139,7 +140,9 @@ contract fuzzTest_NameService_acceptOffer is Test, Constants {
         ) = _executeSig_nameService_acceptOffer(
             params.user,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
@@ -149,7 +152,9 @@ contract fuzzTest_NameService_acceptOffer is Test, Constants {
         nameService.acceptOffer(
             params.user.Address,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
@@ -211,15 +216,14 @@ contract fuzzTest_NameService_acceptOffer is Test, Constants {
                 )
         );
 
-        vm.assume(
-            input.nonceAsyncEVVM != input.nonce
-        );
+        vm.assume(input.nonceAsyncEVVM != input.nonce);
 
         uint offerID = _executeFn_nameService_makeOffer(
             USER,
             USERNAME,
             input.amountToOffer,
             block.timestamp + (uint256(input.expirationDateDays) * 1 days),
+            address(0),
             address(0),
             uint256(
                 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
@@ -250,18 +254,21 @@ contract fuzzTest_NameService_acceptOffer is Test, Constants {
         ) = _executeSig_nameService_acceptOffer(
             params.user,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.priorityFee,
             params.noncePay
         );
 
-
         vm.prank(FISHER_STAKER.Address);
         nameService.acceptOffer(
             params.user.Address,
             params.username,
-            params.offerID,address(0),
+            params.offerID,
+            address(0),
+            address(0),
             params.nonce,
             params.signatureNameService,
             params.priorityFee,
