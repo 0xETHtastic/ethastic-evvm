@@ -1,0 +1,2 @@
+.executables/*.exe filter=lfs diff=lfs merge=lfs -text
+.executables/evvm-* filter=lfs diff=lfs merge=lfs -text
