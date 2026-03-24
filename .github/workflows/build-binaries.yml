@@ -102,6 +102,9 @@ jobs:
     needs: [build-linux, build-macos]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Download Linux binaries
         uses: actions/download-artifact@v4
         with:
@@ -127,3 +130,12 @@ jobs:
           path: .executables/*
           if-no-files-found: error
           include-hidden-files: true
+
+      - name: Commit executables
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .executables/
+          git diff --cached --quiet || git commit -m "add: update executables"
+          git push
