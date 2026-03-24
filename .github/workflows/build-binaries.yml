@@ -101,9 +101,13 @@ jobs:
     name: Combine All Binaries
     needs: [build-linux, build-macos]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download Linux binaries
         uses: actions/download-artifact@v4
@@ -131,8 +135,26 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
 
+  commit-executables:
+    name: Commit Executables to Repo
+    needs: [combine-artifacts]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download combined binaries
+        uses: actions/download-artifact@v4
+        with:
+          name: all-binaries
+          path: .executables/
+
       - name: Commit executables
-        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
