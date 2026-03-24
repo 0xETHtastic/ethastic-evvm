@@ -97,41 +97,9 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
 
-  build-windows:
-    name: Build Windows Binaries
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build Windows x64
-        run: bun build cli/index.ts --compile --outfile .executables/evvm-windows-x64.exe
-
-      - name: Verify binary
-        run: |
-          echo "Verifying Windows binary..."
-          Get-Item .executables/evvm-windows-x64.exe
-        shell: pwsh
-
-      - name: Upload Windows binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-binaries
-          path: .executables/evvm-windows-x64.exe
-          if-no-files-found: error
-          include-hidden-files: true
-
   combine-artifacts:
     name: Combine All Binaries
-    needs: [build-linux, build-macos, build-windows]
+    needs: [build-linux, build-macos]
     runs-on: ubuntu-latest
     steps:
       - name: Download Linux binaries
@@ -144,12 +112,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: macos-binaries
-          path: .executables/
-
-      - name: Download Windows binaries
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-binaries
           path: .executables/
 
       - name: List all binaries
