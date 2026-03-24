@@ -32,8 +32,6 @@ elif [[ "$OS" == "darwin" && "$ARCH" == "x86_64" ]]; then
   EXECUTABLE="$SCRIPT_DIR/.executables/evvm-darwin-x64"
 elif [[ "$OS" == "darwin" && "$ARCH" == "arm64" ]]; then
   EXECUTABLE="$SCRIPT_DIR/.executables/evvm-darwin-arm64"
-elif [[ "$OS" == "cygwin" || "$OS" == "mingw"* || "$OS" == "msys"* ]]; then
-  EXECUTABLE="$SCRIPT_DIR/.executables/evvm-windows-x64.exe"
 else
   echo "Unsupported platform or architecture: $OS-$ARCH"
   exit 1
