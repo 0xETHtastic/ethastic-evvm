@@ -62,8 +62,6 @@ contract Treasury {
                 revert Error.DepositAmountMustBeGreaterThanZero();
 
             if (amount != msg.value) revert Error.InvalidDepositAmount();
-
-            core.addAmountToUser(msg.sender, address(0), msg.value);
         } else {
             /// user is sending ERC20 tokens
 
@@ -72,8 +70,9 @@ contract Treasury {
             if (amount == 0) revert Error.DepositAmountMustBeGreaterThanZero();
 
             IERC20(token).transferFrom(msg.sender, address(this), amount);
-            core.addAmountToUser(msg.sender, token, amount);
         }
+
+        core.addAmountToUser(msg.sender, token, amount);
     }
 
     /**
@@ -89,17 +88,14 @@ contract Treasury {
         if (core.getBalance(msg.sender, token) < amount)
             revert Error.InsufficientBalance();
 
-        if (token == address(0)) {
+        core.removeAmountFromUser(msg.sender, token, amount);
+
+        if (token == address(0))
             /// user is trying to withdraw native coin
-
-            core.removeAmountFromUser(msg.sender, address(0), amount);
             SafeTransferLib.safeTransferETH(msg.sender, amount);
-        } else {
+        else
             /// user is trying to withdraw ERC20 tokens
-
-            core.removeAmountFromUser(msg.sender, token, amount);
             IERC20(token).transfer(msg.sender, amount);
-        }
     }
 
     /**
