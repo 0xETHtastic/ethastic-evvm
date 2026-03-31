@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.1] - 2026-03-31
+
+### Changed
+
+- **Treasury.sol**: Refactored `deposit` and `withdraw` functions for improved code clarity. The `withdraw` function now explicitly updates state (`removeAmountFromUser`) before any external calls (ETH/ERC20 transfers), making the Checks-Effects-Interactions pattern more visible. The `deposit` function consolidates the `addAmountToUser` call outside the conditional branches. No security impact—both functions already followed safe patterns.
+
 ## [3.1.0] - 2026-03-22
 
 ### Codename: "Kitsuragi"
