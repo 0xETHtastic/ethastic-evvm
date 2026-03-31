@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Treasury.sol**: Refactored `deposit` and `withdraw` functions for improved code clarity. The `withdraw` function now explicitly updates state (`removeAmountFromUser`) before any external calls (ETH/ERC20 transfers), making the Checks-Effects-Interactions pattern more visible. The `deposit` function consolidates the `addAmountToUser` call outside the conditional branches. No security impact—both functions already followed safe patterns.
+- **Dependencies**: Updated dependencies to latest versions.
 
 ## [3.1.0] - 2026-03-22
 
