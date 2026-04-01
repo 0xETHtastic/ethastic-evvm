@@ -119,6 +119,8 @@ contract Core is Storage {
         stakerList[nameServiceAddress] = FLAG_IS_STAKER;
 
         treasuryAddress = _treasuryAddress;
+
+        breakerSetupNameServiceAddress = false;
     }
 
     /**
