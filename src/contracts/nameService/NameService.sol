@@ -16,7 +16,7 @@ import {
     IdentityValidation
 } from "@evvm/testnet-contracts/contracts/nameService/lib/IdentityValidation.sol";
 
-import {Core} from "@evvm/testnet-contracts/contracts/core/Core.sol";
+import {ICore as Core} from "@evvm/testnet-contracts/interfaces/ICore.sol";
 
 import {
     AdvancedStrings

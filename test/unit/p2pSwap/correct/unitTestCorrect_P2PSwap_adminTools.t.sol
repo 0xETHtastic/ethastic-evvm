@@ -318,7 +318,6 @@ contract unitTestCorrect_P2PSwap_adminTools is Test, Constants {
             address tokenToWithdraw,
             uint256 amountToWithdraw,
             address recipientToWithdraw,
-            uint256 _timeToWithdrawal
         ) = p2pSwap.getProposedWithdrawal();
 
         assertEq(tokenToWithdraw, token);

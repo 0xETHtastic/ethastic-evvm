@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.1.2] - 2026-04-01
+
+### Changed
+
+- **AdvancedStrings.sol**: Replaced deprecated `/// @solidity memory-safe-assembly` NatSpec comments with the `assembly ("memory-safe") { ... }` block annotation syntax.
+- **Treasury.sol** and **NameService.sol**: Replaced direct usage of the `Core` contract with the `ICore` interface, decoupling these contracts from the concrete implementation.
+
+### Fixed
+
+- **Core.sol**: Fixed a re-initialization vulnerability in `initializeSystemContracts` where the `breakerSetupNameServiceAddress` flag was never reset after the initial call, allowing any caller to overwrite `nameServiceAddress` and `treasuryAddress` an unlimited number of times. The flag is now set to `false` at the end of the function, ensuring it can only be executed once.
+
 ## [3.1.1] - 2026-03-31
 
 ### Changed

@@ -5,9 +5,9 @@ import {
 } from "@evvm/testnet-contracts/library/structs/CoreStructs.sol";
 
 abstract contract BaseInputs {
-    address admin = 0x0000000000000000000000000000000000000000;
-    address goldenFisher = 0x0000000000000000000000000000000000000000;
-    address activator = 0x0000000000000000000000000000000000000000;
+    address admin = 0x5cBf2D4Bbf834912Ad0bD59980355b57695e8309;
+    address goldenFisher = 0x5cBf2D4Bbf834912Ad0bD59980355b57695e8309;
+    address activator = 0x5cBf2D4Bbf834912Ad0bD59980355b57695e8309;
 
     CoreStructs.EvvmMetadata inputMetadata =
         CoreStructs.EvvmMetadata({
