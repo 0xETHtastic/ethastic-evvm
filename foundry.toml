@@ -20,5 +20,6 @@ remappings = [
 optimizer-runs = 300
 via_ir = true
 fs_permissions = [{ access = "read", path = "./input" }]
+ignored_warnings_from = ["node_modules", "lib"]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

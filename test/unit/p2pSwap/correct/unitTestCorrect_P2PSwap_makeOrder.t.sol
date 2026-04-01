@@ -130,7 +130,7 @@ contract unitTestCorrect_P2PSwap_makeOrder is Test, Constants {
 
         // staker because there is going to be some priorityFees attached
         vm.startPrank(COMMON_USER_STAKER.Address);
-        (uint256 market, uint256 orderId) = p2pSwap.makeOrder(
+        (uint256 market,) = p2pSwap.makeOrder(
             COMMON_USER_NO_STAKER_1.Address,
             tokenA,
             tokenB,
@@ -216,7 +216,7 @@ contract unitTestCorrect_P2PSwap_makeOrder is Test, Constants {
         );
 
         vm.startPrank(COMMON_USER_NO_STAKER_2.Address);
-        (uint256 market, uint256 orderId) = p2pSwap.makeOrder(
+        (uint256 market,) = p2pSwap.makeOrder(
             COMMON_USER_NO_STAKER_1.Address,
             tokenA,
             tokenB,

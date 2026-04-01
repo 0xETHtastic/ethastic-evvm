@@ -157,7 +157,7 @@ contract unitTestCorrect_P2PSwap_dispatchOrder_fillFixedFee is Test, Constants {
         );
 
         // 2. create an order
-        (uint256 market, uint256 orderId) = createOrder(
+        (, uint256 orderId) = createOrder(
             COMMON_USER_STAKER,
             COMMON_USER_NO_STAKER_1,
             nonceP2PSwap,
@@ -287,7 +287,7 @@ contract unitTestCorrect_P2PSwap_dispatchOrder_fillFixedFee is Test, Constants {
         );
 
         // 2. create an order
-        (uint256 market, uint256 orderId) = createOrder(
+        (, uint256 orderId) = createOrder(
             COMMON_USER_STAKER,
             COMMON_USER_NO_STAKER_1,
             nonceP2PSwap,
@@ -409,7 +409,7 @@ contract unitTestCorrect_P2PSwap_dispatchOrder_fillFixedFee is Test, Constants {
         );
 
         // 2. create an order
-        (uint256 market, uint256 orderId) = createOrder(
+        (, uint256 orderId) = createOrder(
             COMMON_USER_STAKER,
             COMMON_USER_NO_STAKER_1,
             nonceP2PSwap,
@@ -539,7 +539,7 @@ contract unitTestCorrect_P2PSwap_dispatchOrder_fillFixedFee is Test, Constants {
         );
 
         // 2. create an order
-        (uint256 market, uint256 orderId) = createOrder(
+        (, uint256 orderId) = createOrder(
             COMMON_USER_STAKER,
             COMMON_USER_NO_STAKER_1,
             nonceP2PSwap,

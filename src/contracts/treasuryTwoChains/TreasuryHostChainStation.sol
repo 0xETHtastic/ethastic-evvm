@@ -16,7 +16,7 @@ import {
     PayloadUtils
 } from "@evvm/testnet-contracts/contracts/treasuryTwoChains/lib/PayloadUtils.sol";
 
-import {Core} from "@evvm/testnet-contracts/contracts/core/Core.sol";
+import {ICore as Core} from "@evvm/testnet-contracts/interfaces/ICore.sol";
 
 import {
     AdvancedStrings

@@ -7,7 +7,7 @@ import {
     TreasuryError as Error
 } from "@evvm/testnet-contracts/library/errors/TreasuryError.sol";
 
-import {Core} from "@evvm/testnet-contracts/contracts/core/Core.sol";
+import {ICore as Core} from "@evvm/testnet-contracts/interfaces/ICore.sol";
 
 import {IERC20} from "@evvm/testnet-contracts/library/primitives/IERC20.sol";
 import {SafeTransferLib} from "@solady/utils/SafeTransferLib.sol";
