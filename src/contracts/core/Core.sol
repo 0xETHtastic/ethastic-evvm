@@ -183,34 +183,6 @@ contract Core is Storage {
         }
     }
 
-    //░▒▓█ Testnet Functions ██████████████████████████████████████████████████████▓▒░
-
-    /**
-     * @notice Faucet: Adds balance to a user for testing (Testnet only).
-     * @param user Recipient address.
-     * @param token Token contract address.
-     * @param quantity Amount to add.
-     */
-    function addBalance(
-        address user,
-        address token,
-        uint256 quantity
-    ) external {
-        balances[user][token] += quantity;
-
-        if (token == evvmMetadata.principalTokenAddress)
-            currentSupply += quantity;
-    }
-
-    /**
-     * @notice Faucet: Sets staker status for testing (Testnet only).
-     * @param user User address.
-     * @param answer Status flag (e.g., FLAG_IS_STAKER).
-     */
-    function setPointStaker(address user, bytes1 answer) external {
-        stakerList[user] = answer;
-    }
-
     //░▒▓█ Payment Functions ██████████████████████████████████████████████████████▓▒░
 
     /**
